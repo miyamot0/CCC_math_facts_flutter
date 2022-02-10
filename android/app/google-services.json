@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "206486473497",
+    "project_id": "covcopcompmathfact",
+    "storage_bucket": "covcopcompmathfact.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206486473497:android:de59c9831df0520dca5388",
+        "android_client_info": {
+          "package_name": "com.example.covcopcomp_math_fact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206486473497-dm8c3l4qg8ltakv7tnpqrg5gkav7cgvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOIG-20IxnCC8ivlM7uiEJbotiKoehGHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206486473497-dm8c3l4qg8ltakv7tnpqrg5gkav7cgvv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
