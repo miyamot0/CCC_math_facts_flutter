@@ -1,14 +1,14 @@
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
 
   // State for text fields
@@ -22,7 +22,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: const Text('Sign in to App'),
+        title: const Text('Sign up for App'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -45,7 +45,7 @@ class _SignInState extends State<SignIn> {
             SizedBox(height: 20),
             RaisedButton(
               color: Colors.pink[400],
-              child: Text("Sign in", style: TextStyle(color: Colors.white)),
+              child: Text("Register", style: TextStyle(color: Colors.white)),
               onPressed: () async {
                 print(email);
                 print(pass);
