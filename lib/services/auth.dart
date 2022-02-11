@@ -1,3 +1,4 @@
+import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 
@@ -63,6 +64,9 @@ class AuthService {
       if (user == null) {
         return null;
       } else {
+        // Add stubbed out content
+        await DatabaseService(uid: user.uid).updateTeacherData('', '', '');
+
         return _userFromFirebaseUser(user);
       }
     } catch (e) {
