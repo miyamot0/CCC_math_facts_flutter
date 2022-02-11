@@ -1,4 +1,5 @@
 import 'package:covcopcomp_math_fact/services/auth.dart';
+import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -44,6 +45,7 @@ class _RegisterState extends State<Register> {
               children: [
                 SizedBox(height: 20),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Email'),
                   validator: (value) =>
                       value!.isEmpty ? 'Enter an email' : null,
                   onChanged: (value) {
@@ -52,6 +54,8 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
+                  decoration:
+                      textInputDecoration.copyWith(hintText: 'Password'),
                   validator: (value) => value!.length < 6
                       ? 'Enter a password 6+ chars long'
                       : null,
