@@ -101,10 +101,12 @@ class DatabaseService {
   }
 
   // Add Student to classroom collection
-  Future addToStudentCollection(String studentTag) async {
+  Future addToStudentCollection(
+      String studentTag, String setSize, String target) async {
     var test =
         FirebaseFirestore.instance.collection('mainCollection/$uid/students');
 
-    return await test.add({'name': studentTag});
+    return await test
+        .add({'name': studentTag, 'setSize': setSize, 'target': target});
   }
 }

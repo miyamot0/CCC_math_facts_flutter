@@ -7,6 +7,7 @@ import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/usermodel.dart';
+import '../../shared/constants.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -23,6 +24,8 @@ class _HomeState extends State<Home> {
     final user = Provider.of<UserModel>(context);
 
     TextEditingController _textFieldController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+    String _setSizeEdit = "5", _exerciseEdit = "Math Facts";
 
     Future<void> _displayTextInputDialog(
         BuildContext context, String uidTag) async {
@@ -31,9 +34,40 @@ class _HomeState extends State<Home> {
           builder: (context) {
             return AlertDialog(
               title: const Text('Enter ID for New Student'),
-              content: TextField(
-                controller: _textFieldController,
-                decoration: const InputDecoration(hintText: "Tag Here"),
+              content: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: _textFieldController,
+                      decoration:
+                          textInputDecoration.copyWith(hintText: "Student ID"),
+                    ),
+                    DropdownButtonFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: "Select exercise"),
+                      value: _exerciseEdit,
+                      items: ["Math Facts", "Computation"].map((setting) {
+                        return DropdownMenuItem(
+                            value: setting, child: Text(setting));
+                      }).toList(),
+                      onChanged: (String value) =>
+                          _exerciseEdit = value.toString(),
+                    ),
+                    DropdownButtonFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: "Set Size"),
+                      //value: _currentTarget ?? userData.currentTarget,
+                      items: ["5", "10", "20"].map((setting) {
+                        return DropdownMenuItem(
+                            value: setting, child: Text(setting));
+                      }).toList(),
+                      onChanged: (String value) =>
+                          _setSizeEdit = value.toString(),
+                    ),
+                  ],
+                ),
               ),
               actions: <Widget>[
                 TextButton(
@@ -56,8 +90,10 @@ class _HomeState extends State<Home> {
                   child: const Text('Add Student'),
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
-                      await DatabaseService(uid: uidTag)
-                          .addToStudentCollection(_textFieldController.text);
+                      await DatabaseService(uid: uidTag).addToStudentCollection(
+                          _textFieldController.text,
+                          _setSizeEdit,
+                          _exerciseEdit);
 
                       Navigator.pop(context);
                     }
