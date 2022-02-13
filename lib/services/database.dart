@@ -55,6 +55,15 @@ class DatabaseService {
     return studentArray;
   }
 
+  List<String> _studentListingFromSnapshotHack(DocumentSnapshot snapshot) {
+    //Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+
+    //final studentArray = List<String>.from(data["students"] as List);
+    final studentArray = ["hack"];
+
+    return studentArray;
+  }
+
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
@@ -68,7 +77,10 @@ class DatabaseService {
   }
 
   Stream<List<String>> get students {
-    return mainCollection.doc(uid).snapshots().map(_studentListingFromSnapshot);
+    return mainCollection
+        .doc(uid)
+        .snapshots()
+        .map(_studentListingFromSnapshotHack);
   }
 
   // Get user doc screen
@@ -83,6 +95,14 @@ class DatabaseService {
     return await mainCollection.doc(uid).update({
       'students': FieldValue.arrayUnion([studentTag])
     });
+  }
+
+  // Add Student to classroom collection
+  Future addToStudentCollection(String studentTag) async {
+    var test =
+        FirebaseFirestore.instance.collection('mainCollection/$uid/students');
+
+    return await test.add({'name': studentTag});
   }
 
   /*

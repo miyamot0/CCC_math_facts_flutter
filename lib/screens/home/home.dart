@@ -53,15 +53,13 @@ class _HomeState extends State<Home> {
                       backgroundColor: Colors.green,
                       textStyle: const TextStyle(color: Colors.white)),
                   child: const Text('Add Student'),
-                  onPressed: () {
-                    setState(() async {
-                      if (_textFieldController.text.isNotEmpty) {
-                        await DatabaseService(uid: uidTag)
-                            .addStudentToClassroom(_textFieldController.text);
-                      }
+                  onPressed: () async {
+                    if (_textFieldController.text.isNotEmpty) {
+                      await DatabaseService(uid: uidTag)
+                          .addToStudentCollection(_textFieldController.text);
 
                       Navigator.pop(context);
-                    });
+                    }
                   },
                 ),
               ],
@@ -108,8 +106,9 @@ class _HomeState extends State<Home> {
             TextButton.icon(
               icon: const Icon(Icons.add),
               style: TextButton.styleFrom(primary: Colors.white),
-              onPressed: () async =>
-                  await _displayTextInputDialog(context, user.uid),
+              onPressed: () async {
+                await _displayTextInputDialog(context, user.uid);
+              },
               label: const Text("Add Student"),
             )
           ],

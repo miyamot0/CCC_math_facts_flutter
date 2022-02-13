@@ -12,9 +12,7 @@ class StudentList extends StatefulWidget {
 class _StudentListState extends State<StudentList> {
   @override
   Widget build(BuildContext context) {
-    final List<String> students = Provider.of<List<String>>(context);
-
-    print(students);
+    final List<String> students = Provider.of<List<String>>(context) ?? [];
 
     return ListView.builder(
       itemCount: students.length,
