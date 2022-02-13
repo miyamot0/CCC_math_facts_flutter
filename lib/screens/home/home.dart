@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                     DropdownButtonFormField(
                       decoration:
                           textInputDecoration.copyWith(hintText: "Set Size"),
-                      //value: _currentTarget ?? userData.currentTarget,
+                      value: _setSizeEdit,
                       items: ["5", "10", "20"].map((setting) {
                         return DropdownMenuItem(
                             value: setting, child: Text(setting));
