@@ -12,53 +12,11 @@ class DatabaseService {
   final CollectionReference mainCollection =
       FirebaseFirestore.instance.collection('mainCollection');
 
-  // Update teacher's data
-  Future initialTeacherDataInsert(String school, String teacherName,
-      String grade, String target, int setSize) async {
-    return await mainCollection.doc(uid).set({
-      'school': school,
-      'teacherName': teacherName,
-      'grade': grade,
-      'target': target,
-      'setSize': setSize,
-      'students': []
-    });
-  }
-
-  // Update teacher's data
-  Future updateTeacherData(
-      String school, String teacherName, String grade) async {
-    return await mainCollection
-        .doc(uid)
-        .set({'school': school, 'teacherName': teacherName, 'grade': grade});
-  }
-
-  /*
-  List<String> _studentListFromSnapshot(QuerySnapshot snapshot) {
-    snapshot.docs.map((d) {
-      print(d.toString());
-    });
-
-    return snapshot.docs.map((d) {
-      return d.toString();
-    }).toList();
-  }
-  */
-
-  // Updates
-
-/*
-  // Add Student to classroom
-  Future addStudentToClassroom(String studentTag) async {
-    return await mainCollection.doc(uid).update({
-      'students': FieldValue.arrayUnion([studentTag])
-    });
-  }
-*/
-
 // ------------------------
 // Modern Calls here
 // ------------------------
+
+// Maps
 
   List<Student> _studentListingFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((d) {
@@ -84,7 +42,8 @@ class DatabaseService {
         currentSchool: data['school']);
   }
 
-  // Get user doc screen
+// Streams
+
   Stream<UserData> get userData {
     return mainCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
@@ -96,6 +55,8 @@ class DatabaseService {
         .map(_studentListingFromSnapshot);
   }
 
+// Updates
+
   // Add Student to classroom collection
   Future addToStudentCollection(
       String studentTag, String setSize, String target) async {
@@ -104,5 +65,21 @@ class DatabaseService {
 
     return await test
         .add({'name': studentTag, 'setSize': setSize, 'target': target});
+  }
+
+  // Update teacher's data
+  Future addTeacherDataInsert(
+      String school, String teacherName, String grade) async {
+    return await mainCollection
+        .doc(uid)
+        .set({'school': school, 'teacherName': teacherName, 'grade': grade});
+  }
+
+  // Update teacher's data
+  Future updateTeacherData(
+      String school, String teacherName, String grade) async {
+    return await mainCollection
+        .doc(uid)
+        .set({'school': school, 'teacherName': teacherName, 'grade': grade});
   }
 }
