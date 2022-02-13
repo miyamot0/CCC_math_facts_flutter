@@ -66,7 +66,7 @@ class AuthService {
         return null;
       } else {
         await DatabaseService(uid: user.uid)
-            .updateTeacherData(school, name, grade, 'mathfacts', 5);
+            .initialTeacherDataInsert(school, name, grade, 'mathfacts', 5);
 
         return _userFromFirebaseUser(user);
       }

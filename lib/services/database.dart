@@ -12,6 +12,19 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('mainCollection');
 
   // Update teacher's data
+  Future initialTeacherDataInsert(String school, String teacherName,
+      String grade, String target, int setSize) async {
+    return await mainCollection.doc(uid).set({
+      'school': school,
+      'teacherName': teacherName,
+      'grade': grade,
+      'target': target,
+      'setSize': setSize,
+      'students': []
+    });
+  }
+
+  // Update teacher's data
   Future updateTeacherData(String school, String teacherName, String grade,
       String target, int setSize) async {
     return await mainCollection.doc(uid).set({
@@ -23,19 +36,27 @@ class DatabaseService {
     });
   }
 
-  List<Teacher> _teacherListFromSnapshot(QuerySnapshot snapshot) {
+  List<String> _studentListFromSnapshot(QuerySnapshot snapshot) {
+    snapshot.docs.map((d) {
+      print(d.toString());
+    });
+
     return snapshot.docs.map((d) {
-      return Teacher(
-          name: d['teacherName'] ?? '',
-          school: d['school'] ?? '',
-          grade: d['grade'] ?? '');
+      return d.toString();
     }).toList();
+  }
+
+  List<String> _studentListingFromSnapshot(DocumentSnapshot snapshot) {
+    Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+
+    final studentArray = List<String>.from(data["students"] as List);
+
+    return studentArray;
   }
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
 
-    //print(snapshot.data());
     return UserData(
         uid: uid,
         name: data['teacherName'],
@@ -45,12 +66,34 @@ class DatabaseService {
         currentSchool: data['school']);
   }
 
-  Stream<List<Teacher>> get teachers {
-    return mainCollection.snapshots().map(_teacherListFromSnapshot);
+  Stream<List<String>> get students {
+    return mainCollection.doc(uid).snapshots().map(_studentListingFromSnapshot);
   }
 
   // Get user doc screen
   Stream<UserData> get userData {
     return mainCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  }
+
+  // Updates
+
+  // Add Student to classroom
+  Future addStudentToClassroom(String studentTag) async {
+    return await mainCollection.doc(uid).update({
+      'students': FieldValue.arrayUnion([studentTag])
+    });
+  }
+
+  void readStudents() async {
+    final List<String> studentList =
+        await mainCollection.doc(uid).get().then((value) {
+      Map<String, dynamic> data = value.data()! as Map<String, dynamic>;
+
+      final studentArray = List<String>.from(data["students"] as List);
+
+      return studentArray;
+    });
+
+    print(studentList);
   }
 }
