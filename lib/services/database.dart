@@ -36,6 +36,7 @@ class DatabaseService {
     });
   }
 
+  /*
   List<String> _studentListFromSnapshot(QuerySnapshot snapshot) {
     snapshot.docs.map((d) {
       print(d.toString());
@@ -45,6 +46,7 @@ class DatabaseService {
       return d.toString();
     }).toList();
   }
+  */
 
   List<String> _studentListingFromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
@@ -84,6 +86,7 @@ class DatabaseService {
     });
   }
 
+  /*
   void readStudents() async {
     final List<String> studentList =
         await mainCollection.doc(uid).get().then((value) {
@@ -93,7 +96,6 @@ class DatabaseService {
 
       return studentArray;
     });
-
-    print(studentList);
   }
+  */
 }
