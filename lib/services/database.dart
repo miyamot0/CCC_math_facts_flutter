@@ -26,15 +26,11 @@ class DatabaseService {
   }
 
   // Update teacher's data
-  Future updateTeacherData(String school, String teacherName, String grade,
-      String target, int setSize) async {
-    return await mainCollection.doc(uid).set({
-      'school': school,
-      'teacherName': teacherName,
-      'grade': grade,
-      'target': target,
-      'setSize': setSize
-    });
+  Future updateTeacherData(
+      String school, String teacherName, String grade) async {
+    return await mainCollection
+        .doc(uid)
+        .set({'school': school, 'teacherName': teacherName, 'grade': grade});
   }
 
   /*

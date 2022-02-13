@@ -18,11 +18,9 @@ class _SettingsFormState extends State<SettingsForm> {
   final List<String> settings = ['Math Facts', 'Computation'];
 
   // Form values
-  String _currentGrade = '';
-  String _currentSchool = '';
-  int _currentSetSize = -1;
-  String _currentTarget = '';
-  String _currentName = '';
+  String _currentGrade;
+  String _currentSchool;
+  String _currentName;
 
   @override
   Widget build(BuildContext context) {
@@ -34,28 +32,18 @@ class _SettingsFormState extends State<SettingsForm> {
         if (snapshot.hasData) {
           UserData userData = snapshot.data;
 
-          // TODO: add in extra spots
-
-          /*
-
-          String? currentTarget =
-              _currentTarget.isEmpty ? userData?.currentTarget : 'comp';
-
-          int currentSetSize =
-              _currentSetSize < 0 ? userData!.currentSetSize : _currentSetSize;
-          */
           return Form(
             key: _formKey,
             child: Column(children: [
               const Text(
-                'Update your settings',
+                'Update your personal info',
                 style: TextStyle(fontSize: 18.0),
               ),
               const SizedBox(
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration,
+                decoration: textInputDecoration.copyWith(hintText: "Your name"),
                 initialValue: userData.name,
                 validator: (val) => val.isEmpty ? 'Please enter a name' : null,
                 onChanged: (val) => setState((() => _currentName = val)),
@@ -63,24 +51,25 @@ class _SettingsFormState extends State<SettingsForm> {
               const SizedBox(
                 height: 20.0,
               ),
-              DropdownButtonFormField(
-                  decoration: textInputDecoration,
-                  value: _currentTarget ?? userData.currentTarget,
-                  items: settings.map((setting) {
-                    return DropdownMenuItem(
-                        value: setting, child: Text(setting));
-                  }).toList(),
-                  onChanged: (value) =>
-                      setState(() => _currentTarget = value.toString())),
-              Slider(
-                value: (_currentSetSize ?? userData.currentSetSize).toDouble(),
-                activeColor: Colors.brown,
-                inactiveColor: Colors.brown,
-                min: 5,
-                max: 20,
-                divisions: 4,
-                onChanged: (val) =>
-                    setState(() => _currentSetSize = val.round()),
+              TextFormField(
+                decoration:
+                    textInputDecoration.copyWith(hintText: "Grade(s) taught"),
+                initialValue: userData.currentGrade,
+                validator: (val) => val.isEmpty
+                    ? 'Please enter a value for your grade(s)'
+                    : null,
+                onChanged: (val) => setState((() => _currentGrade = val)),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              TextFormField(
+                decoration:
+                    textInputDecoration.copyWith(hintText: "School name"),
+                initialValue: userData.currentSchool,
+                validator: (val) =>
+                    val.isEmpty ? 'Please enter a value for your school' : null,
+                onChanged: (val) => setState((() => _currentSchool = val)),
               ),
               TextButton(
                   style: TextButton.styleFrom(
@@ -97,9 +86,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       await DatabaseService(uid: user.uid).updateTeacherData(
                           _currentSchool ?? userData.currentSchool,
                           _currentName ?? userData.name,
-                          _currentGrade ?? userData.currentGrade,
-                          _currentTarget ?? userData.currentTarget,
-                          _currentSetSize ?? userData.currentSetSize);
+                          _currentGrade ?? userData.currentGrade);
 
                       Navigator.pop(context);
                     }
