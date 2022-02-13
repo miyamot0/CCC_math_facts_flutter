@@ -99,14 +99,14 @@ class _HomeState extends State<Home> {
               },
               label: const Text("Log Out"),
             ),
-            //TextButton.icon(
-            //  icon: const Icon(Icons.settings),
-            //  style: TextButton.styleFrom(primary: Colors.white),
-            //  onPressed: () => _showSettingsPanel(),
-            //  label: const Text("Settings"),
-            //),
             TextButton.icon(
               icon: const Icon(Icons.settings),
+              style: TextButton.styleFrom(primary: Colors.white),
+              onPressed: () => _showSettingsPanel(),
+              label: const Text("Settings"),
+            ),
+            TextButton.icon(
+              icon: const Icon(Icons.add),
               style: TextButton.styleFrom(primary: Colors.white),
               onPressed: () async =>
                   await _displayTextInputDialog(context, user.uid),

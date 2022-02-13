@@ -15,14 +15,14 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final List<String> settings = ['comp', 'fact'];
+  final List<String> settings = ['Math Facts', 'Computation'];
 
   // Form values
-  String _currentName = '';
-  String _currentTarget = '';
-  int _currentSetSize = -1;
   String _currentGrade = '';
   String _currentSchool = '';
+  int _currentSetSize = -1;
+  String _currentTarget = '';
+  String _currentName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,8 @@ class _SettingsFormState extends State<SettingsForm> {
       stream: DatabaseService(uid: user!.uid).userData,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          print(snapshot.data);
+
           UserData? userData = snapshot.data;
 
           String? currentTarget =
@@ -43,11 +45,11 @@ class _SettingsFormState extends State<SettingsForm> {
           return Form(
             key: _formKey,
             child: Column(children: [
-              Text(
+              const Text(
                 'Update your settings',
-                style: const TextStyle(fontSize: 18.0),
+                style: TextStyle(fontSize: 18.0),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               TextFormField(
@@ -56,7 +58,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 validator: (val) => val!.isEmpty ? 'Please enter a name' : null,
                 onChanged: (val) => setState((() => _currentName = val)),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               DropdownButtonFormField(
@@ -64,7 +66,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   value: currentTarget,
                   items: settings.map((setting) {
                     return DropdownMenuItem(
-                        value: setting, child: Text('$setting'));
+                        value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (value) =>
                       setState(() => _currentTarget = value.toString())),
@@ -80,7 +82,7 @@ class _SettingsFormState extends State<SettingsForm> {
               ),
               RaisedButton(
                   color: Colors.pink,
-                  child: Text(
+                  child: const Text(
                     'Update',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -107,7 +109,7 @@ class _SettingsFormState extends State<SettingsForm> {
             ]),
           );
         } else {
-          return Loading();
+          return const Loading();
         }
       },
     );
