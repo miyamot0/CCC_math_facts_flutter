@@ -3,5 +3,5 @@ class Student {
   final String school;
   final String grade;
 
-  Student({required this.name, required this.school, required this.grade});
+  Student({this.name, this.school, this.grade});
 }

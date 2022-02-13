@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class StudentTile extends StatelessWidget {
   final String student;
 
-  const StudentTile({Key? key, required this.student}) : super(key: key);
+  const StudentTile({Key key, this.student}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

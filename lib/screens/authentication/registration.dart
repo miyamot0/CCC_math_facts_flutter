@@ -4,8 +4,8 @@ import 'package:covcopcomp_math_fact/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class Registration extends StatefulWidget {
-  final Function? toggleView;
-  const Registration({Key? key, this.toggleView}) : super(key: key);
+  final Function toggleView;
+  const Registration({Key key, this.toggleView}) : super(key: key);
 
   @override
   _RegistrationState createState() => _RegistrationState();
@@ -41,7 +41,7 @@ class _RegistrationState extends State<Registration> {
                   style: TextButton.styleFrom(primary: Colors.white),
                   label: const Text("Sign In"),
                   onPressed: () {
-                    widget.toggleView!();
+                    widget.toggleView();
                   },
                 )
               ],
@@ -58,7 +58,7 @@ class _RegistrationState extends State<Registration> {
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Name'),
                         validator: (value) =>
-                            value!.isEmpty ? 'Enter your name' : null,
+                            value.isEmpty ? 'Enter your name' : null,
                         onChanged: (value) {
                           setState(() => name = value);
                         },
@@ -68,7 +68,7 @@ class _RegistrationState extends State<Registration> {
                         decoration: textInputDecoration.copyWith(
                             hintText: 'School name'),
                         validator: (value) =>
-                            value!.isEmpty ? 'Enter your school' : null,
+                            value.isEmpty ? 'Enter your school' : null,
                         onChanged: (value) {
                           setState(() => school = value);
                         },
@@ -77,7 +77,7 @@ class _RegistrationState extends State<Registration> {
                       TextFormField(
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Grade'),
-                        validator: (value) => value!.isEmpty
+                        validator: (value) => value.isEmpty
                             ? 'Enter the grade(s) for your classroom'
                             : null,
                         onChanged: (value) {
@@ -89,7 +89,7 @@ class _RegistrationState extends State<Registration> {
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Email'),
                         validator: (value) =>
-                            value!.isEmpty ? 'Enter an email' : null,
+                            value.isEmpty ? 'Enter an email' : null,
                         onChanged: (value) {
                           setState(() => email = value);
                         },
@@ -98,7 +98,7 @@ class _RegistrationState extends State<Registration> {
                       TextFormField(
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Password'),
-                        validator: (value) => value!.length < 6
+                        validator: (value) => value.length < 6
                             ? 'Enter a password 6+ chars long'
                             : null,
                         obscureText: true,
@@ -114,9 +114,7 @@ class _RegistrationState extends State<Registration> {
                         child: const Text("Register",
                             style: TextStyle(color: Colors.white)),
                         onPressed: () async {
-                          var currentState = _formKey.currentState!;
-
-                          if (currentState.validate()) {
+                          if (_formKey.currentState.validate()) {
                             setState(() => {loading = true});
 
                             dynamic result =

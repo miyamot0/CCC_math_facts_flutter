@@ -1,7 +1,7 @@
 class UserModel {
   final String uid;
 
-  UserModel({required this.uid});
+  UserModel({this.uid});
 }
 
 class UserData {
@@ -13,10 +13,10 @@ class UserData {
   final String currentSchool;
 
   UserData(
-      {required this.uid,
-      required this.name,
-      required this.currentTarget,
-      required this.currentSetSize,
-      required this.currentGrade,
-      required this.currentSchool});
+      {this.uid,
+      this.name,
+      this.currentTarget,
+      this.currentSetSize,
+      this.currentGrade,
+      this.currentSchool});
 }

@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:covcopcomp_math_fact/models/teacher.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 
 class DatabaseService {
   final String uid;
 
-  DatabaseService({required this.uid});
+  DatabaseService({this.uid});
 
   // Collection reference
   final CollectionReference mainCollection =
@@ -49,7 +48,7 @@ class DatabaseService {
   */
 
   List<String> _studentListingFromSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
     final studentArray = List<String>.from(data["students"] as List);
 
@@ -57,7 +56,7 @@ class DatabaseService {
   }
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
     return UserData(
         uid: uid,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../shared/loading.dart';
 
 class SignIn extends StatefulWidget {
-  final Function? toggleView;
+  final Function toggleView;
   const SignIn({this.toggleView});
 
   @override
@@ -39,7 +39,7 @@ class _SignInState extends State<SignIn> {
                   label: const Text("Register"),
                   style: TextButton.styleFrom(primary: Colors.white),
                   onPressed: () {
-                    widget.toggleView!();
+                    widget.toggleView();
                   },
                 )
               ],
@@ -56,7 +56,7 @@ class _SignInState extends State<SignIn> {
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Email'),
                         validator: (value) =>
-                            value!.isEmpty ? 'Enter an email' : null,
+                            value.isEmpty ? 'Enter an email' : null,
                         onChanged: (value) {
                           setState(() => email = value);
                         },
@@ -65,7 +65,7 @@ class _SignInState extends State<SignIn> {
                       TextFormField(
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Password'),
-                        validator: (value) => value!.length < 6
+                        validator: (value) => value.length < 6
                             ? 'Enter a password 6+ chars long'
                             : null,
                         obscureText: true,
@@ -80,9 +80,7 @@ class _SignInState extends State<SignIn> {
                         child: const Text("Sign in",
                             style: TextStyle(color: Colors.white)),
                         onPressed: () async {
-                          var currentState = _formKey.currentState!;
-
-                          if (currentState.validate()) {
+                          if (_formKey.currentState.validate()) {
                             setState(() => {loading = true});
 
                             dynamic result = await _auth

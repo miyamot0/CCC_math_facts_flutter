@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/screens/authrouting.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
@@ -12,12 +13,12 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<UserModel?>.value(
+    return StreamProvider<UserModel>.value(
         value: AuthService().user,
         initialData: null,
         child: const MaterialApp(

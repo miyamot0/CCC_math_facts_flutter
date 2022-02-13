@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../../models/usermodel.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({Key key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel?>(context);
+    final user = Provider.of<UserModel>(context);
 
     TextEditingController _textFieldController = TextEditingController();
 
@@ -81,8 +81,8 @@ class _HomeState extends State<Home> {
           });
     }
 
-    return StreamProvider<List<String>?>.value(
-      value: DatabaseService(uid: user!.uid).students,
+    return StreamProvider<List<String>>.value(
+      value: DatabaseService(uid: user.uid).students,
       initialData: null,
       child: Scaffold(
         backgroundColor: Colors.brown[50],

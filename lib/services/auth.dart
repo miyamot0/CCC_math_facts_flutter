@@ -6,22 +6,22 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Create a custom user object from response
-  UserModel? _userFromFirebaseUser(User? user) {
+  UserModel _userFromFirebaseUser(User user) {
     return user != null ? UserModel(uid: user.uid) : null;
   }
 
   // Detect auth change
-  Stream<UserModel?> get user {
+  Stream<UserModel> get user {
     return _auth
         .authStateChanges()
-        .map((User? user) => _userFromFirebaseUser(user));
+        .map((User user) => _userFromFirebaseUser(user));
   }
 
   // Sign into app anonymously
   Future signInAnonymous() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
+      User user = result.user;
 
       if (user == null) {
         return null;
@@ -41,7 +41,7 @@ class AuthService {
       UserCredential result =
           await _auth.signInWithEmailAndPassword(email: email, password: pass);
 
-      User? user = result.user;
+      User user = result.user;
 
       if (user == null) {
         return null;
@@ -60,7 +60,7 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: pass);
 
-      User? user = result.user;
+      User user = result.user;
 
       if (user == null) {
         return null;

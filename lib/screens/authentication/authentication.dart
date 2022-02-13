@@ -3,7 +3,7 @@ import 'package:covcopcomp_math_fact/screens/authentication/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationPage extends StatefulWidget {
-  const AuthenticationPage({Key? key}) : super(key: key);
+  const AuthenticationPage({Key key}) : super(key: key);
 
   @override
   __AuthenticationPageState createState() => __AuthenticationPageState();
