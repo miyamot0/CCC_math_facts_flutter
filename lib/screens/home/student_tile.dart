@@ -1,4 +1,5 @@
 import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -114,7 +115,12 @@ class _StudentTileState extends State<StudentTile> {
               radius: 25.0,
               backgroundColor: Colors.green[100],
             ),
-            onTap: () => print('tap left'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MathFactsCCC()),
+              );
+            },
             onLongPress: () async => await _displayTextModificationDialog(
                 context,
                 widget.student.setSize,
