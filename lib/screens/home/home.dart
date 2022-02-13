@@ -1,3 +1,4 @@
+import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/home/settings_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/student_list.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
@@ -79,7 +80,7 @@ class _HomeState extends State<Home> {
           });
     }
 
-    return StreamProvider<List<String>>.value(
+    return StreamProvider<List<Student>>.value(
       value: DatabaseService(uid: user.uid).students,
       initialData: null,
       child: Scaffold(

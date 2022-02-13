@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 
+import '../models/student.dart';
+
 class DatabaseService {
   final String uid;
 
@@ -47,21 +49,31 @@ class DatabaseService {
   }
   */
 
-  List<String> _studentListingFromSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+  // Updates
 
-    final studentArray = List<String>.from(data["students"] as List);
-
-    return studentArray;
+/*
+  // Add Student to classroom
+  Future addStudentToClassroom(String studentTag) async {
+    return await mainCollection.doc(uid).update({
+      'students': FieldValue.arrayUnion([studentTag])
+    });
   }
+*/
 
-  List<String> _studentListingFromSnapshotHack(DocumentSnapshot snapshot) {
-    //Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+// ------------------------
+// Modern Calls here
+// ------------------------
 
-    //final studentArray = List<String>.from(data["students"] as List);
-    final studentArray = ["hack"];
+  List<Student> _studentListingFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((d) {
+      Map<String, dynamic> data = d.data() as Map<String, dynamic>;
 
-    return studentArray;
+      return Student(
+        name: data['name'].toString() ?? '',
+        setSize: data['setSize'].toString() ?? '',
+        target: data['target'].toString() ?? '',
+      );
+    }).toList();
   }
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
@@ -76,25 +88,16 @@ class DatabaseService {
         currentSchool: data['school']);
   }
 
-  Stream<List<String>> get students {
-    return mainCollection
-        .doc(uid)
-        .snapshots()
-        .map(_studentListingFromSnapshotHack);
-  }
-
   // Get user doc screen
   Stream<UserData> get userData {
     return mainCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
-  // Updates
-
-  // Add Student to classroom
-  Future addStudentToClassroom(String studentTag) async {
-    return await mainCollection.doc(uid).update({
-      'students': FieldValue.arrayUnion([studentTag])
-    });
+  Stream<List<Student>> get students {
+    return FirebaseFirestore.instance
+        .collection('mainCollection/$uid/students')
+        .snapshots()
+        .map(_studentListingFromSnapshot);
   }
 
   // Add Student to classroom collection
@@ -104,17 +107,4 @@ class DatabaseService {
 
     return await test.add({'name': studentTag});
   }
-
-  /*
-  void readStudents() async {
-    final List<String> studentList =
-        await mainCollection.doc(uid).get().then((value) {
-      Map<String, dynamic> data = value.data()! as Map<String, dynamic>;
-
-      final studentArray = List<String>.from(data["students"] as List);
-
-      return studentArray;
-    });
-  }
-  */
 }

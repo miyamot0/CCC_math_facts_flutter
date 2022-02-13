@@ -1,7 +1,8 @@
+import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:flutter/material.dart';
 
 class StudentTile extends StatelessWidget {
-  final String student;
+  final Student student;
 
   const StudentTile({Key key, this.student}) : super(key: key);
 
@@ -16,7 +17,9 @@ class StudentTile extends StatelessWidget {
             radius: 25.0,
             backgroundColor: Colors.brown[100],
           ),
-          title: Text(student),
+          title: Text(student.name),
+          subtitle:
+              Text("Target: ${student.target}, Set Size: ${student.setSize}"),
         ),
       ),
     );
