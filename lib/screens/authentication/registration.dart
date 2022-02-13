@@ -3,15 +3,15 @@ import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
 import 'package:flutter/material.dart';
 
-class Register extends StatefulWidget {
+class Registration extends StatefulWidget {
   final Function? toggleView;
-  Register({Key? key, this.toggleView}) : super(key: key);
+  const Registration({Key? key, this.toggleView}) : super(key: key);
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _RegistrationState createState() => _RegistrationState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegistrationState extends State<Registration> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -33,7 +33,7 @@ class _RegisterState extends State<Register> {
               elevation: 0.0,
               title: const Text('Sign up for App'),
               actions: [
-                FlatButton.icon(
+                TextButton.icon(
                   icon: const Icon(Icons.person),
                   label: const Text("Sign In"),
                   onPressed: () {
@@ -72,8 +72,10 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      RaisedButton(
-                        color: Colors.pink[400],
+                      ElevatedButton(
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.pink[400]),
+                        //color: Colors.pink[400],
                         child: const Text("Register",
                             style: TextStyle(color: Colors.white)),
                         onPressed: () async {

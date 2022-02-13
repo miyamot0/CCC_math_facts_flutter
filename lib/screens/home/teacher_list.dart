@@ -14,7 +14,7 @@ class TeacherList extends StatefulWidget {
 class _TeacherListState extends State<TeacherList> {
   @override
   Widget build(BuildContext context) {
-    final teachers = Provider.of<List<Teacher>>(context);
+    final List<Teacher> teachers = Provider.of<List<Teacher>>(context) ?? [];
 
     return ListView.builder(
       itemCount: teachers.length,

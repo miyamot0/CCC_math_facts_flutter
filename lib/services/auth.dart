@@ -65,7 +65,8 @@ class AuthService {
         return null;
       } else {
         // Add stubbed out content
-        await DatabaseService(uid: user.uid).updateTeacherData('', '', '');
+        await DatabaseService(uid: user.uid)
+            .updateTeacherData('', '', '', '', 5);
 
         return _userFromFirebaseUser(user);
       }

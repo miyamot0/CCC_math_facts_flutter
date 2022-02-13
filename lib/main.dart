@@ -1,5 +1,5 @@
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
-import 'package:covcopcomp_math_fact/screens/wrapper.dart';
+import 'package:covcopcomp_math_fact/screens/authrouting.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
     return StreamProvider<UserModel?>.value(
         value: AuthService().user,
         initialData: null,
-        child: MaterialApp(
-          home: Wrapper(),
+        child: const MaterialApp(
+          home: AuthRouting(),
         ));
   }
 }

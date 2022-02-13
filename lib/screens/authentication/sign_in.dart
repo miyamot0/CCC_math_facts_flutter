@@ -6,7 +6,7 @@ import '../../shared/loading.dart';
 
 class SignIn extends StatefulWidget {
   final Function? toggleView;
-  SignIn({this.toggleView});
+  const SignIn({this.toggleView});
 
   @override
   _SignInState createState() => _SignInState();
@@ -34,7 +34,7 @@ class _SignInState extends State<SignIn> {
               elevation: 0.0,
               title: const Text('Sign in to App'),
               actions: [
-                FlatButton.icon(
+                TextButton.icon(
                   icon: const Icon(Icons.person),
                   label: const Text("Register"),
                   onPressed: () {
@@ -73,8 +73,9 @@ class _SignInState extends State<SignIn> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      RaisedButton(
-                        color: Colors.pink[400],
+                      ElevatedButton(
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.pink[400]),
                         child: const Text("Sign in",
                             style: TextStyle(color: Colors.white)),
                         onPressed: () async {
