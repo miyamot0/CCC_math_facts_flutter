@@ -18,6 +18,9 @@ class _RegistrationState extends State<Registration> {
   bool loading = false;
 
   // State for text fields
+  String name = '';
+  String school = '';
+  String grade = '';
   String email = '';
   String pass = '';
   String error = '';
@@ -31,10 +34,11 @@ class _RegistrationState extends State<Registration> {
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
-              title: const Text('Sign up for App'),
+              title: const Text('Sign up for Cover-Copy-Compare App'),
               actions: [
                 TextButton.icon(
                   icon: const Icon(Icons.person),
+                  style: TextButton.styleFrom(primary: Colors.white),
                   label: const Text("Sign In"),
                   onPressed: () {
                     widget.toggleView!();
@@ -49,6 +53,37 @@ class _RegistrationState extends State<Registration> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'Name'),
+                        validator: (value) =>
+                            value!.isEmpty ? 'Enter your name' : null,
+                        onChanged: (value) {
+                          setState(() => name = value);
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'School name'),
+                        validator: (value) =>
+                            value!.isEmpty ? 'Enter your school' : null,
+                        onChanged: (value) {
+                          setState(() => school = value);
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'Grade'),
+                        validator: (value) => value!.isEmpty
+                            ? 'Enter the grade(s) for your classroom'
+                            : null,
+                        onChanged: (value) {
+                          setState(() => grade = value);
+                        },
+                      ),
                       const SizedBox(height: 20),
                       TextFormField(
                         decoration:
@@ -84,8 +119,9 @@ class _RegistrationState extends State<Registration> {
                           if (currentState.validate()) {
                             setState(() => {loading = true});
 
-                            dynamic result = await _auth
-                                .registerWithEmailAndPassword(email, pass);
+                            dynamic result =
+                                await _auth.registerWithEmailAndPassword(
+                                    email, pass, name, school, grade);
 
                             if (result == null) {
                               setState(() {

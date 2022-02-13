@@ -32,11 +32,12 @@ class _SignInState extends State<SignIn> {
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
-              title: const Text('Sign in to App'),
+              title: const Text('Sign in to Cover-Copy-Compare App'),
               actions: [
                 TextButton.icon(
                   icon: const Icon(Icons.person),
                   label: const Text("Register"),
+                  style: TextButton.styleFrom(primary: Colors.white),
                   onPressed: () {
                     widget.toggleView!();
                   },

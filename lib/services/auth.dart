@@ -29,7 +29,7 @@ class AuthService {
         return _userFromFirebaseUser(user);
       }
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
 
       return null;
     }
@@ -49,12 +49,13 @@ class AuthService {
         return _userFromFirebaseUser(user);
       }
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
     }
   }
 
   // Register new user with email/pass
-  Future registerWithEmailAndPassword(String email, String pass) async {
+  Future registerWithEmailAndPassword(String email, String pass, String name,
+      String school, String grade) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: pass);
@@ -64,14 +65,13 @@ class AuthService {
       if (user == null) {
         return null;
       } else {
-        // Add stubbed out content
         await DatabaseService(uid: user.uid)
-            .updateTeacherData('', '', '', '', 5);
+            .updateTeacherData(school, name, grade, 'mathfacts', 5);
 
         return _userFromFirebaseUser(user);
       }
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
     }
   }
 
@@ -80,7 +80,7 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
       return null;
     }
   }
