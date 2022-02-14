@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../models/record_ccc_mfacts.dart';
 import '../../models/student.dart';
-import '../../models/usermodel.dart';
 import '../../services/database.dart';
 import '../../shared/constants.dart';
 import 'heads_up.dart';
@@ -72,7 +68,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   }
 
   void _toggleEntry(BuildContext context) {
-    bool isMatching = null;
+    bool isMatching;
 
     setState(() {
       if (buttonText.isEmpty) return;

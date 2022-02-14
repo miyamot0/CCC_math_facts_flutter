@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../shared/constants.dart';
 
 class KeyPad extends StatelessWidget {
-  KeyPad({Key key, this.appendInput}) : super(key: key);
+  const KeyPad({Key key, this.appendInput}) : super(key: key);
 
   final ValueSetter<String> appendInput;
 

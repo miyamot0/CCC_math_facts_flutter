@@ -14,7 +14,7 @@ class AuthRouting extends StatelessWidget {
     if (user == null) {
       return const AuthenticationPage();
     } else {
-      return Home();
+      return const Home();
     }
   }
 }
