@@ -12,10 +12,12 @@ import 'heads_up.dart';
 import 'key_pad.dart';
 
 class MathFactsCCC extends StatefulWidget {
-  const MathFactsCCC({Key key, this.student, this.tid}) : super(key: key);
+  const MathFactsCCC({Key key, this.student, this.tid, this.set})
+      : super(key: key);
 
   final Student student;
   final String tid;
+  final List<String> set;
 
   @override
   _MathFactsCCCState createState() => _MathFactsCCCState();
@@ -23,8 +25,10 @@ class MathFactsCCC extends StatefulWidget {
 
 class _MathFactsCCCState extends State<MathFactsCCC> {
   bool isOngoing = false;
+  bool initialLoad = true;
 
-  List<String> listProblems = ["9+8=17", "5+3=8", "6+9=15", "3+5=8", "3+3=6"];
+  List<String> localSet;
+
   String cachedString = '';
 
   String viewPanelString = '';
@@ -187,7 +191,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                 numTrial++;
                 initialTry = true;
 
-                if (listProblems.isEmpty) {
+                if (localSet.isEmpty) {
                   _submitData();
                 }
 
@@ -200,6 +204,12 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   @override
   Widget build(BuildContext context) {
+    if (initialLoad) {
+      initialLoad = false;
+
+      localSet = widget.set;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cover, Copy, Compare'),
@@ -228,7 +238,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                       Expanded(
                         flex: 1,
                         child: ListView.builder(
-                            itemCount: listProblems.length,
+                            itemCount: localSet.length,
                             itemBuilder: (context, index) {
                               return ListTile(
                                 leading: GestureDetector(
@@ -238,11 +248,11 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                       }
 
                                       setState(() {
-                                        viewPanelString = listProblems[index];
+                                        viewPanelString = localSet[index];
                                         cachedString = viewPanelString;
                                         isOngoing = true;
                                         buttonText = 'Cover';
-                                        listProblems.removeAt(index);
+                                        localSet.removeAt(index);
                                       });
 
                                       _toggleEntry(context);
@@ -251,7 +261,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                       foregroundColor: Colors.blue,
                                     )),
                                 title: Text(
-                                  listProblems[index],
+                                  localSet[index],
                                   style: const TextStyle(fontSize: 42.0),
                                 ),
                               );

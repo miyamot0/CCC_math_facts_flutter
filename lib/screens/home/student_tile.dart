@@ -1,5 +1,6 @@
 import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
+import 'package:covcopcomp_math_fact/shared/sheets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,13 @@ class StudentTile extends StatefulWidget {
 
   @override
   State<StudentTile> createState() => _StudentTileState();
+}
+
+List<String> _getSet(Student student) {
+  List<String> mLocal = mathFactsAp1;
+  mLocal.shuffle();
+
+  return mLocal.take(int.parse(student.setSize)).toList();
 }
 
 class _StudentTileState extends State<StudentTile> {
@@ -122,6 +130,7 @@ class _StudentTileState extends State<StudentTile> {
                     builder: (context) => MathFactsCCC(
                           student: widget.student,
                           tid: user.uid,
+                          set: _getSet(widget.student),
                         )),
               );
             },
