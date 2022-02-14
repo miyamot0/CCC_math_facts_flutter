@@ -13,4 +13,4 @@ const cccTextStyle = TextStyle(fontSize: 42.0, fontWeight: FontWeight.bold);
 ButtonStyle keypadButtonStyle =
     TextButton.styleFrom(backgroundColor: Colors.green, primary: Colors.white);
 
-enum CCCStatus { entry, begin, cover, copyCompare }
+enum CCCStatus { entry, begin, coverCopy, compare }

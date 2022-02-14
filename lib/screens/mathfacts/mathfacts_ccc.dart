@@ -21,14 +21,34 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   //List<String> dynamicProblemList;
   String viewPanelString = '';
-  Color entryPanel = Colors.white;
-  Color viewPanel = Colors.white;
+  String entryPanelString = '';
+  Color entryPanel = Colors.grey;
+  Color viewPanel = Colors.grey;
   Color viewPanelText = Colors.black;
 
   CCCStatus hud = CCCStatus.entry;
 
+  static const String delCode = "Del";
+
   void _appendCharacter(String char) {
+    if (hud != CCCStatus.coverCopy) {
+      return;
+    }
+
     print(char);
+
+    setState(() {
+      if (char == delCode) {
+        if (entryPanelString.isEmpty) {
+          return;
+        }
+
+        entryPanelString =
+            entryPanelString.substring(0, entryPanelString.length - 1);
+      } else {
+        entryPanelString = entryPanelString + char;
+      }
+    });
   }
 
   void _toggleEntry() {
@@ -38,15 +58,15 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
         viewPanel = Colors.white;
         viewPanelText = Colors.black;
-        entryPanel = Colors.white;
+        entryPanel = Colors.grey;
       } else if (hud == CCCStatus.begin) {
-        hud = CCCStatus.cover;
+        hud = CCCStatus.coverCopy;
 
         viewPanel = Colors.grey;
         viewPanelText = Colors.grey;
         entryPanel = Colors.white;
-      } else if (hud == CCCStatus.cover) {
-        hud = CCCStatus.copyCompare;
+      } else if (hud == CCCStatus.coverCopy) {
+        hud = CCCStatus.compare;
 
         viewPanel = Colors.white;
         viewPanelText = Colors.black;
@@ -55,7 +75,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         // TODO: need verification logic here
         hud = CCCStatus.begin;
         viewPanelString = '';
+        entryPanelString = '';
       }
+
+      print('status: $hud');
     });
   }
 
@@ -72,6 +95,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
               HeadsUpPanel(
                   viewPanelString: viewPanelString,
                   entryPanelColor: entryPanel,
+                  entryPanelString: entryPanelString,
                   viewPanelColor: viewPanel,
                   viewPanelText: viewPanelText,
                   toggleEntry: _toggleEntry,
@@ -123,7 +147,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                     )),
                                 title: Text(
                                   listProblems[index],
-                                  style: const TextStyle(fontSize: 20.0),
+                                  style: const TextStyle(fontSize: 42.0),
                                 ),
                               );
                             }),

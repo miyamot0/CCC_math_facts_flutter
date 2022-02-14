@@ -6,6 +6,7 @@ class HeadsUpPanel extends StatelessWidget {
   const HeadsUpPanel(
       {Key key,
       this.viewPanelString,
+      this.entryPanelString,
       this.entryPanelColor,
       this.viewPanelColor,
       this.viewPanelText,
@@ -14,6 +15,7 @@ class HeadsUpPanel extends StatelessWidget {
       : super(key: key);
 
   final String viewPanelString;
+  final String entryPanelString;
   final Color entryPanelColor;
   final Color viewPanelColor;
   final Color viewPanelText;
@@ -69,10 +71,12 @@ class HeadsUpPanel extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: entryPanelColor,
                     border: Border.all(color: Colors.black)),
-                child: const Text(
-                  "",
+                child: Center(
+                    child: Text(
+                  entryPanelString,
+                  textAlign: TextAlign.center,
                   style: cccTextStyle,
-                ),
+                )),
               ),
             ),
             const SizedBox(
@@ -82,23 +86,6 @@ class HeadsUpPanel extends StatelessWidget {
               flex: 2,
               child: _advanceButton(),
             ),
-            /*
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              flex: 2,
-              child: TextButton(
-                  onPressed: toggleEntry,
-                  style: TextButton.styleFrom(
-                      primary: Colors.white, backgroundColor: Colors.green),
-                  child: Text(
-                    'Confirm',
-                    style: cccTextStyle.copyWith(
-                        fontWeight: FontWeight.normal, fontSize: 24.0),
-                  )),
-            ),
-            */
           ],
         ));
   }
