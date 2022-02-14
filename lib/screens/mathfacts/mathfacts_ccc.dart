@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
+import 'heads_up.dart';
+import 'key_pad.dart';
 
 class MathFactsCCC extends StatefulWidget {
   const MathFactsCCC({Key key}) : super(key: key);
@@ -8,13 +13,7 @@ class MathFactsCCC extends StatefulWidget {
 }
 
 class _MathFactsCCCState extends State<MathFactsCCC> {
-  List<Object> probList = [
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-    ["3", "+", "2", "=", "5"],
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-  ];
+  /*
 
   Column _createView(List<Object> probList) {
     int rows = probList.length;
@@ -66,208 +65,77 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     );
   }
 
+  */
+
+  bool isOngoing = false;
+
+  String _entryBar;
+  List<String> listProblems = ["9+8=17", "5+3=8", "6+9=15", "3+5=8", "3+3=6"];
+
   @override
   Widget build(BuildContext context) {
-    Widget mWidget = _createView(probList);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cover, Copy, Compare'),
       ),
       body: Container(
           margin: const EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
             children: [
-              /*
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  decoration:
-                      BoxDecoration(color: Colors.white, border: Border.all()),
-                  height: double.infinity,
-                  child: const Text(""),
-                ),
-              ),
-              */
-              Expanded(
-                child: mWidget,
+              HeadsUpPanel(
+                entryBarString: _entryBar,
               ),
               Expanded(
-                child: Column(children: [
-                  Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  flex: 4,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("1", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("2", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("3", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("+", textAlign: TextAlign.center),
-                      )),
+                        flex: 1,
+                        child: ListView.builder(
+                            itemCount: listProblems.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                leading: GestureDetector(
+                                    onTap: () {
+                                      if (isOngoing) {
+                                        return;
+                                      }
+
+                                      print('Tap, Index: $index');
+
+                                      setState(() {
+                                        _entryBar = listProblems[index];
+                                        isOngoing = true;
+                                        listProblems.removeAt(index);
+                                      });
+
+                                      Future.delayed(Duration(seconds: 3))
+                                          .then((value) {
+                                        print('Re-enabled');
+                                        isOngoing = false;
+
+                                        setState(() {
+                                          _entryBar = "";
+                                        });
+                                      });
+                                    },
+                                    child: CircleAvatar(
+                                      foregroundColor: Colors.blue,
+                                    )),
+                                title: Text(
+                                  listProblems[index],
+                                  style: TextStyle(fontSize: 20.0),
+                                ),
+                              );
+                            }),
+                      ),
+                      const Expanded(
+                        flex: 1,
+                        child: KeyPad(),
+                      ),
                     ],
-                  )),
-                  const SizedBox(height: 5),
-                  Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("4", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("5", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("6", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("-", textAlign: TextAlign.center),
-                      )),
-                    ],
-                  )),
-                  const SizedBox(height: 5),
-                  Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("7", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("8", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("9", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("X", textAlign: TextAlign.center),
-                      )),
-                    ],
-                  )),
-                  const SizedBox(height: 5),
-                  Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("Del", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("0", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("=", textAlign: TextAlign.center),
-                      )),
-                      const SizedBox(width: 5),
-                      Expanded(
-                          child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white),
-                        child: const Text("/", textAlign: TextAlign.center),
-                      )),
-                    ],
-                  )),
-                ]),
-              ),
+                  ))
             ],
           )),
     );
