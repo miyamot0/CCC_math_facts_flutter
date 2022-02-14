@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 
 import '../models/student.dart';
@@ -11,6 +12,9 @@ class DatabaseService {
   // Collection reference
   final CollectionReference mainCollection =
       FirebaseFirestore.instance.collection('mainCollection');
+
+  final CollectionReference performanceCollection =
+      FirebaseFirestore.instance.collection('performanceCollection');
 
 // ------------------------
 // Modern Calls here
@@ -66,6 +70,25 @@ class DatabaseService {
 
     return await test
         .add({'name': studentTag, 'setSize': setSize, 'target': target});
+  }
+
+  Future addToStudentPerformanceCollection(RecordMathFacts record) async {
+    var test = FirebaseFirestore.instance.collection(
+        'performanceCollection/${record.tid}/${record.target}/students/${record.id}');
+
+    return await test.add({
+      'tid': record.tid,
+      'id': record.id,
+      'setSize': record.setSize,
+      'target': record.target,
+      'dateTimeStart': record.dateTimeStart,
+      'dateTimeEnd': record.dateTimeEnd,
+      'errCount': record.errCount,
+      'nRetries': record.nRetries,
+      'nCorrectInitial': record.nCorrectInitial,
+      'delaySec': record.delaySec,
+      'sessionDuration': record.sessionDuration
+    });
   }
 
   Future updateStudentInCollection(

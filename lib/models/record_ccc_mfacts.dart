@@ -1,6 +1,6 @@
 class RecordMathFacts {
+  final String tid;
   final String id;
-  final String name;
   final String setSize;
   final String target;
   final String dateTimeStart;
@@ -8,15 +8,19 @@ class RecordMathFacts {
   final int errCount;
   final int nRetries;
   final int nCorrectInitial;
+  final int delaySec;
+  final int sessionDuration;
 
   RecordMathFacts(
-      {this.id,
-      this.name,
+      {this.tid,
+      this.id,
       this.setSize,
       this.target,
       this.dateTimeStart,
       this.dateTimeEnd,
       this.errCount,
       this.nRetries,
-      this.nCorrectInitial});
+      this.nCorrectInitial,
+      this.delaySec,
+      this.sessionDuration});
 }

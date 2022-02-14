@@ -1,16 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/record_ccc_mfacts.dart';
 import '../../models/student.dart';
+import '../../models/usermodel.dart';
+import '../../services/database.dart';
 import '../../shared/constants.dart';
 import 'heads_up.dart';
 import 'key_pad.dart';
 
 class MathFactsCCC extends StatefulWidget {
-  const MathFactsCCC({Key key, this.student}) : super(key: key);
+  const MathFactsCCC({Key key, this.student, this.tid}) : super(key: key);
 
   final Student student;
+  final String tid;
 
   @override
   _MathFactsCCCState createState() => _MathFactsCCCState();
@@ -121,9 +126,29 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         _showMessageDialog(context);
 
         _outputMetrics();
-        //TODO record here
       }
     });
+  }
+
+  _submitData() async {
+    end = DateTime.now();
+
+    int secs = end.difference(start).inSeconds;
+
+    await DatabaseService(uid: widget.tid)
+        .addToStudentPerformanceCollection(RecordMathFacts(
+            tid: widget.tid,
+            id: widget.student.id,
+            setSize: widget.student.setSize,
+            target: widget.student.target,
+            dateTimeStart: start.toString(),
+            dateTimeEnd: end.toString(),
+            errCount: errCount,
+            nRetries: nRetries,
+            nCorrectInitial: nCorrectInitial,
+            delaySec: 0,
+            sessionDuration: secs))
+        .then((value) => Navigator.of(context).pop());
   }
 
   _showMessageDialog(BuildContext context) => showDialog(
@@ -168,6 +193,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
                 numTrial++;
                 initialTry = true;
+
+                if (listProblems.isEmpty) {
+                  _submitData();
+                }
 
                 Navigator.of(context).pop();
               },
@@ -226,10 +255,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                       });
 
                                       _toggleEntry(context);
-
-                                      if (listProblems.length == 0) {
-                                        // TODO: submit fx
-                                      }
                                     },
                                     child: const CircleAvatar(
                                       foregroundColor: Colors.blue,
