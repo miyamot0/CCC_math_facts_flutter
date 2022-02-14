@@ -21,14 +21,14 @@ class HeadsUpPanel extends StatelessWidget {
   final Color entryPanelColor;
   final Color viewPanelColor;
   final Color viewPanelText;
-  final Function toggleEntry;
+  final ValueSetter<BuildContext> toggleEntry;
   final CCCStatus hudStatus;
 
   @override
   Widget build(BuildContext context) {
-    Widget _advanceButton() {
+    Widget _advanceButton(BuildContext context) {
       return TextButton(
-          onPressed: toggleEntry,
+          onPressed: () => toggleEntry(context),
           style: TextButton.styleFrom(
               primary: Colors.white, backgroundColor: Colors.blue),
           child: Text(buttonText,
@@ -78,7 +78,7 @@ class HeadsUpPanel extends StatelessWidget {
             ),
             Expanded(
               flex: 2,
-              child: _advanceButton(),
+              child: _advanceButton(context),
             ),
           ],
         ));

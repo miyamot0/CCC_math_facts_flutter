@@ -16,10 +16,9 @@ class MathFactsCCC extends StatefulWidget {
 class _MathFactsCCCState extends State<MathFactsCCC> {
   bool isOngoing = false;
 
-  //String _entryBar;
   List<String> listProblems = ["9+8=17", "5+3=8", "6+9=15", "3+5=8", "3+3=6"];
+  String cachedString = '';
 
-  //List<String> dynamicProblemList;
   String viewPanelString = '';
   String entryPanelString = '';
   String buttonText = '';
@@ -31,12 +30,12 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   static const String delCode = "Del";
 
+  bool toVerify = false;
+
   void _appendCharacter(String char) {
     if (hud != CCCStatus.coverCopy) {
       return;
     }
-
-    print(char);
 
     setState(() {
       if (char == delCode) {
@@ -52,7 +51,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     });
   }
 
-  void _toggleEntry() {
+  void _toggleEntry(BuildContext context) {
+    bool isMatching = null;
+
     setState(() {
       if (buttonText.isEmpty) return;
 
@@ -63,6 +64,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         viewPanelText = Colors.black;
         entryPanel = Colors.grey;
         buttonText = 'Cover';
+        toVerify = false;
       } else if (hud == CCCStatus.begin) {
         hud = CCCStatus.coverCopy;
 
@@ -70,6 +72,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         viewPanelText = Colors.grey;
         entryPanel = Colors.white;
         buttonText = 'Copied';
+        toVerify = false;
       } else if (hud == CCCStatus.coverCopy) {
         hud = CCCStatus.compare;
 
@@ -77,18 +80,68 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         viewPanelText = Colors.black;
         entryPanel = Colors.white;
         buttonText = 'Compare';
+        toVerify = false;
       } else {
-        // TODO: need verification logic here
         hud = CCCStatus.begin;
-        viewPanelString = '';
-        entryPanelString = '';
-        buttonText = '';
-        isOngoing = false;
+
+        isMatching = viewPanelString.trim() == entryPanelString.trim();
+
+        toVerify = true;
       }
 
-      print('status: $hud');
+      if (toVerify) {
+        toVerify = false;
+
+        _showMessageDialog(context);
+
+        //TODO record here
+      }
     });
   }
+
+  _showMessageDialog(BuildContext context) => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: const Text("Compare Facts"),
+          content:
+              const Text("Please check your facts. Do you need to try again?"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Yes"),
+              onPressed: () {
+                setState(() {
+                  viewPanelString = cachedString;
+                  viewPanel = Colors.white;
+                  viewPanelText = Colors.black;
+                  entryPanel = Colors.grey;
+                  buttonText = 'Cover';
+                  toVerify = false;
+
+                  entryPanelString = '';
+                  isOngoing = true;
+                });
+
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("No"),
+              onPressed: () {
+                setState(() {
+                  viewPanelString = '';
+
+                  entryPanelString = '';
+                  buttonText = '';
+                  isOngoing = false;
+                });
+
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -133,12 +186,13 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
                                       setState(() {
                                         viewPanelString = listProblems[index];
+                                        cachedString = viewPanelString;
                                         isOngoing = true;
                                         buttonText = 'Cover';
                                         listProblems.removeAt(index);
                                       });
 
-                                      _toggleEntry();
+                                      _toggleEntry(context);
                                     },
                                     child: const CircleAvatar(
                                       foregroundColor: Colors.blue,
