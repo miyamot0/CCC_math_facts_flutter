@@ -73,6 +73,15 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   List<String> listProblems = ["9+8=17", "5+3=8", "6+9=15", "3+5=8", "3+3=6"];
 
   List<String> dynamicProblemList;
+  Color entryPanel = Colors.grey;
+  Color viewPanel = Colors.white;
+  bool showEntry = false;
+
+  void _toggleEntry() {
+    setState(() {
+      showEntry = !showEntry;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +95,13 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             children: [
               HeadsUpPanel(
                 entryBarDynamic: dynamicProblemList,
+                entryPanelColor: entryPanel,
+                viewPanelColor: viewPanel,
+                toggleEntry: _toggleEntry,
+                showEntry: showEntry,
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Expanded(
                   flex: 4,
@@ -165,6 +181,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                         listProblems.removeAt(index);
                                       });
 
+                                      /*
                                       Future.delayed(const Duration(seconds: 3))
                                           .then((value) {
                                         isOngoing = false;
@@ -174,6 +191,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                           modString = null;
                                         });
                                       });
+                                      */
                                     },
                                     child: const CircleAvatar(
                                       foregroundColor: Colors.blue,
@@ -186,7 +204,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                             }),
                       ),
                       const Expanded(
-                        flex: 1,
+                        flex: 2,
                         child: KeyPad(),
                       ),
                     ],
