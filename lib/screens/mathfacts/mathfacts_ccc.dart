@@ -22,6 +22,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   //List<String> dynamicProblemList;
   String viewPanelString = '';
   String entryPanelString = '';
+  String buttonText = '';
   Color entryPanel = Colors.grey;
   Color viewPanel = Colors.grey;
   Color viewPanelText = Colors.black;
@@ -53,29 +54,36 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   void _toggleEntry() {
     setState(() {
+      if (buttonText.isEmpty) return;
+
       if (hud == CCCStatus.entry) {
         hud = CCCStatus.begin;
 
         viewPanel = Colors.white;
         viewPanelText = Colors.black;
         entryPanel = Colors.grey;
+        buttonText = 'Cover';
       } else if (hud == CCCStatus.begin) {
         hud = CCCStatus.coverCopy;
 
         viewPanel = Colors.grey;
         viewPanelText = Colors.grey;
         entryPanel = Colors.white;
+        buttonText = 'Copied';
       } else if (hud == CCCStatus.coverCopy) {
         hud = CCCStatus.compare;
 
         viewPanel = Colors.white;
         viewPanelText = Colors.black;
         entryPanel = Colors.white;
+        buttonText = 'Compare';
       } else {
         // TODO: need verification logic here
         hud = CCCStatus.begin;
         viewPanelString = '';
         entryPanelString = '';
+        buttonText = '';
+        isOngoing = false;
       }
 
       print('status: $hud');
@@ -96,6 +104,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   viewPanelString: viewPanelString,
                   entryPanelColor: entryPanel,
                   entryPanelString: entryPanelString,
+                  buttonText: buttonText,
                   viewPanelColor: viewPanel,
                   viewPanelText: viewPanelText,
                   toggleEntry: _toggleEntry,
@@ -125,22 +134,11 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                       setState(() {
                                         viewPanelString = listProblems[index];
                                         isOngoing = true;
+                                        buttonText = 'Cover';
                                         listProblems.removeAt(index);
                                       });
 
                                       _toggleEntry();
-
-                                      /*
-                                      Future.delayed(const Duration(seconds: 3))
-                                          .then((value) {
-                                        isOngoing = false;
-
-                                        setState(() {
-                                          dynamicProblemList = null;
-                                          modString = null;
-                                        });
-                                      });
-                                      */
                                     },
                                     child: const CircleAvatar(
                                       foregroundColor: Colors.blue,

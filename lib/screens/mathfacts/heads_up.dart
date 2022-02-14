@@ -7,6 +7,7 @@ class HeadsUpPanel extends StatelessWidget {
       {Key key,
       this.viewPanelString,
       this.entryPanelString,
+      this.buttonText,
       this.entryPanelColor,
       this.viewPanelColor,
       this.viewPanelText,
@@ -16,6 +17,7 @@ class HeadsUpPanel extends StatelessWidget {
 
   final String viewPanelString;
   final String entryPanelString;
+  final String buttonText;
   final Color entryPanelColor;
   final Color viewPanelColor;
   final Color viewPanelText;
@@ -25,14 +27,6 @@ class HeadsUpPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget _advanceButton() {
-      if (hudStatus == CCCStatus.entry) {
-        return const SizedBox(
-          width: 0,
-        );
-      }
-
-      String buttonText = hudStatus == CCCStatus.begin ? "Cover" : "Compare";
-
       return TextButton(
           onPressed: toggleEntry,
           style: TextButton.styleFrom(
