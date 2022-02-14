@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/constants.dart';
+
 class KeyPad extends StatelessWidget {
-  const KeyPad({Key key}) : super(key: key);
+  KeyPad({Key key, this.appendInput}) : super(key: key);
+
+  final ValueSetter<String> appendInput;
+
+  Widget _createKey(String code) {
+    return Expanded(
+        child: TextButton(
+      onPressed: () => appendInput(code),
+      style: keypadButtonStyle,
+      child: Text(
+        code,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 42.0),
+      ),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,37 +28,13 @@ class KeyPad extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("1", textAlign: TextAlign.center),
-          )),
+          _createKey("1"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("2", textAlign: TextAlign.center),
-          )),
+          _createKey("2"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("3", textAlign: TextAlign.center),
-          )),
+          _createKey("3"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("+", textAlign: TextAlign.center),
-          )),
+          _createKey("+"),
         ],
       )),
       const SizedBox(height: 5),
@@ -50,37 +43,13 @@ class KeyPad extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("4", textAlign: TextAlign.center),
-          )),
+          _createKey("4"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("5", textAlign: TextAlign.center),
-          )),
+          _createKey("5"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("6", textAlign: TextAlign.center),
-          )),
+          _createKey("6"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("-", textAlign: TextAlign.center),
-          )),
+          _createKey("-"),
         ],
       )),
       const SizedBox(height: 5),
@@ -89,37 +58,13 @@ class KeyPad extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("7", textAlign: TextAlign.center),
-          )),
+          _createKey("7"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("8", textAlign: TextAlign.center),
-          )),
+          _createKey("8"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("9", textAlign: TextAlign.center),
-          )),
+          _createKey("9"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("X", textAlign: TextAlign.center),
-          )),
+          _createKey("-"),
         ],
       )),
       const SizedBox(height: 5),
@@ -128,37 +73,13 @@ class KeyPad extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("Del", textAlign: TextAlign.center),
-          )),
+          _createKey("Del"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("0", textAlign: TextAlign.center),
-          )),
+          _createKey("0"),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("=", textAlign: TextAlign.center),
-          )),
+          _createKey("="),
           const SizedBox(width: 5),
-          Expanded(
-              child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-                backgroundColor: Colors.green, primary: Colors.white),
-            child: const Text("/", textAlign: TextAlign.center),
-          )),
+          _createKey("/"),
         ],
       )),
     ]);

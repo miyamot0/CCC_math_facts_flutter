@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../shared/constants.dart';
 import 'heads_up.dart';
 import 'key_pad.dart';
 
@@ -13,73 +14,48 @@ class MathFactsCCC extends StatefulWidget {
 }
 
 class _MathFactsCCCState extends State<MathFactsCCC> {
-  /*
-
-  Column _createView(List<Object> probList) {
-    int rows = probList.length;
-
-    List<Widget> dynContainer = [];
-    List<Widget> dynRows = [];
-
-    probList.forEach((element) {
-      List<Object> mod = element as List<Object>;
-      print(mod);
-
-      int len = mod.length;
-
-      List<Widget> dynRow = [];
-
-      for (int c = 0; c < len; c++) {
-        String value = mod[c] ?? "";
-
-        Container dynC = Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-          decoration: BoxDecoration(color: Colors.white, border: Border.all()),
-          height: 50,
-          child: Text(value),
-        );
-
-        Expanded dyn = Expanded(
-          child: dynC,
-        );
-
-        dynRow.add(dyn);
-      }
-
-      dynRows.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: dynRow,
-      ));
-    });
-
-    //dynContainer.add(newRow);
-    //print(dynRow);
-
-    //Row newRow = Row(
-    //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //  children: dynRow,
-    //);
-
-    return Column(
-      children: dynRows,
-    );
-  }
-
-  */
-
   bool isOngoing = false;
 
   //String _entryBar;
   List<String> listProblems = ["9+8=17", "5+3=8", "6+9=15", "3+5=8", "3+3=6"];
 
-  List<String> dynamicProblemList;
-  Color entryPanel = Colors.grey;
+  //List<String> dynamicProblemList;
+  String viewPanelString = '';
+  Color entryPanel = Colors.white;
   Color viewPanel = Colors.white;
-  bool showEntry = false;
+  Color viewPanelText = Colors.black;
+
+  CCCStatus hud = CCCStatus.entry;
+
+  void _appendCharacter(String char) {
+    print(char);
+  }
 
   void _toggleEntry() {
     setState(() {
-      showEntry = !showEntry;
+      if (hud == CCCStatus.entry) {
+        hud = CCCStatus.begin;
+
+        viewPanel = Colors.white;
+        viewPanelText = Colors.black;
+        entryPanel = Colors.white;
+      } else if (hud == CCCStatus.begin) {
+        hud = CCCStatus.cover;
+
+        viewPanel = Colors.grey;
+        viewPanelText = Colors.grey;
+        entryPanel = Colors.white;
+      } else if (hud == CCCStatus.cover) {
+        hud = CCCStatus.copyCompare;
+
+        viewPanel = Colors.white;
+        viewPanelText = Colors.black;
+        entryPanel = Colors.white;
+      } else {
+        // TODO: need verification logic here
+        hud = CCCStatus.begin;
+        viewPanelString = '';
+      }
     });
   }
 
@@ -94,12 +70,12 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
           child: Column(
             children: [
               HeadsUpPanel(
-                entryBarDynamic: dynamicProblemList,
-                entryPanelColor: entryPanel,
-                viewPanelColor: viewPanel,
-                toggleEntry: _toggleEntry,
-                showEntry: showEntry,
-              ),
+                  viewPanelString: viewPanelString,
+                  entryPanelColor: entryPanel,
+                  viewPanelColor: viewPanel,
+                  viewPanelText: viewPanelText,
+                  toggleEntry: _toggleEntry,
+                  hudStatus: hud),
               const SizedBox(
                 height: 10,
               ),
@@ -120,66 +96,15 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                         return;
                                       }
 
-                                      List<String> characters =
-                                          listProblems[index].trim().split("");
-
-                                      List<String> modString = [];
-
-                                      characters.forEach((c) {
-                                        switch (c) {
-                                          case '0':
-                                            modString.add('zero.svg');
-                                            break;
-                                          case '1':
-                                            modString.add('one.svg');
-                                            break;
-                                          case '2':
-                                            modString.add('two.svg');
-                                            break;
-                                          case '3':
-                                            modString.add('three.svg');
-                                            break;
-                                          case '4':
-                                            modString.add('four.svg');
-                                            break;
-                                          case '5':
-                                            modString.add('five.svg');
-                                            break;
-                                          case '6':
-                                            modString.add('six.svg');
-                                            break;
-                                          case '7':
-                                            modString.add('seven.svg');
-                                            break;
-                                          case '8':
-                                            modString.add('eight.svg');
-                                            break;
-                                          case '9':
-                                            modString.add('nine.svg');
-                                            break;
-                                          case '+':
-                                            modString.add('add.svg');
-                                            break;
-                                          case '-':
-                                            modString.add('subtract.svg');
-                                            break;
-                                          case 'x':
-                                            modString.add('multiply.svg');
-                                            break;
-                                          case '/':
-                                            modString.add('divide.svg');
-                                            break;
-                                          case '=':
-                                            modString.add('equals.svg');
-                                            break;
-                                        }
-                                      });
+                                      print('tapped');
 
                                       setState(() {
-                                        dynamicProblemList = modString;
+                                        viewPanelString = listProblems[index];
                                         isOngoing = true;
                                         listProblems.removeAt(index);
                                       });
+
+                                      _toggleEntry();
 
                                       /*
                                       Future.delayed(const Duration(seconds: 3))
@@ -203,9 +128,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                               );
                             }),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 2,
-                        child: KeyPad(),
+                        child: KeyPad(appendInput: _appendCharacter),
                       ),
                     ],
                   ))

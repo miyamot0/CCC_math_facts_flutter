@@ -1,27 +1,44 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../shared/constants.dart';
 
 class HeadsUpPanel extends StatelessWidget {
   const HeadsUpPanel(
       {Key key,
-      this.entryBarDynamic,
+      this.viewPanelString,
       this.entryPanelColor,
       this.viewPanelColor,
+      this.viewPanelText,
       this.toggleEntry,
-      this.showEntry})
+      this.hudStatus})
       : super(key: key);
 
-  final List<String> entryBarDynamic;
+  final String viewPanelString;
   final Color entryPanelColor;
   final Color viewPanelColor;
+  final Color viewPanelText;
   final Function toggleEntry;
-  final bool showEntry;
+  final CCCStatus hudStatus;
 
   @override
   Widget build(BuildContext context) {
-    int len = entryBarDynamic == null ? 0 : entryBarDynamic.length;
+    Widget _advanceButton() {
+      if (hudStatus == CCCStatus.entry) {
+        return const SizedBox(
+          width: 0,
+        );
+      }
+
+      String buttonText = hudStatus == CCCStatus.begin ? "Cover" : "Compare";
+
+      return TextButton(
+          onPressed: toggleEntry,
+          style: TextButton.styleFrom(
+              primary: Colors.white, backgroundColor: Colors.blue),
+          child: Text(buttonText,
+              style: cccTextStyle.copyWith(
+                  fontWeight: FontWeight.normal, fontSize: 24.0)));
+    }
 
     return Expanded(
         flex: 1,
@@ -31,64 +48,42 @@ class HeadsUpPanel extends StatelessWidget {
           children: [
             Expanded(
               flex: 6,
-              child: ColoredBox(
-                color: showEntry ? viewPanelColor : entryPanelColor,
-                child: ListView.builder(
-                    itemCount: len,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return SvgPicture.asset(
-                        "assets/images/${entryBarDynamic[index]}",
-                        fit: BoxFit.contain,
-                        width: 50,
-                      );
-                    }),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                    color: viewPanelColor,
+                    border: Border.all(color: Colors.black)),
+                child: Center(
+                    child: Text(
+                  viewPanelString,
+                  textAlign: TextAlign.center,
+                  style: cccTextStyle.copyWith(color: viewPanelText),
+                )),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Expanded(
               flex: 6,
-              child: ColoredBox(
-                color: showEntry ? entryPanelColor : viewPanelColor,
-                child: const Text(""),
-                /*
-                ListView.builder(
-                    itemCount: len,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return SvgPicture.asset(
-                        "assets/images/${entryBarDynamic[index]}",
-                        fit: BoxFit.contain,
-                        width: 50,
-                      );
-                    }),
-                    */
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                    color: entryPanelColor,
+                    border: Border.all(color: Colors.black)),
+                child: const Text(
+                  "",
+                  style: cccTextStyle,
+                ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
-            showEntry
-                ? SizedBox(
-                    width: 0,
-                  )
-                : Expanded(
-                    flex: 2,
-                    child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            backgroundColor: Colors.blue),
-                        //onPressed: () {},
-                        //style: TextButton.styleFrom(primary: Colors.white),
-                        //onPressed: () { print("Confirm")},
-                        child: const Text('Check')),
-                  ),
-            SizedBox(
+            Expanded(
+              flex: 2,
+              child: _advanceButton(),
+            ),
+            /*
+            const SizedBox(
               width: 10,
             ),
             Expanded(
@@ -97,11 +92,13 @@ class HeadsUpPanel extends StatelessWidget {
                   onPressed: toggleEntry,
                   style: TextButton.styleFrom(
                       primary: Colors.white, backgroundColor: Colors.green),
-                  //onPressed: () {},
-                  //style: TextButton.styleFrom(primary: Colors.white),
-                  //onPressed: () { print("Confirm")},
-                  child: const Text('Confirm')),
+                  child: Text(
+                    'Confirm',
+                    style: cccTextStyle.copyWith(
+                        fontWeight: FontWeight.normal, fontSize: 24.0),
+                  )),
             ),
+            */
           ],
         ));
   }
