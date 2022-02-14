@@ -118,7 +118,9 @@ class _StudentTileState extends State<StudentTile> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const MathFactsCCC()),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MathFactsCCC(student: widget.student)),
               );
             },
             onLongPress: () async => await _displayTextModificationDialog(

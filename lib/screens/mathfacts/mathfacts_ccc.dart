@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../models/student.dart';
 import '../../shared/constants.dart';
 import 'heads_up.dart';
 import 'key_pad.dart';
 
 class MathFactsCCC extends StatefulWidget {
-  const MathFactsCCC({Key key}) : super(key: key);
+  const MathFactsCCC({Key key, this.student}) : super(key: key);
+
+  final Student student;
 
   @override
   _MathFactsCCCState createState() => _MathFactsCCCState();
@@ -25,12 +28,27 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   Color entryPanel = Colors.grey;
   Color viewPanel = Colors.grey;
   Color viewPanelText = Colors.black;
+  int errCount = 0;
+  int nRetries = 0;
+  int nCorrectInitial = 0;
+  int numTrial = 1;
+
+  DateTime start = DateTime.now();
+  DateTime end;
 
   CCCStatus hud = CCCStatus.entry;
 
   static const String delCode = "Del";
 
   bool toVerify = false;
+  bool initialTry = true;
+
+  void _outputMetrics() {
+    print('errCount: $errCount');
+    print('nRetries: $nRetries');
+    print('nCorrectInitial: $nCorrectInitial');
+    print('numTrial: $numTrial');
+  }
 
   void _appendCharacter(String char) {
     if (hud != CCCStatus.coverCopy) {
@@ -92,8 +110,17 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       if (toVerify) {
         toVerify = false;
 
+        if (initialTry && isMatching) {
+          nCorrectInitial++;
+        }
+
+        if (!isMatching) {
+          errCount++;
+        }
+
         _showMessageDialog(context);
 
+        _outputMetrics();
         //TODO record here
       }
     });
@@ -122,6 +149,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   isOngoing = true;
                 });
 
+                nRetries++;
+                initialTry = false;
+
                 Navigator.of(context).pop();
               },
             ),
@@ -135,6 +165,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   buttonText = '';
                   isOngoing = false;
                 });
+
+                numTrial++;
+                initialTry = true;
 
                 Navigator.of(context).pop();
               },
@@ -193,6 +226,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                       });
 
                                       _toggleEntry(context);
+
+                                      if (listProblems.length == 0) {
+                                        // TODO: submit fx
+                                      }
                                     },
                                     child: const CircleAvatar(
                                       foregroundColor: Colors.blue,
