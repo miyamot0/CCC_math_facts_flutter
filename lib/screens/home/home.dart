@@ -144,7 +144,7 @@ class _HomeState extends State<Home> {
         ),
         body: const StudentList(),
         floatingActionButton: FloatingActionButton(
-          child: const Text("Add"),
+          child: const Icon(Icons.add),
           onPressed: () async {
             await _displayTextInputDialog(context, user.uid);
           },
