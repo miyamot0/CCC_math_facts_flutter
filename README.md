@@ -1,16 +1,39 @@
 # Cover-Copy-Compare: Math Facts (Takuan)
 
-This project (c/n Takuan) is an initial implementation of Cover-Copy-Compare (an established approach for instructional support) specific to the acquisition of basic math facts. The projects 
+This project (c/n Takuan) is an initial implementation of Cover-Copy-Compare (an established approach for instructional support) specific to the acquisition of basic math facts. This particular implementation is begin crafted to support comparisons of high- (i.e., tablet-based) and low-tech modalities for implementing Cover-Copy-Compare. 
 
-## Getting Started
+### Features
 
-This project is a starting point for a Flutter application.
+ - Native views in both iOS and Android
+ - Sync trial-level student feedback to cloud
+ - Stimulus sets and associated procedures are derived from established tools
 
-A few resources to get you started if this is your first Flutter project:
+### Images
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+TODO
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Version
+
+ - 0.0.0.1 - Alpha
+
+### Derivative Works
+
+Materials included in Takuan are derivative of work:
+
+* [Measures & Interventions for Numeracy Development](https://brianponcy.wixsite.com/mind/cover-copy-compare) - License Unknown (but permission granted) - Copyright ???-??? Brian Poncy. [https://brianponcy.wixsite.com/mind/](https://brianponcy.wixsite.com/mind/)
+
+### Acknowledgements and Credits
+
+TODO
+
+### Installation
+
+Takuan can be installed as either an Android or iOS application. 
+
+### Development
+
+This is currently under active development and evaluation.
+
+### License
+----
+Takuan - Copyright Shawn Gilroy, Louisiana State University. MIT
