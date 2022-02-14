@@ -69,8 +69,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   bool isOngoing = false;
 
-  String _entryBar;
+  //String _entryBar;
   List<String> listProblems = ["9+8=17", "5+3=8", "6+9=15", "3+5=8", "3+3=6"];
+
+  List<String> dynamicProblemList;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
           child: Column(
             children: [
               HeadsUpPanel(
-                entryBarString: _entryBar,
+                entryBarDynamic: dynamicProblemList,
               ),
               Expanded(
                   flex: 4,
@@ -102,30 +104,83 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                         return;
                                       }
 
-                                      print('Tap, Index: $index');
+                                      List<String> characters =
+                                          listProblems[index].trim().split("");
+
+                                      List<String> modString = [];
+
+                                      characters.forEach((c) {
+                                        switch (c) {
+                                          case '0':
+                                            modString.add('zero.svg');
+                                            break;
+                                          case '1':
+                                            modString.add('one.svg');
+                                            break;
+                                          case '2':
+                                            modString.add('two.svg');
+                                            break;
+                                          case '3':
+                                            modString.add('three.svg');
+                                            break;
+                                          case '4':
+                                            modString.add('four.svg');
+                                            break;
+                                          case '5':
+                                            modString.add('five.svg');
+                                            break;
+                                          case '6':
+                                            modString.add('six.svg');
+                                            break;
+                                          case '7':
+                                            modString.add('seven.svg');
+                                            break;
+                                          case '8':
+                                            modString.add('eight.svg');
+                                            break;
+                                          case '9':
+                                            modString.add('nine.svg');
+                                            break;
+                                          case '+':
+                                            modString.add('add.svg');
+                                            break;
+                                          case '-':
+                                            modString.add('subtract.svg');
+                                            break;
+                                          case 'x':
+                                            modString.add('multiply.svg');
+                                            break;
+                                          case '/':
+                                            modString.add('divide.svg');
+                                            break;
+                                          case '=':
+                                            modString.add('equals.svg');
+                                            break;
+                                        }
+                                      });
 
                                       setState(() {
-                                        _entryBar = listProblems[index];
+                                        dynamicProblemList = modString;
                                         isOngoing = true;
                                         listProblems.removeAt(index);
                                       });
 
-                                      Future.delayed(Duration(seconds: 3))
+                                      Future.delayed(const Duration(seconds: 3))
                                           .then((value) {
-                                        print('Re-enabled');
                                         isOngoing = false;
 
                                         setState(() {
-                                          _entryBar = "";
+                                          dynamicProblemList = null;
+                                          modString = null;
                                         });
                                       });
                                     },
-                                    child: CircleAvatar(
+                                    child: const CircleAvatar(
                                       foregroundColor: Colors.blue,
                                     )),
                                 title: Text(
                                   listProblems[index],
-                                  style: TextStyle(fontSize: 20.0),
+                                  style: const TextStyle(fontSize: 20.0),
                                 ),
                               );
                             }),
