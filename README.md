@@ -1,6 +1,6 @@
-# covcopcomp_math_fact
+# Cover-Copy-Compare: Math Facts (Takuan)
 
-A new Flutter project.
+This project (c/n Takuan) is an initial implementation of Cover-Copy-Compare (an established approach for instructional support) specific to the acquisition of basic math facts. The projects 
 
 ## Getting Started
 
