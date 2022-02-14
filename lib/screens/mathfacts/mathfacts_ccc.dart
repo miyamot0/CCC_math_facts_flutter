@@ -48,13 +48,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   bool toVerify = false;
   bool initialTry = true;
 
-  void _outputMetrics() {
-    print('errCount: $errCount');
-    print('nRetries: $nRetries');
-    print('nCorrectInitial: $nCorrectInitial');
-    print('numTrial: $numTrial');
-  }
-
   void _appendCharacter(String char) {
     if (hud != CCCStatus.coverCopy) {
       return;
@@ -105,7 +98,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Compare';
         toVerify = false;
       } else {
-        hud = CCCStatus.begin;
+        hud = CCCStatus.entry;
 
         isMatching = viewPanelString.trim() == entryPanelString.trim();
 
@@ -124,8 +117,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         }
 
         _showMessageDialog(context);
-
-        _outputMetrics();
       }
     });
   }
@@ -172,6 +163,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
                   entryPanelString = '';
                   isOngoing = true;
+
+                  hud = CCCStatus.begin;
                 });
 
                 nRetries++;
@@ -243,8 +236,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                       if (isOngoing) {
                                         return;
                                       }
-
-                                      print('tapped');
 
                                       setState(() {
                                         viewPanelString = listProblems[index];
