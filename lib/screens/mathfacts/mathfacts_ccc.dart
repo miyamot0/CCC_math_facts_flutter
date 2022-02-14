@@ -20,35 +20,31 @@ class MathFactsCCC extends StatefulWidget {
 }
 
 class _MathFactsCCCState extends State<MathFactsCCC> {
-  bool isOngoing = false;
-  bool initialLoad = true;
+  bool isOngoing = false,
+      initialLoad = true,
+      toVerify = false,
+      initialTry = true;
 
   List<String> localSet;
 
-  String cachedString = '';
+  String cachedString = '',
+      viewPanelString = '',
+      entryPanelString = '',
+      buttonText = '';
 
-  String viewPanelString = '';
-  String entryPanelString = '';
-  String buttonText = '';
-  Color entryPanel = Colors.grey;
-  Color viewPanel = Colors.grey;
-  Color viewPanelText = Colors.black;
-  int errCount = 0;
-  int nRetries = 0;
-  int nCorrectInitial = 0;
-  int numTrial = 1;
+  Color entryPanel = Colors.grey,
+      viewPanel = Colors.grey,
+      viewPanelText = Colors.black;
 
-  DateTime start = DateTime.now();
-  DateTime end;
+  int errCount = 0, nRetries = 0, nCorrectInitial = 0, numTrial = 1;
+
+  DateTime start = DateTime.now(), end;
 
   CCCStatus hud = CCCStatus.entry;
 
   static const String delCode = "Del";
 
-  bool toVerify = false;
-  bool initialTry = true;
-
-  void _appendCharacter(String char) {
+  _appendCharacter(String char) {
     if (hud != CCCStatus.coverCopy) {
       return;
     }
@@ -67,7 +63,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     });
   }
 
-  void _toggleEntry(BuildContext context) {
+  _toggleEntry(BuildContext context) {
     bool isMatching;
 
     setState(() {
@@ -209,6 +205,16 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cover, Copy, Compare'),
+        actions: [
+          Center(
+            child: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Text(
+                  "Name: ${widget.student.name}, Set Size: ${widget.student.setSize}",
+                  style: cccTextStyle.copyWith(fontSize: 24.0),
+                )),
+          )
+        ],
       ),
       body: Container(
           margin: const EdgeInsets.all(20.0),
