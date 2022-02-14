@@ -140,17 +140,15 @@ class _HomeState extends State<Home> {
               onPressed: () => _showSettingsPanel(),
               label: const Text("Settings"),
             ),
-            TextButton.icon(
-              icon: const Icon(Icons.add),
-              style: TextButton.styleFrom(primary: Colors.white),
-              onPressed: () async {
-                await _displayTextInputDialog(context, user.uid);
-              },
-              label: const Text("Add Student"),
-            )
           ],
         ),
         body: const StudentList(),
+        floatingActionButton: FloatingActionButton(
+          child: const Text("Add"),
+          onPressed: () async {
+            await _displayTextInputDialog(context, user.uid);
+          },
+        ),
       ),
     );
   }
