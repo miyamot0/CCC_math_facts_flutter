@@ -51,6 +51,7 @@ class DatabaseService {
         name: data['name'].toString() ?? '',
         setSize: data['setSize'].toString() ?? '',
         target: data['target'].toString() ?? '',
+        set: data['set'].toString() ?? '',
         id: d.id ?? '',
       );
     }).toList();
@@ -81,12 +82,15 @@ class DatabaseService {
 
   // Add Student to classroom collection
   Future addToStudentCollection(
-      String studentTag, String setSize, String target) async {
-    var test =
-        FirebaseFirestore.instance.collection('mainCollection/$uid/students');
-
-    return await test
-        .add({'name': studentTag, 'setSize': setSize, 'target': target});
+      String studentTag, String setSize, String target, int setNum) async {
+    return await FirebaseFirestore.instance
+        .collection('mainCollection/$uid/students')
+        .add({
+      'name': studentTag,
+      'setSize': setSize,
+      'target': target,
+      'set': setNum.toString()
+    });
   }
 
   Future addToStudentPerformanceCollection(RecordMathFacts record) async {
@@ -108,14 +112,14 @@ class DatabaseService {
     });
   }
 
-  Future updateStudentInCollection(
-      String studentTag, String setSize, String target, String iid) async {
+  Future updateStudentInCollection(String studentTag, String setSize,
+      String target, String set, String iid) async {
     var test = FirebaseFirestore.instance
         .collection('mainCollection/$uid/students')
         .doc(iid);
 
-    return await test
-        .set({'name': studentTag, 'setSize': setSize, 'target': target});
+    return await test.set(
+        {'name': studentTag, 'setSize': setSize, 'set': set, 'target': target});
   }
 
   // Update teacher's data

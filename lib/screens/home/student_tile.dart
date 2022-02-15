@@ -27,8 +27,10 @@ import 'package:covcopcomp_math_fact/shared/sheets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/data.dart';
 import '../../models/usermodel.dart';
 import '../../services/database.dart';
+import '../../services/mind.dart';
 import '../../shared/constants.dart';
 
 class StudentTile extends StatefulWidget {
@@ -40,11 +42,16 @@ class StudentTile extends StatefulWidget {
   State<StudentTile> createState() => _StudentTileState();
 }
 
-List<String> _getSet(Student student) {
-  List<String> mLocal = mathFactsAp1;
+List<String> _getSet(Student student, MathFactData data) {
+  List<String> mLocal = data.addition[int.parse(student.set)];
   mLocal.shuffle();
 
   return mLocal.take(int.parse(student.setSize)).toList();
+}
+
+Future<MathFactData> _parseJson() async {
+  return await parseJsonFromAssets('assets/mathfacts.json')
+      .then((map) => MathFactData.fromJson(map));
 }
 
 class _StudentTileState extends State<StudentTile> {
@@ -59,8 +66,13 @@ class _StudentTileState extends State<StudentTile> {
         String _setSizeEdit,
         String _exerciseEdit,
         String _name,
+        String _set,
         String _id) async {
       _textFieldController.text = _name;
+
+      final jsonSet = await _parseJson();
+      List<int> sets = Iterable<int>.generate(jsonSet.additionSets).toList();
+      List<String> strSets = sets.map((i) => i.toString()).toList();
 
       return showDialog(
           context: context,
@@ -69,7 +81,8 @@ class _StudentTileState extends State<StudentTile> {
               title: const Text('Update Student Information'),
               content: Form(
                 key: _formKey,
-                child: Column(
+                child: SingleChildScrollView(
+                    child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
@@ -99,8 +112,18 @@ class _StudentTileState extends State<StudentTile> {
                       onChanged: (String value) =>
                           _setSizeEdit = value.toString(),
                     ),
+                    DropdownButtonFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: "Select set number"),
+                      value: _set,
+                      items: strSets.map((setting) {
+                        return DropdownMenuItem(
+                            value: setting, child: Text(setting));
+                      }).toList(),
+                      onChanged: (value) => _set = value,
+                    ),
                   ],
-                ),
+                )),
               ),
               actions: <Widget>[
                 TextButton(
@@ -125,7 +148,7 @@ class _StudentTileState extends State<StudentTile> {
                     if (_textFieldController.text.isNotEmpty) {
                       await DatabaseService(uid: user.uid)
                           .updateStudentInCollection(_textFieldController.text,
-                              _setSizeEdit, _exerciseEdit, _id);
+                              _setSizeEdit, _exerciseEdit, _set, _id);
 
                       Navigator.pop(context);
                     }
@@ -146,14 +169,16 @@ class _StudentTileState extends State<StudentTile> {
               radius: 25.0,
               backgroundColor: Colors.green[100],
             ),
-            onTap: () {
+            onTap: () async {
+              final jsonSet = await _parseJson();
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => MathFactsCCC(
                           student: widget.student,
                           tid: user.uid,
-                          set: _getSet(widget.student),
+                          set: _getSet(widget.student, jsonSet),
                         )),
               );
             },
@@ -162,11 +187,12 @@ class _StudentTileState extends State<StudentTile> {
                 widget.student.setSize,
                 widget.student.target,
                 widget.student.name,
+                widget.student.set,
                 widget.student.id),
           ),
           title: Text(widget.student.name),
           subtitle: Text(
-              "Target: ${widget.student.target}, \nSet Size: ${widget.student.setSize}, \nID: ${widget.student.id}"),
+              "Current assignment: ${widget.student.target}, \nCurrent set size: ${widget.student.setSize} \nCurrent set: ${widget.student.set}, \nID: ${widget.student.id}"),
         ),
       ),
     );

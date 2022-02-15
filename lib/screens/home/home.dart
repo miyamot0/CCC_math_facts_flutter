@@ -116,7 +116,8 @@ class _HomeState extends State<Home> {
                       await DatabaseService(uid: uidTag).addToStudentCollection(
                           _textFieldController.text,
                           _setSizeEdit,
-                          _exerciseEdit);
+                          _exerciseEdit,
+                          0);
 
                       Navigator.pop(context);
                     }
