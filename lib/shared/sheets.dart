@@ -1,3 +1,5 @@
+// TODO Json-style organization for math facts
+
 List<String> mathFactsAp1 = [
   "9+8=17",
   "5+3=8",

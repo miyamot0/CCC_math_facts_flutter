@@ -37,3 +37,9 @@ ButtonStyle keypadButtonStyle =
     TextButton.styleFrom(backgroundColor: Colors.green, primary: Colors.white);
 
 enum CCCStatus { entry, begin, coverCopy, compare }
+
+List<String> setSizeArray = ["8", "16", "24"];
+List<String> factsType = [
+  "Math Facts-Addition",
+  "Math Facts-Subtraction",
+];

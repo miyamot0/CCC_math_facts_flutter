@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
 
     TextEditingController _textFieldController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
-    String _setSizeEdit = "5", _exerciseEdit = "Math Facts";
+    String _setSizeEdit = setSizeArray[0], _exerciseEdit = factsType[0];
 
     Future<void> _displayTextInputDialog(
         BuildContext context, String uidTag) async {
@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
                       decoration: textInputDecoration.copyWith(
                           hintText: "Select exercise"),
                       value: _exerciseEdit,
-                      items: ["Math Facts", "Computation"].map((setting) {
+                      items: factsType.map((setting) {
                         return DropdownMenuItem(
                             value: setting, child: Text(setting));
                       }).toList(),
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
                       decoration:
                           textInputDecoration.copyWith(hintText: "Set Size"),
                       value: _setSizeEdit,
-                      items: ["5", "10", "20"].map((setting) {
+                      items: setSizeArray.map((setting) {
                         return DropdownMenuItem(
                             value: setting, child: Text(setting));
                       }).toList(),
