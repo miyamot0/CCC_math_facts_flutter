@@ -33,6 +33,7 @@ class RecordMathFacts {
   final int nCorrectInitial;
   final int delaySec;
   final int sessionDuration;
+  final int set;
 
   RecordMathFacts(
       {this.tid,
@@ -45,5 +46,6 @@ class RecordMathFacts {
       this.nRetries,
       this.nCorrectInitial,
       this.delaySec,
-      this.sessionDuration});
+      this.sessionDuration,
+      this.set});
 }

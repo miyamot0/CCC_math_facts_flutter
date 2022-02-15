@@ -157,6 +157,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             nRetries: nRetries,
             nCorrectInitial: nCorrectInitial,
             delaySec: 0,
+            set: int.parse(widget.student.set),
             sessionDuration: secs))
         .then((value) => Navigator.of(context).pop());
   }

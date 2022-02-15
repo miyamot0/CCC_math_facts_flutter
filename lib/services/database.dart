@@ -101,6 +101,7 @@ class DatabaseService {
       'tid': record.tid,
       'id': record.id,
       'setSize': record.setSize,
+      'set': record.set,
       'target': record.target,
       'dateTimeStart': record.dateTimeStart,
       'dateTimeEnd': record.dateTimeEnd,
