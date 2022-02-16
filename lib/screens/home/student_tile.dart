@@ -23,7 +23,6 @@
 
 import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
-import 'package:covcopcomp_math_fact/shared/sheets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +42,18 @@ class StudentTile extends StatefulWidget {
 }
 
 List<String> _getSet(Student student, MathFactData data) {
-  List<String> mLocal = data.addition[int.parse(student.set)];
+  List<String> mLocal;
+
+  if (student.target == "Math Facts-Addition") {
+    mLocal = data.addition[int.parse(student.set)];
+  } else if (student.target == "Math Facts-Subtraction") {
+    mLocal = data.subtraction[int.parse(student.set)];
+  } else if (student.target == "Math Facts-Multiplication") {
+    mLocal = data.multiplication[int.parse(student.set)];
+  } else if (student.target == "Math Facts-Division") {
+    mLocal = data.division[int.parse(student.set)];
+  }
+
   mLocal.shuffle();
 
   return mLocal.take(int.parse(student.setSize)).toList();
@@ -70,8 +80,7 @@ class _StudentTileState extends State<StudentTile> {
         String _id) async {
       _textFieldController.text = _name;
 
-      final jsonSet = await _parseJson();
-      List<int> sets = Iterable<int>.generate(jsonSet.additionSets).toList();
+      List<int> sets = Iterable<int>.generate(18).toList();
       List<String> strSets = sets.map((i) => i.toString()).toList();
 
       return showDialog(
