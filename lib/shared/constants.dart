@@ -42,4 +42,6 @@ List<String> setSizeArray = ["8", "16", "24"];
 List<String> factsType = [
   "Math Facts-Addition",
   "Math Facts-Subtraction",
+  "Math Facts-Multiplication",
+  "Math Facts-Division"
 ];
