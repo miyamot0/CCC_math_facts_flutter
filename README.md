@@ -44,6 +44,6 @@ Takuan can be installed as either an Android or iOS application. No builds or bi
 
 This is currently under active development and evaluation.
 
-## ##\# License
+### License
 
 Takuan - Copyright Shawn Gilroy, Louisiana State University. MIT
