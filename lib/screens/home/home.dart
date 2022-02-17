@@ -49,6 +49,7 @@ class _HomeState extends State<Home> {
     TextEditingController _textFieldController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
     String _setSizeEdit = setSizeArray[0], _exerciseEdit = factsType[0];
+    bool _randomized = false;
 
     Future<void> _displayTextInputDialog(
         BuildContext context, String uidTag) async {
@@ -89,6 +90,17 @@ class _HomeState extends State<Home> {
                       onChanged: (String value) =>
                           _setSizeEdit = value.toString(),
                     ),
+                    DropdownButtonFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: "Set Presentation"),
+                      value: _randomized ? 'Randomized' : 'Fixed',
+                      items: ['Fixed', 'Randomized'].map((setting) {
+                        return DropdownMenuItem(
+                            value: setting, child: Text(setting));
+                      }).toList(),
+                      onChanged: (value) => _randomized =
+                          value.toString() == "Randomized" ? true : false,
+                    ),
                   ],
                 ),
               ),
@@ -117,7 +129,8 @@ class _HomeState extends State<Home> {
                           _textFieldController.text,
                           _setSizeEdit,
                           _exerciseEdit,
-                          0);
+                          0,
+                          _randomized);
 
                       Navigator.pop(context);
                     }

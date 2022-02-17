@@ -27,6 +27,13 @@ class Student {
   final String target;
   final String set;
   final String id;
+  final bool randomized;
 
-  Student({this.name, this.setSize, this.target, this.id, this.set});
+  Student(
+      {this.name,
+      this.setSize,
+      this.target,
+      this.id,
+      this.set,
+      this.randomized});
 }

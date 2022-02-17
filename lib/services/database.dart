@@ -48,12 +48,12 @@ class DatabaseService {
       Map<String, dynamic> data = d.data() as Map<String, dynamic>;
 
       return Student(
-        name: data['name'].toString() ?? '',
-        setSize: data['setSize'].toString() ?? '',
-        target: data['target'].toString() ?? '',
-        set: data['set'].toString() ?? '',
-        id: d.id ?? '',
-      );
+          name: data['name'].toString() ?? '',
+          setSize: data['setSize'].toString() ?? '',
+          target: data['target'].toString() ?? '',
+          set: data['set'].toString() ?? '',
+          id: d.id ?? '',
+          randomized: data['random']);
     }).toList();
   }
 
@@ -81,15 +81,16 @@ class DatabaseService {
   }
 
   // Add Student to classroom collection
-  Future addToStudentCollection(
-      String studentTag, String setSize, String target, int setNum) async {
+  Future addToStudentCollection(String studentTag, String setSize,
+      String target, int setNum, bool randomized) async {
     return await FirebaseFirestore.instance
         .collection('mainCollection/$uid/students')
         .add({
       'name': studentTag,
       'setSize': setSize,
       'target': target,
-      'set': setNum.toString()
+      'set': setNum.toString(),
+      'random': randomized
     });
   }
 
@@ -114,13 +115,18 @@ class DatabaseService {
   }
 
   Future updateStudentInCollection(String studentTag, String setSize,
-      String target, String set, String iid) async {
+      String target, String set, String iid, bool randomized) async {
     var test = FirebaseFirestore.instance
         .collection('mainCollection/$uid/students')
         .doc(iid);
 
-    return await test.set(
-        {'name': studentTag, 'setSize': setSize, 'set': set, 'target': target});
+    return await test.set({
+      'name': studentTag,
+      'setSize': setSize,
+      'set': set,
+      'target': target,
+      'random': randomized
+    });
   }
 
   // Update teacher's data

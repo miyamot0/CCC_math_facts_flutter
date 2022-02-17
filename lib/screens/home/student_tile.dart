@@ -54,7 +54,9 @@ List<String> _getSet(Student student, MathFactData data) {
     mLocal = data.division[int.parse(student.set)];
   }
 
-  mLocal.shuffle();
+  if (student.randomized) {
+    mLocal.shuffle();
+  }
 
   return mLocal.take(int.parse(student.setSize)).toList();
 }
@@ -77,7 +79,8 @@ class _StudentTileState extends State<StudentTile> {
         String _exerciseEdit,
         String _name,
         String _set,
-        String _id) async {
+        String _id,
+        bool _randomized) async {
       _textFieldController.text = _name;
 
       List<int> sets = Iterable<int>.generate(18).toList();
@@ -131,6 +134,17 @@ class _StudentTileState extends State<StudentTile> {
                       }).toList(),
                       onChanged: (value) => _set = value,
                     ),
+                    DropdownButtonFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: "Set Presentation"),
+                      value: _randomized ? 'Randomized' : 'Fixed',
+                      items: ['Fixed', 'Randomized'].map((setting) {
+                        return DropdownMenuItem(
+                            value: setting, child: Text(setting));
+                      }).toList(),
+                      onChanged: (value) => _randomized =
+                          value.toString() == "Randomized" ? true : false,
+                    ),
                   ],
                 )),
               ),
@@ -156,8 +170,13 @@ class _StudentTileState extends State<StudentTile> {
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
                       await DatabaseService(uid: user.uid)
-                          .updateStudentInCollection(_textFieldController.text,
-                              _setSizeEdit, _exerciseEdit, _set, _id);
+                          .updateStudentInCollection(
+                              _textFieldController.text,
+                              _setSizeEdit,
+                              _exerciseEdit,
+                              _set,
+                              _id,
+                              _randomized);
 
                       Navigator.pop(context);
                     }
@@ -197,11 +216,12 @@ class _StudentTileState extends State<StudentTile> {
                 widget.student.target,
                 widget.student.name,
                 widget.student.set,
-                widget.student.id),
+                widget.student.id,
+                widget.student.randomized),
           ),
           title: Text(widget.student.name),
           subtitle: Text(
-              "Current assignment: ${widget.student.target}, \nCurrent set size: ${widget.student.setSize} \nCurrent set: ${widget.student.set}, \nID: ${widget.student.id}"),
+              "Current assignment: ${widget.student.target}, \nCurrent set size: ${widget.student.setSize} \nCurrent set: ${widget.student.set}, \nSet Randomization: ${widget.student.randomized}, \nID: ${widget.student.id}"),
         ),
       ),
     );
