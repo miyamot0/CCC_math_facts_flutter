@@ -59,51 +59,52 @@ class _HomeState extends State<Home> {
             return AlertDialog(
               title: const Text('Enter ID for New Student'),
               content: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: _textFieldController,
-                      decoration:
-                          textInputDecoration.copyWith(hintText: "Student ID"),
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextField(
+                          controller: _textFieldController,
+                          decoration: textInputDecoration.copyWith(
+                              hintText: "Student ID"),
+                        ),
+                        DropdownButtonFormField(
+                          decoration: textInputDecoration.copyWith(
+                              hintText: "Select exercise"),
+                          value: _exerciseEdit,
+                          items: factsType.map((setting) {
+                            return DropdownMenuItem(
+                                value: setting, child: Text(setting));
+                          }).toList(),
+                          onChanged: (String value) =>
+                              _exerciseEdit = value.toString(),
+                        ),
+                        DropdownButtonFormField(
+                          decoration: textInputDecoration.copyWith(
+                              hintText: "Set Size"),
+                          value: _setSizeEdit,
+                          items: setSizeArray.map((setting) {
+                            return DropdownMenuItem(
+                                value: setting, child: Text(setting));
+                          }).toList(),
+                          onChanged: (String value) =>
+                              _setSizeEdit = value.toString(),
+                        ),
+                        DropdownButtonFormField(
+                          decoration: textInputDecoration.copyWith(
+                              hintText: "Set Presentation"),
+                          value: _randomized ? 'Randomized' : 'Fixed',
+                          items: ['Fixed', 'Randomized'].map((setting) {
+                            return DropdownMenuItem(
+                                value: setting, child: Text(setting));
+                          }).toList(),
+                          onChanged: (value) => _randomized =
+                              value.toString() == "Randomized" ? true : false,
+                        ),
+                      ],
                     ),
-                    DropdownButtonFormField(
-                      decoration: textInputDecoration.copyWith(
-                          hintText: "Select exercise"),
-                      value: _exerciseEdit,
-                      items: factsType.map((setting) {
-                        return DropdownMenuItem(
-                            value: setting, child: Text(setting));
-                      }).toList(),
-                      onChanged: (String value) =>
-                          _exerciseEdit = value.toString(),
-                    ),
-                    DropdownButtonFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: "Set Size"),
-                      value: _setSizeEdit,
-                      items: setSizeArray.map((setting) {
-                        return DropdownMenuItem(
-                            value: setting, child: Text(setting));
-                      }).toList(),
-                      onChanged: (String value) =>
-                          _setSizeEdit = value.toString(),
-                    ),
-                    DropdownButtonFormField(
-                      decoration: textInputDecoration.copyWith(
-                          hintText: "Set Presentation"),
-                      value: _randomized ? 'Randomized' : 'Fixed',
-                      items: ['Fixed', 'Randomized'].map((setting) {
-                        return DropdownMenuItem(
-                            value: setting, child: Text(setting));
-                      }).toList(),
-                      onChanged: (value) => _randomized =
-                          value.toString() == "Randomized" ? true : false,
-                    ),
-                  ],
-                ),
-              ),
+                  )),
               actions: <Widget>[
                 TextButton(
                   style: TextButton.styleFrom(
