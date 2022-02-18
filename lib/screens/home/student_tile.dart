@@ -66,12 +66,16 @@ Future<MathFactData> _parseJson() async {
       .then((map) => MathFactData.fromJson(map));
 }
 
+Widget _buildStudentDescription(Student student) {
+  return Text(
+      "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \nCurrent set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id}");
+}
+
 class _StudentTileState extends State<StudentTile> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     TextEditingController _textFieldController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
 
     Future<void> _displayTextModificationDialog(
         BuildContext context,
@@ -92,7 +96,6 @@ class _StudentTileState extends State<StudentTile> {
             return AlertDialog(
               title: const Text('Update Student Information'),
               content: Form(
-                key: _formKey,
                 child: SingleChildScrollView(
                     child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -192,37 +195,35 @@ class _StudentTileState extends State<StudentTile> {
       child: Card(
         margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
-          leading: GestureDetector(
-            child: CircleAvatar(
-              radius: 25.0,
-              backgroundColor: Colors.green[100],
-            ),
-            onTap: () async {
-              final jsonSet = await _parseJson();
+            leading: GestureDetector(
+              child: CircleAvatar(
+                radius: 25.0,
+                backgroundColor: Colors.green[100],
+              ),
+              onTap: () async {
+                final jsonSet = await _parseJson();
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MathFactsCCC(
-                          student: widget.student,
-                          tid: user.uid,
-                          set: _getSet(widget.student, jsonSet),
-                        )),
-              );
-            },
-            onLongPress: () async => await _displayTextModificationDialog(
-                context,
-                widget.student.setSize,
-                widget.student.target,
-                widget.student.name,
-                widget.student.set,
-                widget.student.id,
-                widget.student.randomized),
-          ),
-          title: Text(widget.student.name),
-          subtitle: Text(
-              "Current assignment: ${widget.student.target}, \nCurrent set size: ${widget.student.setSize} \nCurrent set: ${widget.student.set}, \nSet Randomization: ${widget.student.randomized}, \nID: ${widget.student.id}"),
-        ),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MathFactsCCC(
+                            student: widget.student,
+                            tid: user.uid,
+                            set: _getSet(widget.student, jsonSet),
+                          )),
+                );
+              },
+              onLongPress: () async => await _displayTextModificationDialog(
+                  context,
+                  widget.student.setSize,
+                  widget.student.target,
+                  widget.student.name,
+                  widget.student.set,
+                  widget.student.id,
+                  widget.student.randomized),
+            ),
+            title: Text(widget.student.name),
+            subtitle: _buildStudentDescription(widget.student)),
       ),
     );
   }

@@ -39,8 +39,6 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final List<String> settings = ['Math Facts', 'Computation'];
-
   // Form values
   String _currentGrade;
   String _currentSchool;
