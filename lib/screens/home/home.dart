@@ -128,11 +128,12 @@ class _HomeState extends State<Home> {
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
                       await DatabaseService(uid: uidTag).addToStudentCollection(
-                          _textFieldController.text,
-                          _setSizeEdit,
-                          _exerciseEdit,
-                          0,
-                          _randomized);
+                          Student(
+                              name: _textFieldController.text,
+                              set: "0",
+                              setSize: _setSizeEdit,
+                              target: _exerciseEdit,
+                              randomized: _randomized));
 
                       Navigator.pop(context);
                     }

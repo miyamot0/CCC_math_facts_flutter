@@ -33,25 +33,6 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  final CollectionReference mainCollection =
-      FirebaseFirestore.instance.collection('mainCollection');
-
-  final CollectionReference performanceCollection =
-      FirebaseFirestore.instance.collection('performanceCollection');
-
-  // Stream for user data
-  Stream<UserData> get userData {
-    return mainCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
-  }
-
-  // Stream for current students
-  Stream<List<Student>> get students {
-    return FirebaseFirestore.instance
-        .collection(_studentInformationPath())
-        .snapshots()
-        .map(_studentListingFromSnapshot);
-  }
-
   // Path generator, student information
   String _studentInformationPath() {
     return 'mainCollection/$uid/students';
@@ -60,6 +41,23 @@ class DatabaseService {
   // Path generator, student performance
   String _studentPerformancePath(RecordMathFacts record) {
     return 'performanceCollection/${record.tid}/${record.target}/students/${record.id}';
+  }
+
+  // Stream for user data
+  Stream<UserData> get userData {
+    return FirebaseFirestore.instance
+        .collection('mainCollection')
+        .doc(uid)
+        .snapshots()
+        .map(_userDataFromSnapshot);
+  }
+
+  // Stream for current students
+  Stream<List<Student>> get students {
+    return FirebaseFirestore.instance
+        .collection(_studentInformationPath())
+        .snapshots()
+        .map(_studentListingFromSnapshot);
   }
 
   // Map for snapshot, list of students for home page
@@ -91,16 +89,15 @@ class DatabaseService {
   }
 
   // Add Student to classroom collection
-  Future addToStudentCollection(String studentTag, String setSize,
-      String target, int setNum, bool randomized) async {
+  Future addToStudentCollection(Student student) async {
     return await FirebaseFirestore.instance
         .collection(_studentInformationPath())
         .add({
-      'name': studentTag,
-      'setSize': setSize,
-      'target': target,
-      'set': setNum.toString(),
-      'random': randomized
+      'name': student.name,
+      'setSize': student.setSize,
+      'target': student.target,
+      'set': student.set,
+      'random': student.randomized
     });
   }
 
@@ -140,7 +137,10 @@ class DatabaseService {
 
   // Update a teacher's working defaults
   Future updateTeacherInCollection(Teacher teacher) async {
-    return await mainCollection.doc(uid).set({
+    return await FirebaseFirestore.instance
+        .collection('mainCollection')
+        .doc(uid)
+        .set({
       'school': teacher.school,
       'teacherName': teacher.name,
       'grade': teacher.grade
