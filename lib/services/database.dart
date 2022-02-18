@@ -26,23 +26,43 @@ import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 
 import '../models/student.dart';
+import '../models/teacher.dart';
 
 class DatabaseService {
   final String uid;
 
   DatabaseService({this.uid});
 
-  // Collection reference
   final CollectionReference mainCollection =
       FirebaseFirestore.instance.collection('mainCollection');
 
   final CollectionReference performanceCollection =
       FirebaseFirestore.instance.collection('performanceCollection');
 
-// ------------------------
-// Modern Calls here
-// ------------------------
+  // Stream for user data
+  Stream<UserData> get userData {
+    return mainCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  }
 
+  // Stream for current students
+  Stream<List<Student>> get students {
+    return FirebaseFirestore.instance
+        .collection(_studentInformationPath())
+        .snapshots()
+        .map(_studentListingFromSnapshot);
+  }
+
+  // Path generator, student information
+  String _studentInformationPath() {
+    return 'mainCollection/$uid/students';
+  }
+
+  // Path generator, student performance
+  String _studentPerformancePath(RecordMathFacts record) {
+    return 'performanceCollection/${record.tid}/${record.target}/students/${record.id}';
+  }
+
+  // Map for snapshot, list of students for home page
   List<Student> _studentListingFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((d) {
       Map<String, dynamic> data = d.data() as Map<String, dynamic>;
@@ -57,6 +77,7 @@ class DatabaseService {
     }).toList();
   }
 
+  // Map for snapshot, specific to teacher user data
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
@@ -69,22 +90,11 @@ class DatabaseService {
         currentSchool: data['school']);
   }
 
-  Stream<UserData> get userData {
-    return mainCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
-  }
-
-  Stream<List<Student>> get students {
-    return FirebaseFirestore.instance
-        .collection('mainCollection/$uid/students')
-        .snapshots()
-        .map(_studentListingFromSnapshot);
-  }
-
   // Add Student to classroom collection
   Future addToStudentCollection(String studentTag, String setSize,
       String target, int setNum, bool randomized) async {
     return await FirebaseFirestore.instance
-        .collection('mainCollection/$uid/students')
+        .collection(_studentInformationPath())
         .add({
       'name': studentTag,
       'setSize': setSize,
@@ -94,11 +104,11 @@ class DatabaseService {
     });
   }
 
+  // Add student performance to collection
   Future addToStudentPerformanceCollection(RecordMathFacts record) async {
-    var test = FirebaseFirestore.instance.collection(
-        'performanceCollection/${record.tid}/${record.target}/students/${record.id}');
-
-    return await test.add({
+    return await FirebaseFirestore.instance
+        .collection(_studentPerformancePath(record))
+        .add({
       'tid': record.tid,
       'id': record.id,
       'setSize': record.setSize,
@@ -114,34 +124,26 @@ class DatabaseService {
     });
   }
 
-  Future updateStudentInCollection(String studentTag, String setSize,
-      String target, String set, String iid, bool randomized) async {
-    var test = FirebaseFirestore.instance
-        .collection('mainCollection/$uid/students')
-        .doc(iid);
-
-    return await test.set({
-      'name': studentTag,
-      'setSize': setSize,
-      'set': set,
-      'target': target,
-      'random': randomized
+  // Update a student's programming
+  Future updateStudentInCollection(Student student) async {
+    return await FirebaseFirestore.instance
+        .collection(_studentInformationPath())
+        .doc(student.id)
+        .set({
+      'name': student.name,
+      'setSize': student.setSize,
+      'set': student.set,
+      'target': student.target,
+      'random': student.randomized
     });
   }
 
-  // Update teacher's data
-  Future addTeacherDataInsert(
-      String school, String teacherName, String grade) async {
-    return await mainCollection
-        .doc(uid)
-        .set({'school': school, 'teacherName': teacherName, 'grade': grade});
-  }
-
-  // Update teacher's data
-  Future updateTeacherData(
-      String school, String teacherName, String grade) async {
-    return await mainCollection
-        .doc(uid)
-        .set({'school': school, 'teacherName': teacherName, 'grade': grade});
+  // Update a teacher's working defaults
+  Future updateTeacherInCollection(Teacher teacher) async {
+    return await mainCollection.doc(uid).set({
+      'school': teacher.school,
+      'teacherName': teacher.name,
+      'grade': teacher.grade
+    });
   }
 }

@@ -21,11 +21,12 @@
     THE SOFTWARE.
 */
 
+import 'package:covcopcomp_math_fact/models/teacher.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
-import 'package:flutter/material.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SettingsForm extends StatefulWidget {
@@ -106,10 +107,12 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
-                      await DatabaseService(uid: user.uid).updateTeacherData(
-                          _currentSchool ?? userData.currentSchool,
-                          _currentName ?? userData.name,
-                          _currentGrade ?? userData.currentGrade);
+                      await DatabaseService(uid: user.uid)
+                          .updateTeacherInCollection(Teacher(
+                              school: _currentSchool ?? userData.currentSchool,
+                              name: _currentName ?? userData.name,
+                              grade: _currentGrade ?? userData.currentGrade,
+                              id: user.uid));
 
                       Navigator.pop(context);
                     }

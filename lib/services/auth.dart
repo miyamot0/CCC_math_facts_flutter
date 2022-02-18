@@ -25,6 +25,8 @@ import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 
+import '../models/teacher.dart';
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -38,24 +40,6 @@ class AuthService {
     return _auth
         .authStateChanges()
         .map((User user) => _userFromFirebaseUser(user));
-  }
-
-  // Sign into app anonymously
-  Future signInAnonymous() async {
-    try {
-      UserCredential result = await _auth.signInAnonymously();
-      User user = result.user;
-
-      if (user == null) {
-        return null;
-      } else {
-        return _userFromFirebaseUser(user);
-      }
-    } catch (e) {
-      //print(e.toString());
-
-      return null;
-    }
   }
 
   // Sign in with email/pass
@@ -88,8 +72,8 @@ class AuthService {
       if (user == null) {
         return null;
       } else {
-        await DatabaseService(uid: user.uid)
-            .addTeacherDataInsert(school, name, grade);
+        await DatabaseService(uid: user.uid).updateTeacherInCollection(
+            Teacher(school: school, name: name, grade: grade, id: user.uid));
 
         return _userFromFirebaseUser(user);
       }

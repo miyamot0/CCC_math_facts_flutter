@@ -170,13 +170,13 @@ class _StudentTileState extends State<StudentTile> {
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
                       await DatabaseService(uid: user.uid)
-                          .updateStudentInCollection(
-                              _textFieldController.text,
-                              _setSizeEdit,
-                              _exerciseEdit,
-                              _set,
-                              _id,
-                              _randomized);
+                          .updateStudentInCollection(Student(
+                              id: _id,
+                              set: _set,
+                              setSize: _setSizeEdit,
+                              target: _exerciseEdit,
+                              randomized: _randomized,
+                              name: _textFieldController.text));
 
                       Navigator.pop(context);
                     }
