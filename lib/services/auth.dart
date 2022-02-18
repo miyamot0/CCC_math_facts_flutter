@@ -50,11 +50,7 @@ class AuthService {
 
       User user = result.user;
 
-      if (user == null) {
-        return null;
-      } else {
-        return _userFromFirebaseUser(user);
-      }
+      return user == null ? null : _userFromFirebaseUser(user);
     } catch (e) {
       //print(e.toString());
     }

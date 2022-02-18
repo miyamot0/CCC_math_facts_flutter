@@ -74,12 +74,13 @@ class _RegistrationState extends State<Registration> {
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                   key: _formKey,
-                  child: Column(
+                  child: SingleChildScrollView(
+                      child: Column(
                     children: [
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Name'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'Name', labelText: "Name:"),
                         validator: (value) =>
                             value.isEmpty ? 'Enter your name' : null,
                         onChanged: (value) {
@@ -89,7 +90,7 @@ class _RegistrationState extends State<Registration> {
                       const SizedBox(height: 20),
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
-                            hintText: 'School name'),
+                            hintText: 'School name', labelText: "School Name:"),
                         validator: (value) =>
                             value.isEmpty ? 'Enter your school' : null,
                         onChanged: (value) {
@@ -98,8 +99,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Grade'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'Grade', labelText: "Grade(s) Taught:"),
                         validator: (value) => value.isEmpty
                             ? 'Enter the grade(s) for your classroom'
                             : null,
@@ -109,8 +110,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Email'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'Email', labelText: "Email Address:"),
                         validator: (value) =>
                             value.isEmpty ? 'Enter an email' : null,
                         onChanged: (value) {
@@ -119,8 +120,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Password'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'Password', labelText: "Password:"),
                         validator: (value) => value.length < 6
                             ? 'Enter a password 6+ chars long'
                             : null,
@@ -163,7 +164,7 @@ class _RegistrationState extends State<Registration> {
                             const TextStyle(color: Colors.red, fontSize: 14.0),
                       )
                     ],
-                  )),
+                  ))),
             ),
           );
   }

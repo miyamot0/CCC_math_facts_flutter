@@ -41,37 +41,38 @@ class StudentTile extends StatefulWidget {
   State<StudentTile> createState() => _StudentTileState();
 }
 
-List<String> _getSet(Student student, MathFactData data) {
-  List<String> mLocal;
-
-  if (student.target == "Math Facts-Addition") {
-    mLocal = data.addition[int.parse(student.set)];
-  } else if (student.target == "Math Facts-Subtraction") {
-    mLocal = data.subtraction[int.parse(student.set)];
-  } else if (student.target == "Math Facts-Multiplication") {
-    mLocal = data.multiplication[int.parse(student.set)];
-  } else if (student.target == "Math Facts-Division") {
-    mLocal = data.division[int.parse(student.set)];
-  }
-
-  if (student.randomized) {
-    mLocal.shuffle();
-  }
-
-  return mLocal.take(int.parse(student.setSize)).toList();
-}
-
-Future<MathFactData> _parseJson() async {
-  return await parseJsonFromAssets('assets/mathfacts.json')
-      .then((map) => MathFactData.fromJson(map));
-}
-
-Widget _buildStudentDescription(Student student) {
-  return Text(
-      "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \nCurrent set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id}");
-}
-
 class _StudentTileState extends State<StudentTile> {
+  // Pull respective content from data
+  List<String> _getSet(Student student, MathFactData data) {
+    List<String> mLocal;
+
+    if (student.target == "Math Facts-Addition") {
+      mLocal = data.addition[int.parse(student.set)];
+    } else if (student.target == "Math Facts-Subtraction") {
+      mLocal = data.subtraction[int.parse(student.set)];
+    } else if (student.target == "Math Facts-Multiplication") {
+      mLocal = data.multiplication[int.parse(student.set)];
+    } else if (student.target == "Math Facts-Division") {
+      mLocal = data.division[int.parse(student.set)];
+    }
+
+    if (student.randomized == true) {
+      mLocal.shuffle();
+    }
+
+    return mLocal.take(int.parse(student.setSize)).toList();
+  }
+
+  Future<MathFactData> _parseJson() async {
+    return await parseJsonFromAssets('assets/mathfacts.json')
+        .then((map) => MathFactData.fromJson(map));
+  }
+
+  Widget _buildStudentDescription(Student student) {
+    return Text(
+        "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \nCurrent set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id}");
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
@@ -87,14 +88,14 @@ class _StudentTileState extends State<StudentTile> {
         bool _randomized) async {
       _textFieldController.text = _name;
 
-      List<int> sets = Iterable<int>.generate(18).toList();
+      List<int> sets = Iterable<int>.generate(NumberSetsMind).toList();
       List<String> strSets = sets.map((i) => i.toString()).toList();
 
       return showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text('Update Student Information'),
+              title: const Text('Update Student Info'),
               content: Form(
                 child: SingleChildScrollView(
                     child: Column(
@@ -102,12 +103,13 @@ class _StudentTileState extends State<StudentTile> {
                   children: [
                     TextField(
                       controller: _textFieldController,
-                      decoration:
-                          textInputDecoration.copyWith(hintText: "Student ID"),
+                      decoration: textInputDecoration.copyWith(
+                          hintText: "Student Name", labelText: "Student Name:"),
                     ),
                     DropdownButtonFormField(
                       decoration: textInputDecoration.copyWith(
-                          hintText: "Select exercise"),
+                          hintText: "Select exercise",
+                          labelText: "Target Skill:"),
                       value: _exerciseEdit,
                       items: factsType.map((setting) {
                         return DropdownMenuItem(
@@ -117,8 +119,8 @@ class _StudentTileState extends State<StudentTile> {
                           _exerciseEdit = value.toString(),
                     ),
                     DropdownButtonFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: "Set Size"),
+                      decoration: textInputDecoration.copyWith(
+                          hintText: "Set Size", labelText: "Size of Set:"),
                       value: _setSizeEdit,
                       items: setSizeArray.map((setting) {
                         return DropdownMenuItem(
@@ -129,7 +131,8 @@ class _StudentTileState extends State<StudentTile> {
                     ),
                     DropdownButtonFormField(
                       decoration: textInputDecoration.copyWith(
-                          hintText: "Select set number"),
+                          hintText: "Select set number",
+                          labelText: "Which Set:"),
                       value: _set,
                       items: strSets.map((setting) {
                         return DropdownMenuItem(
@@ -139,8 +142,9 @@ class _StudentTileState extends State<StudentTile> {
                     ),
                     DropdownButtonFormField(
                       decoration: textInputDecoration.copyWith(
-                          hintText: "Set Presentation"),
-                      value: _randomized ? 'Randomized' : 'Fixed',
+                          hintText: "Problem Selection",
+                          labelText: "Problem Selection:"),
+                      value: _randomized == true ? 'Randomized' : 'Fixed',
                       items: ['Fixed', 'Randomized'].map((setting) {
                         return DropdownMenuItem(
                             value: setting, child: Text(setting));
