@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
     String _setSizeEdit = setSizeArray[0], _exerciseEdit = factsType[0];
     bool _randomized = false;
 
+    // Display new student input
     Future<void> _displayTextInputDialog(
         BuildContext context, String uidTag) async {
       return showDialog(
@@ -142,15 +143,20 @@ class _HomeState extends State<Home> {
           });
     }
 
+    // Render bottom modal sheet
     void _showSettingsPanel() {
       showModalBottomSheet(
           context: context,
+          isScrollControlled: true,
           builder: (context) {
-            return Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+            return SingleChildScrollView(
+                child: Container(
+              padding: EdgeInsets.only(
+                  left: 60.0,
+                  right: 60.0,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
               child: const SettingsForm(),
-            );
+            ));
           });
     }
 
