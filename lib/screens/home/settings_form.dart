@@ -39,10 +39,7 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
 
-  // Form values
-  String _currentGrade;
-  String _currentSchool;
-  String _currentName;
+  String _currentGrade, _currentSchool, _currentName;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +62,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: "Your name"),
+                decoration: textInputDecoration.copyWith(
+                    hintText: "e.g., John/Jane Smith", labelText: "Name:"),
                 initialValue: userData.name,
                 validator: (val) => val.isEmpty ? 'Please enter a name' : null,
                 onChanged: (val) => setState((() => _currentName = val)),
@@ -74,8 +72,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration:
-                    textInputDecoration.copyWith(hintText: "Grade(s) taught"),
+                decoration: textInputDecoration.copyWith(
+                    hintText: "e.g., K-2", labelText: "Grade(s) taught:"),
                 initialValue: userData.currentGrade,
                 validator: (val) => val.isEmpty
                     ? 'Please enter a value for your grade(s)'
@@ -86,8 +84,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration:
-                    textInputDecoration.copyWith(hintText: "School name"),
+                decoration: textInputDecoration.copyWith(
+                    hintText: "e.g., Sadie Hawkins", labelText: "School name:"),
                 initialValue: userData.currentSchool,
                 validator: (val) =>
                     val.isEmpty ? 'Please enter a value for your school' : null,
