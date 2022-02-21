@@ -118,8 +118,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   }
 
   List<InlineSpan> _verticalizeStringEditor(String str) {
-    //print('_verticalizeStringEditor ' + str);
-
     RegExp regExp = RegExp(
       r"(\d[^\+\-\x\\==]*)+",
       caseSensitive: false,
@@ -143,25 +141,19 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       operator = ' ';
     }
 
-    print('Current group units ${regExp.allMatches(str).length}');
-
     if (regExp.allMatches(str).length < 2 && operator == ' ') {
-      print("in base builder, just 1 or 0");
-
       for (RegExpMatch reg in regExp.allMatches(str)) {
-        newText.add(TextSpan(text: reg.group(1).padLeft(4)));
+        newText.add(TextSpan(text: reg.group(1).padLeft(4, ' ')));
       }
       newText.add(const TextSpan(text: "\r\n"));
       newText.add(TextSpan(text: operator));
     } else if (regExp.allMatches(str).length <= 1 && !str.contains(' ')) {
-      print("in intermediate builder 1");
-
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
 
           print(textToInclude);
-          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
           newText.add(const TextSpan(text: "\r\n"));
         }
 
@@ -171,17 +163,15 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       newText.add(TextSpan(text: (operator).padLeft(4).trim()));
       newText.add(const TextSpan(text: "\r\n"));
     } else if (regExp.allMatches(str).length == 2 && !str.contains('=')) {
-      print("in intermediate builder 2");
-
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
-          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
           newText.add(const TextSpan(text: "\r\n"));
         } else if (iter == 1) {
           String textToInclude = reg.group(1);
           newText.add(TextSpan(
-            text: (operator + " " + textToInclude).padLeft(4).trim(),
+            text: (operator + " " + textToInclude).padLeft(4, ' '),
           ));
           newText.add(const TextSpan(text: "\r\n"));
         }
@@ -191,17 +181,15 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
       newText.add(const TextSpan(text: "\r\n"));
     } else if (regExp.allMatches(str).length == 2 && str.contains('=')) {
-      print("in intermediate builder 3");
-
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
-          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
           newText.add(const TextSpan(text: "\r\n"));
         } else if (iter == 1) {
           String textToInclude = reg.group(1);
           newText.add(TextSpan(
-              text: (operator + " " + textToInclude).padLeft(4).trim(),
+              text: (operator + " " + textToInclude).padLeft(4, ' '),
               style: const TextStyle(decoration: TextDecoration.underline)));
           newText.add(const TextSpan(text: "\r\n"));
         }
@@ -211,22 +199,19 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
       newText.add(const TextSpan(text: "\r\n"));
     } else if (regExp.allMatches(str).length == 3) {
-      print("in final builder");
-
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
-          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
           newText.add(const TextSpan(text: "\r\n"));
         } else if (iter == 1) {
           String textToInclude = reg.group(1);
           newText.add(TextSpan(
-              text: (operator + " " + textToInclude).padLeft(4).trim(),
+              text: (operator + " " + textToInclude).padLeft(4, ' '),
               style: const TextStyle(decoration: TextDecoration.underline)));
           newText.add(const TextSpan(text: "\r\n"));
         } else {
-          TextSpan newText3 =
-              TextSpan(text: reg.group(1).padLeft(4, ' ').trim());
+          TextSpan newText3 = TextSpan(text: reg.group(1).padLeft(4, ' '));
 
           newText.add(newText3);
         }
@@ -235,20 +220,13 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       }
     }
 
-    //print(newText);
-
     return newText;
   }
 
-  // TODO ended here
   _appendCharacter(String char) {
-    print('_appendCharacter: ' + char);
-
     if (hud != CCCStatus.coverCopy) {
       return;
     }
-
-    print('isVertical $isVertical');
 
     if (isVertical) {
       if (char == delCode) {
@@ -280,8 +258,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         entryPanelStringInternal = entryPanelStringInternal + char;
       }
     }
-
-    print('entryPanelStringInternal: ' + entryPanelStringInternal);
   }
 
   _toggleEntry(BuildContext context) {
@@ -321,8 +297,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         print(hud);
         hud = CCCStatus.entry;
 
-        // TODO
-        //isMatching = viewPanelString.trim() == entryPanelStringInternal.trim();
+        isMatching =
+            viewPanelStringInternal.trim() == entryPanelStringInternal.trim();
 
         toVerify = true;
       }
@@ -403,6 +379,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   viewPanelString = [];
 
                   entryPanelStringInternal = '';
+                  entryPanelStringView = [];
                   buttonText = '';
                   isOngoing = false;
                 });
