@@ -35,7 +35,8 @@ class HeadsUpPanel extends StatelessWidget {
       this.viewPanelColor,
       this.viewPanelText,
       this.toggleEntry,
-      this.hudStatus})
+      this.hudStatus,
+      this.isVertical})
       : super(key: key);
 
   final String viewPanelString;
@@ -46,6 +47,7 @@ class HeadsUpPanel extends StatelessWidget {
   final Color viewPanelText;
   final ValueSetter<BuildContext> toggleEntry;
   final CCCStatus hudStatus;
+  final bool isVertical;
 
   @override
   Widget build(BuildContext context) {
@@ -59,51 +61,102 @@ class HeadsUpPanel extends StatelessWidget {
                   fontWeight: FontWeight.normal, fontSize: 24.0)));
     }
 
+    Widget _horizontal() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 6,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: viewPanelColor,
+                  border: Border.all(color: Colors.black)),
+              child: Center(
+                  child: Text(
+                viewPanelString,
+                textAlign: TextAlign.center,
+                style: cccTextStyle.copyWith(color: viewPanelText),
+              )),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            flex: 6,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: entryPanelColor,
+                  border: Border.all(color: Colors.black)),
+              child: Center(
+                  child: Text(
+                entryPanelString,
+                textAlign: TextAlign.center,
+                style: cccTextStyle,
+              )),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            flex: 2,
+            child: _advanceButton(context),
+          ),
+        ],
+      );
+    }
+
+    Widget _vertical() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 6,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: viewPanelColor,
+                  border: Border.all(color: Colors.black)),
+              child: Center(
+                  child: Text(
+                viewPanelString,
+                textAlign: TextAlign.center,
+                style: cccTextStyle.copyWith(color: viewPanelText),
+              )),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            flex: 6,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: entryPanelColor,
+                  border: Border.all(color: Colors.black)),
+              child: Center(
+                  child: Text(
+                entryPanelString,
+                textAlign: TextAlign.center,
+                style: cccTextStyle,
+              )),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            flex: 2,
+            child: _advanceButton(context),
+          ),
+        ],
+      );
+    }
+
     return Expanded(
-        flex: 1,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 6,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: viewPanelColor,
-                    border: Border.all(color: Colors.black)),
-                child: Center(
-                    child: Text(
-                  viewPanelString,
-                  textAlign: TextAlign.center,
-                  style: cccTextStyle.copyWith(color: viewPanelText),
-                )),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              flex: 6,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: entryPanelColor,
-                    border: Border.all(color: Colors.black)),
-                child: Center(
-                    child: Text(
-                  entryPanelString,
-                  textAlign: TextAlign.center,
-                  style: cccTextStyle,
-                )),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              flex: 2,
-              child: _advanceButton(context),
-            ),
-          ],
-        ));
+        flex: isVertical == false ? 1 : 3,
+        child: isVertical == false ? _horizontal() : _vertical());
   }
 }

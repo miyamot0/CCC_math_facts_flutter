@@ -27,6 +27,7 @@ import '../../models/record_ccc_mfacts.dart';
 import '../../models/student.dart';
 import '../../services/database.dart';
 import '../../shared/constants.dart';
+
 import 'heads_up.dart';
 import 'key_pad.dart';
 
@@ -46,7 +47,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   bool isOngoing = false,
       initialLoad = true,
       toVerify = false,
-      initialTry = true;
+      initialTry = true,
+      isVertical = false;
 
   List<String> localSet;
 
@@ -78,9 +80,11 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
           return;
         }
 
+        // TODO remove new line
         entryPanelString =
             entryPanelString.substring(0, entryPanelString.length - 1);
       } else {
+        // TODO add new line
         entryPanelString = entryPanelString + char;
       }
     });
@@ -226,6 +230,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       localSet = widget.set;
     }
 
+    isVertical = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cover, Copy, Compare'),
@@ -240,67 +246,75 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
           )
         ],
       ),
-      body: Container(
-          margin: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              HeadsUpPanel(
-                  viewPanelString: viewPanelString,
-                  entryPanelColor: entryPanel,
-                  entryPanelString: entryPanelString,
-                  buttonText: buttonText,
-                  viewPanelColor: viewPanel,
-                  viewPanelText: viewPanelText,
-                  toggleEntry: _toggleEntry,
-                  hudStatus: hud),
-              const SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                  flex: 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: ListView.builder(
-                            itemCount: localSet.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                leading: GestureDetector(
-                                    onTap: () {
-                                      if (isOngoing) {
-                                        return;
-                                      }
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          bool isVertical = orientation == Orientation.portrait;
 
-                                      setState(() {
-                                        viewPanelString = localSet[index];
-                                        cachedString = viewPanelString;
-                                        isOngoing = true;
-                                        buttonText = 'Cover';
-                                        localSet.removeAt(index);
-                                      });
+          return Container(
+              margin: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  HeadsUpPanel(
+                    viewPanelString: viewPanelString,
+                    entryPanelColor: entryPanel,
+                    entryPanelString: entryPanelString,
+                    buttonText: buttonText,
+                    viewPanelColor: viewPanel,
+                    viewPanelText: viewPanelText,
+                    toggleEntry: _toggleEntry,
+                    hudStatus: hud,
+                    isVertical: isVertical,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                      flex: 4,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: ListView.builder(
+                                itemCount: localSet.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    leading: GestureDetector(
+                                        onTap: () {
+                                          if (isOngoing) {
+                                            return;
+                                          }
 
-                                      _toggleEntry(context);
-                                    },
-                                    child: const CircleAvatar(
-                                      foregroundColor: Colors.blue,
-                                    )),
-                                title: Text(
-                                  localSet[index],
-                                  style: const TextStyle(fontSize: 42.0),
-                                ),
-                              );
-                            }),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: KeyPad(appendInput: _appendCharacter),
-                      ),
-                    ],
-                  ))
-            ],
-          )),
+                                          setState(() {
+                                            viewPanelString = localSet[index];
+                                            cachedString = viewPanelString;
+                                            isOngoing = true;
+                                            buttonText = 'Cover';
+                                            localSet.removeAt(index);
+                                          });
+
+                                          _toggleEntry(context);
+                                        },
+                                        child: const CircleAvatar(
+                                          foregroundColor: Colors.blue,
+                                        )),
+                                    title: Text(
+                                      localSet[index],
+                                      style: const TextStyle(fontSize: 42.0),
+                                    ),
+                                  );
+                                }),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: KeyPad(appendInput: _appendCharacter),
+                          ),
+                        ],
+                      ))
+                ],
+              ));
+        },
+      ),
     );
   }
 }

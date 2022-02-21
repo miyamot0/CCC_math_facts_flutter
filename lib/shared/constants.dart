@@ -38,6 +38,8 @@ ButtonStyle keypadButtonStyle =
 
 enum CCCStatus { entry, begin, coverCopy, compare }
 
+enum CCCOrientation { horizontal, vertical, preference }
+
 List<String> setSizeArray = ["8", "16", "24"];
 List<String> factsType = [
   "Math Facts-Addition",
