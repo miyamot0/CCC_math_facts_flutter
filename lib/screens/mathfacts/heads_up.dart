@@ -63,54 +63,6 @@ class HeadsUpPanel extends StatelessWidget {
               )));
     }
 
-    Widget _horizontal() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            flex: 6,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                  color: viewPanelColor,
-                  border: Border.all(color: Colors.black)),
-              child: Center(
-                  child: RichText(
-                textAlign: TextAlign.right,
-                text: TextSpan(children: viewPanelString),
-              )),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            flex: 6,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                  color: entryPanelColor,
-                  border: Border.all(color: Colors.black)),
-              child: Center(
-                  child: RichText(
-                textAlign: TextAlign.right,
-                text: TextSpan(
-                    children: entryPanelString,
-                    style: cccTextStyle.copyWith(color: Colors.black)),
-                //style: ,
-              )),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            flex: 2,
-            child: _advanceButton(context),
-          ),
-        ],
-      );
-    }
-
     Widget _vertical() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -160,8 +112,6 @@ class HeadsUpPanel extends StatelessWidget {
       );
     }
 
-    return Expanded(
-        flex: isVertical == false ? 1 : 3,
-        child: isVertical == false ? _horizontal() : _vertical());
+    return Expanded(flex: 3, child: _vertical());
   }
 }

@@ -361,6 +361,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   toVerify = false;
 
                   entryPanelStringInternal = '';
+                  entryPanelStringView = [];
                   isOngoing = true;
 
                   hud = CCCStatus.begin;
@@ -405,10 +406,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
       localSet = widget.set;
     }
-
-    isVertical = MediaQuery.of(context).orientation == Orientation.portrait;
-
-    print('is vertical: $isVertical');
 
     return Scaffold(
       appBar: AppBar(
@@ -462,8 +459,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                           if (isOngoing) {
                                             return;
                                           }
-
-                                          _verticalizeString(localSet[index]);
 
                                           setState(() {
                                             viewPanelStringInternal =
