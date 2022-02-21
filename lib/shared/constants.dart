@@ -38,14 +38,24 @@ ButtonStyle keypadButtonStyle =
 
 enum CCCStatus { entry, begin, coverCopy, compare }
 
-enum CCCOrientation { horizontal, vertical, preference }
-
 List<String> setSizeArray = ["8", "16", "24"];
+
+class MathFactTypes {
+  // ignore: non_constant_identifier_names
+  String Addition = "Math Facts-Addition";
+  // ignore: non_constant_identifier_names
+  String Subtraction = "Math Facts-Subtraction";
+  // ignore: non_constant_identifier_names
+  String Multiplication = "Math Facts-Multiplication";
+  // ignore: non_constant_identifier_names
+  String Division = "Math Facts-Division";
+}
+
 List<String> factsType = [
-  "Math Facts-Addition",
-  "Math Facts-Subtraction",
-  "Math Facts-Multiplication",
-  "Math Facts-Division"
+  MathFactTypes().Addition,
+  MathFactTypes().Subtraction,
+  MathFactTypes().Multiplication,
+  MathFactTypes().Division
 ];
 
 class Orientations {
