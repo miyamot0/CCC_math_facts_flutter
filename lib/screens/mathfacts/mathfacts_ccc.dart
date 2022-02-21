@@ -53,9 +53,12 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   List<String> localSet;
 
   String cachedString = '',
-      viewPanelString = '',
-      entryPanelString = '',
+      viewPanelStringInternal = '',
+      entryPanelStringInternal = '',
       buttonText = '';
+
+  List<InlineSpan> viewPanelString = [];
+  List<InlineSpan> entryPanelStringView = [];
 
   Color entryPanel = Colors.grey,
       viewPanel = Colors.grey,
@@ -69,25 +72,114 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   static const String delCode = "Del";
 
+  List<InlineSpan> _verticalizeString(String str) {
+    RegExp regExp = RegExp(
+      r"(\d[^\+\-\x\\==]*)+",
+      caseSensitive: false,
+      multiLine: true,
+    );
+
+    String operator = "";
+    int iter = 0;
+
+    List<InlineSpan> newText = [];
+
+    if (str.contains('+')) {
+      operator = '+';
+    } else if (str.contains('-')) {
+      operator = '-';
+    } else if (str.contains('x')) {
+      operator = 'x';
+    } else if (str.contains('/')) {
+      operator = '/';
+    }
+
+    for (RegExpMatch reg in regExp.allMatches(str)) {
+      if (iter == 0) {
+        String textToInclude = reg.group(1).trim();
+        newText.add(TextSpan(text: textToInclude.padLeft(4)));
+        newText.add(const TextSpan(text: "\r\n"));
+      } else if (iter == 1) {
+        String textToInclude = reg.group(1);
+        newText.add(TextSpan(
+            text: (operator + " " + textToInclude).padLeft(4).trim(),
+            style: const TextStyle(decoration: TextDecoration.underline)));
+        newText.add(const TextSpan(text: "\r\n"));
+      } else {
+        TextSpan newText3 = TextSpan(text: reg.group(1).padLeft(4, ' ').trim());
+
+        newText.add(newText3);
+      }
+
+      iter++;
+    }
+
+    return newText;
+  }
+
+  List<InlineSpan> _verticalizeStringEditor(String str) {
+    RegExp regExp = RegExp(
+      r"(\d[^\+\-\x\\==]*)+",
+      caseSensitive: false,
+      multiLine: true,
+    );
+
+    String operator = "";
+    int iter = 0;
+
+    List<InlineSpan> newText = [];
+
+    if (str.contains('+')) {
+      operator = '+';
+    } else if (str.contains('-')) {
+      operator = '-';
+    } else if (str.contains('x')) {
+      operator = 'x';
+    } else if (str.contains('/')) {
+      operator = '/';
+    }
+
+    for (RegExpMatch reg in regExp.allMatches(str)) {
+      if (iter == 0) {
+        String textToInclude = reg.group(1).trim();
+        newText.add(TextSpan(text: textToInclude.padLeft(4)));
+        newText.add(const TextSpan(text: "\r\n"));
+      } else if (iter == 1) {
+        String textToInclude = reg.group(1);
+        newText.add(TextSpan(
+            text: (operator + " " + textToInclude).padLeft(4).trim(),
+            style: const TextStyle(decoration: TextDecoration.underline)));
+        newText.add(const TextSpan(text: "\r\n"));
+      } else {
+        TextSpan newText3 = TextSpan(text: reg.group(1).padLeft(4, ' ').trim());
+
+        newText.add(newText3);
+      }
+
+      iter++;
+    }
+
+    return newText;
+  }
+
+  // TODO ended here
   _appendCharacter(String char) {
     if (hud != CCCStatus.coverCopy) {
       return;
     }
 
-    setState(() {
-      if (char == delCode) {
-        if (entryPanelString.isEmpty) {
-          return;
-        }
-
-        // TODO remove new line
-        entryPanelString =
-            entryPanelString.substring(0, entryPanelString.length - 1);
-      } else {
-        // TODO add new line
-        entryPanelString = entryPanelString + char;
+    if (isVertical == true) {
+      if (char == delCode && entryPanelStringInternal.isEmpty) {
+        return;
       }
-    });
+
+      entryPanelStringInternal = entryPanelStringInternal.substring(
+          0, entryPanelStringInternal.length - 1);
+    } else {
+      entryPanelStringInternal = entryPanelStringInternal + char;
+
+      entryPanelStringView = _verticalizeStringEditor(entryPanelStringInternal);
+    }
   }
 
   _toggleEntry(BuildContext context) {
@@ -123,7 +215,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       } else {
         hud = CCCStatus.entry;
 
-        isMatching = viewPanelString.trim() == entryPanelString.trim();
+        // TODO
+        //isMatching = viewPanelString.trim() == entryPanelStringInternal.trim();
 
         toVerify = true;
       }
@@ -178,14 +271,14 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
               child: const Text("Yes"),
               onPressed: () {
                 setState(() {
-                  viewPanelString = cachedString;
+                  entryPanelStringInternal = cachedString;
                   viewPanel = Colors.white;
                   viewPanelText = Colors.black;
                   entryPanel = Colors.grey;
                   buttonText = 'Cover';
                   toVerify = false;
 
-                  entryPanelString = '';
+                  entryPanelStringInternal = '';
                   isOngoing = true;
 
                   hud = CCCStatus.begin;
@@ -201,9 +294,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
               child: const Text("No"),
               onPressed: () {
                 setState(() {
-                  viewPanelString = '';
+                  viewPanelString = [];
 
-                  entryPanelString = '';
+                  entryPanelStringInternal = '';
                   buttonText = '';
                   isOngoing = false;
                 });
@@ -232,6 +325,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     isVertical = MediaQuery.of(context).orientation == Orientation.portrait;
 
+    print('is vertical: $isVertical');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cover, Copy, Compare'),
@@ -257,7 +352,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   HeadsUpPanel(
                     viewPanelString: viewPanelString,
                     entryPanelColor: entryPanel,
-                    entryPanelString: entryPanelString,
+                    entryPanelString: entryPanelStringView,
                     buttonText: buttonText,
                     viewPanelColor: viewPanel,
                     viewPanelText: viewPanelText,
@@ -285,9 +380,19 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                             return;
                                           }
 
+                                          _verticalizeString(localSet[index]);
+
                                           setState(() {
-                                            viewPanelString = localSet[index];
-                                            cachedString = viewPanelString;
+                                            viewPanelStringInternal =
+                                                localSet[index];
+
+                                            viewPanelString = isVertical == true
+                                                ? _verticalizeString(
+                                                    viewPanelStringInternal)
+                                                : viewPanelStringInternal;
+
+                                            cachedString =
+                                                viewPanelStringInternal;
                                             isOngoing = true;
                                             buttonText = 'Cover';
                                             localSet.removeAt(index);

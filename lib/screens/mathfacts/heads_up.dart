@@ -39,8 +39,8 @@ class HeadsUpPanel extends StatelessWidget {
       this.isVertical})
       : super(key: key);
 
-  final String viewPanelString;
-  final String entryPanelString;
+  final List<InlineSpan> viewPanelString;
+  final List<InlineSpan> entryPanelString;
   final String buttonText;
   final Color entryPanelColor;
   final Color viewPanelColor;
@@ -73,10 +73,10 @@ class HeadsUpPanel extends StatelessWidget {
                   color: viewPanelColor,
                   border: Border.all(color: Colors.black)),
               child: Center(
-                  child: Text(
-                viewPanelString,
-                textAlign: TextAlign.center,
-                style: cccTextStyle.copyWith(color: viewPanelText),
+                  child: RichText(
+                textAlign: TextAlign.right,
+                text: TextSpan(children: viewPanelString),
+                //style: cccTextStyle.copyWith(color: viewPanelText),
               )),
             ),
           ),
@@ -90,10 +90,10 @@ class HeadsUpPanel extends StatelessWidget {
                   color: entryPanelColor,
                   border: Border.all(color: Colors.black)),
               child: Center(
-                  child: Text(
-                entryPanelString,
-                textAlign: TextAlign.center,
-                style: cccTextStyle,
+                  child: RichText(
+                textAlign: TextAlign.right,
+                text: TextSpan(children: entryPanelString),
+                //style: cccTextStyle.copyWith(color: viewPanelText),
               )),
             ),
           ),
@@ -120,10 +120,13 @@ class HeadsUpPanel extends StatelessWidget {
                   color: viewPanelColor,
                   border: Border.all(color: Colors.black)),
               child: Center(
-                  child: Text(
-                viewPanelString,
+                  child: RichText(
                 textAlign: TextAlign.center,
-                style: cccTextStyle.copyWith(color: viewPanelText),
+                text: TextSpan(
+                    children: viewPanelString,
+                    style: cccTextStyle.copyWith(color: viewPanelText)),
+
+                //style: cccTextStyle.copyWith(color: viewPanelText),
               )),
             ),
           ),
@@ -137,10 +140,10 @@ class HeadsUpPanel extends StatelessWidget {
                   color: entryPanelColor,
                   border: Border.all(color: Colors.black)),
               child: Center(
-                  child: Text(
-                entryPanelString,
-                textAlign: TextAlign.center,
-                style: cccTextStyle,
+                  child: RichText(
+                textAlign: TextAlign.right,
+                text: TextSpan(children: entryPanelString),
+                //style: cccTextStyle.copyWith(color: viewPanelText),
               )),
             ),
           ),
