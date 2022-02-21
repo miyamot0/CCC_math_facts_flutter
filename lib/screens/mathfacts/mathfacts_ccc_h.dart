@@ -270,7 +270,6 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
                     viewPanelText: viewPanelText,
                     toggleEntry: _toggleEntry,
                     hudStatus: hud,
-                    isVertical: isVertical,
                   ),
                   const SizedBox(
                     height: 10,

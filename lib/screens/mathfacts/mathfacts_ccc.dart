@@ -48,8 +48,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   bool isOngoing = false,
       initialLoad = true,
       toVerify = false,
-      initialTry = true,
-      isVertical = false;
+      initialTry = true;
 
   List<String> localSet;
 
@@ -228,36 +227,20 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       return;
     }
 
-    if (isVertical) {
-      if (char == delCode) {
-        if (entryPanelStringInternal.isEmpty == true) {
-          return;
-        }
-
-        entryPanelStringInternal = entryPanelStringInternal.substring(
-            0, entryPanelStringInternal.length - 1);
-      } else {
-        entryPanelStringInternal = entryPanelStringInternal + char;
+    if (char == delCode) {
+      if (entryPanelStringInternal.isEmpty == true) {
+        return;
       }
 
-      setState(() {
-        entryPanelStringView =
-            _verticalizeStringEditor(entryPanelStringInternal);
-      });
+      entryPanelStringInternal = entryPanelStringInternal.substring(
+          0, entryPanelStringInternal.length - 1);
     } else {
       entryPanelStringInternal = entryPanelStringInternal + char;
-
-      if (char == delCode) {
-        if (entryPanelStringInternal.isEmpty == true) {
-          return;
-        }
-
-        entryPanelStringInternal = entryPanelStringInternal.substring(
-            0, entryPanelStringInternal.length - 1);
-      } else {
-        entryPanelStringInternal = entryPanelStringInternal + char;
-      }
     }
+
+    setState(() {
+      entryPanelStringView = _verticalizeStringEditor(entryPanelStringInternal);
+    });
   }
 
   _toggleEntry(BuildContext context) {
@@ -423,8 +406,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
-          bool isVertical = orientation == Orientation.portrait;
-
           return Container(
               margin: const EdgeInsets.all(20.0),
               child: Column(
@@ -438,7 +419,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                     viewPanelText: viewPanelText,
                     toggleEntry: _toggleEntry,
                     hudStatus: hud,
-                    isVertical: isVertical,
                   ),
                   const SizedBox(
                     height: 10,
@@ -464,10 +444,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                             viewPanelStringInternal =
                                                 localSet[index];
 
-                                            viewPanelString = isVertical == true
-                                                ? _verticalizeString(
-                                                    viewPanelStringInternal)
-                                                : viewPanelStringInternal;
+                                            viewPanelString =
+                                                _verticalizeString(
+                                                    viewPanelStringInternal);
 
                                             cachedString =
                                                 viewPanelStringInternal;

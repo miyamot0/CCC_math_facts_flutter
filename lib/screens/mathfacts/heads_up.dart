@@ -35,8 +35,7 @@ class HeadsUpPanel extends StatelessWidget {
       this.viewPanelColor,
       this.viewPanelText,
       this.toggleEntry,
-      this.hudStatus,
-      this.isVertical})
+      this.hudStatus})
       : super(key: key);
 
   final List<InlineSpan> viewPanelString;
@@ -47,7 +46,6 @@ class HeadsUpPanel extends StatelessWidget {
   final Color viewPanelText;
   final ValueSetter<BuildContext> toggleEntry;
   final CCCStatus hudStatus;
-  final bool isVertical;
 
   @override
   Widget build(BuildContext context) {
