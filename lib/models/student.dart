@@ -27,13 +27,17 @@ class Student {
   final String target;
   final String set;
   final String id;
+  final String preferredOrientation;
+  final bool orientationPreference;
   final bool randomized;
 
   Student(
       {this.name,
       this.setSize,
       this.target,
-      this.id,
       this.set,
+      this.id,
+      this.preferredOrientation,
+      this.orientationPreference,
       this.randomized});
 }

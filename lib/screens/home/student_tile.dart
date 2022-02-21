@@ -70,8 +70,9 @@ class _StudentTileState extends State<StudentTile> {
   }
 
   Widget _buildStudentDescription(Student student) {
-    return Text(
-        "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \nCurrent set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id}");
+    return Text("Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
+        "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
+        "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}");
   }
 
   @override
@@ -89,7 +90,9 @@ class _StudentTileState extends State<StudentTile> {
         String _name,
         String _set,
         String _id,
-        bool _randomized) async {
+        bool _randomized,
+        bool _preferredOrientation,
+        String _orientationSetting) async {
       _textFieldController.text = _name;
 
       List<int> sets = Iterable<int>.generate(numberSetsMind).toList();
@@ -156,6 +159,23 @@ class _StudentTileState extends State<StudentTile> {
                       onChanged: (value) => _randomized =
                           value.toString() == "Randomized" ? true : false,
                     ),
+                    DropdownButtonFormField(
+                        decoration: textInputDecoration.copyWith(
+                            hintText: "Item Presentation",
+                            labelText: "Item Presentation:"),
+                        value: _orientationSetting,
+                        items: orientationPreference.map((setting) {
+                          return DropdownMenuItem(
+                              value: setting, child: Text(setting));
+                        }).toList(),
+                        onChanged: (value) {
+                          _preferredOrientation =
+                              (value.toString() == orientationPreference[0])
+                                  ? false
+                                  : true;
+
+                          _orientationSetting = value.toString();
+                        }),
                   ],
                 )),
               ),
@@ -187,7 +207,9 @@ class _StudentTileState extends State<StudentTile> {
                               setSize: _setSizeEdit,
                               target: _exerciseEdit,
                               randomized: _randomized,
-                              name: _textFieldController.text));
+                              name: _textFieldController.text,
+                              preferredOrientation: _orientationSetting,
+                              orientationPreference: _preferredOrientation));
 
                       Navigator.pop(context);
                     }
@@ -211,7 +233,13 @@ class _StudentTileState extends State<StudentTile> {
                 onTap: () async {
                   final jsonSet = await _parseJson();
 
-                  if (isInPortrait == true) {
+                  bool showVertical = widget.student.preferredOrientation ==
+                          Orientations().Vertical ||
+                      (widget.student.preferredOrientation ==
+                              Orientations().NoPreference &&
+                          isInPortrait);
+
+                  if (showVertical == true) {
                     var res = await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -248,7 +276,9 @@ class _StudentTileState extends State<StudentTile> {
                     widget.student.name,
                     widget.student.set,
                     widget.student.id,
-                    widget.student.randomized),
+                    widget.student.randomized,
+                    widget.student.orientationPreference,
+                    widget.student.preferredOrientation),
               ),
               title: Text(widget.student.name),
               subtitle: _buildStudentDescription(widget.student))),

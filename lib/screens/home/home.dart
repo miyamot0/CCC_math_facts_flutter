@@ -133,7 +133,9 @@ class _HomeState extends State<Home> {
                               set: "0",
                               setSize: _setSizeEdit,
                               target: _exerciseEdit,
-                              randomized: _randomized));
+                              randomized: _randomized,
+                              preferredOrientation: "Horizontal",
+                              orientationPreference: false));
 
                       Navigator.pop(context);
                     }

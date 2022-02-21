@@ -47,3 +47,18 @@ List<String> factsType = [
   "Math Facts-Multiplication",
   "Math Facts-Division"
 ];
+
+class Orientations {
+  // ignore: non_constant_identifier_names
+  String Vertical = "Vertical";
+  // ignore: non_constant_identifier_names
+  String Horizontal = "Horizontal";
+  // ignore: non_constant_identifier_names
+  String NoPreference = "No Preference";
+}
+
+List<String> orientationPreference = [
+  Orientations().NoPreference,
+  Orientations().Vertical,
+  Orientations().Horizontal
+];
