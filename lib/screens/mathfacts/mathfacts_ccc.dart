@@ -118,6 +118,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   }
 
   List<InlineSpan> _verticalizeStringEditor(String str) {
+    //print('_verticalizeStringEditor ' + str);
+
     RegExp regExp = RegExp(
       r"(\d[^\+\-\x\\==]*)+",
       caseSensitive: false,
@@ -137,49 +139,149 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       operator = 'x';
     } else if (str.contains('/')) {
       operator = '/';
+    } else {
+      operator = ' ';
     }
 
-    for (RegExpMatch reg in regExp.allMatches(str)) {
-      if (iter == 0) {
-        String textToInclude = reg.group(1).trim();
-        newText.add(TextSpan(text: textToInclude.padLeft(4)));
-        newText.add(const TextSpan(text: "\r\n"));
-      } else if (iter == 1) {
-        String textToInclude = reg.group(1);
-        newText.add(TextSpan(
-            text: (operator + " " + textToInclude).padLeft(4).trim(),
-            style: const TextStyle(decoration: TextDecoration.underline)));
-        newText.add(const TextSpan(text: "\r\n"));
-      } else {
-        TextSpan newText3 = TextSpan(text: reg.group(1).padLeft(4, ' ').trim());
+    print('Current group units ${regExp.allMatches(str).length}');
 
-        newText.add(newText3);
+    if (regExp.allMatches(str).length < 2 && operator == ' ') {
+      print("in base builder, just 1 or 0");
+
+      for (RegExpMatch reg in regExp.allMatches(str)) {
+        newText.add(TextSpan(text: reg.group(1).padLeft(4)));
+      }
+      newText.add(const TextSpan(text: "\r\n"));
+      newText.add(TextSpan(text: operator));
+    } else if (regExp.allMatches(str).length <= 1 && !str.contains(' ')) {
+      print("in intermediate builder 1");
+
+      for (RegExpMatch reg in regExp.allMatches(str)) {
+        if (iter == 0) {
+          String textToInclude = reg.group(1).trim();
+
+          print(textToInclude);
+          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(const TextSpan(text: "\r\n"));
+        }
+
+        iter++;
       }
 
-      iter++;
+      newText.add(TextSpan(text: (operator).padLeft(4).trim()));
+      newText.add(const TextSpan(text: "\r\n"));
+    } else if (regExp.allMatches(str).length == 2 && !str.contains('=')) {
+      print("in intermediate builder 2");
+
+      for (RegExpMatch reg in regExp.allMatches(str)) {
+        if (iter == 0) {
+          String textToInclude = reg.group(1).trim();
+          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(const TextSpan(text: "\r\n"));
+        } else if (iter == 1) {
+          String textToInclude = reg.group(1);
+          newText.add(TextSpan(
+            text: (operator + " " + textToInclude).padLeft(4).trim(),
+          ));
+          newText.add(const TextSpan(text: "\r\n"));
+        }
+
+        iter++;
+      }
+
+      newText.add(const TextSpan(text: "\r\n"));
+    } else if (regExp.allMatches(str).length == 2 && str.contains('=')) {
+      print("in intermediate builder 3");
+
+      for (RegExpMatch reg in regExp.allMatches(str)) {
+        if (iter == 0) {
+          String textToInclude = reg.group(1).trim();
+          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(const TextSpan(text: "\r\n"));
+        } else if (iter == 1) {
+          String textToInclude = reg.group(1);
+          newText.add(TextSpan(
+              text: (operator + " " + textToInclude).padLeft(4).trim(),
+              style: const TextStyle(decoration: TextDecoration.underline)));
+          newText.add(const TextSpan(text: "\r\n"));
+        }
+
+        iter++;
+      }
+
+      newText.add(const TextSpan(text: "\r\n"));
+    } else if (regExp.allMatches(str).length == 3) {
+      print("in final builder");
+
+      for (RegExpMatch reg in regExp.allMatches(str)) {
+        if (iter == 0) {
+          String textToInclude = reg.group(1).trim();
+          newText.add(TextSpan(text: textToInclude.padLeft(4)));
+          newText.add(const TextSpan(text: "\r\n"));
+        } else if (iter == 1) {
+          String textToInclude = reg.group(1);
+          newText.add(TextSpan(
+              text: (operator + " " + textToInclude).padLeft(4).trim(),
+              style: const TextStyle(decoration: TextDecoration.underline)));
+          newText.add(const TextSpan(text: "\r\n"));
+        } else {
+          TextSpan newText3 =
+              TextSpan(text: reg.group(1).padLeft(4, ' ').trim());
+
+          newText.add(newText3);
+        }
+
+        iter++;
+      }
     }
+
+    //print(newText);
 
     return newText;
   }
 
   // TODO ended here
   _appendCharacter(String char) {
+    print('_appendCharacter: ' + char);
+
     if (hud != CCCStatus.coverCopy) {
       return;
     }
 
-    if (isVertical == true) {
-      if (char == delCode && entryPanelStringInternal.isEmpty) {
-        return;
+    print('isVertical $isVertical');
+
+    if (isVertical) {
+      if (char == delCode) {
+        if (entryPanelStringInternal.isEmpty == true) {
+          return;
+        }
+
+        entryPanelStringInternal = entryPanelStringInternal.substring(
+            0, entryPanelStringInternal.length - 1);
+      } else {
+        entryPanelStringInternal = entryPanelStringInternal + char;
       }
 
-      entryPanelStringInternal = entryPanelStringInternal.substring(
-          0, entryPanelStringInternal.length - 1);
+      setState(() {
+        entryPanelStringView =
+            _verticalizeStringEditor(entryPanelStringInternal);
+      });
     } else {
       entryPanelStringInternal = entryPanelStringInternal + char;
 
-      entryPanelStringView = _verticalizeStringEditor(entryPanelStringInternal);
+      if (char == delCode) {
+        if (entryPanelStringInternal.isEmpty == true) {
+          return;
+        }
+
+        entryPanelStringInternal = entryPanelStringInternal.substring(
+            0, entryPanelStringInternal.length - 1);
+      } else {
+        entryPanelStringInternal = entryPanelStringInternal + char;
+      }
     }
+
+    print('entryPanelStringInternal: ' + entryPanelStringInternal);
   }
 
   _toggleEntry(BuildContext context) {
@@ -189,6 +291,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       if (buttonText.isEmpty) return;
 
       if (hud == CCCStatus.entry) {
+        print(hud);
         hud = CCCStatus.begin;
 
         viewPanel = Colors.white;
@@ -197,6 +300,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Cover';
         toVerify = false;
       } else if (hud == CCCStatus.begin) {
+        print(hud);
         hud = CCCStatus.coverCopy;
 
         viewPanel = Colors.grey;
@@ -205,6 +309,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Copied';
         toVerify = false;
       } else if (hud == CCCStatus.coverCopy) {
+        print(hud);
         hud = CCCStatus.compare;
 
         viewPanel = Colors.white;
@@ -213,6 +318,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Compare';
         toVerify = false;
       } else {
+        print(hud);
         hud = CCCStatus.entry;
 
         // TODO

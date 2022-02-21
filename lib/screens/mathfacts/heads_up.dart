@@ -74,7 +74,7 @@ class HeadsUpPanel extends StatelessWidget {
                   border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.center,
                 text: TextSpan(children: viewPanelString),
                 //style: cccTextStyle.copyWith(color: viewPanelText),
               )),
@@ -91,9 +91,11 @@ class HeadsUpPanel extends StatelessWidget {
                   border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
-                textAlign: TextAlign.right,
-                text: TextSpan(children: entryPanelString),
-                //style: cccTextStyle.copyWith(color: viewPanelText),
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                    children: entryPanelString,
+                    style: cccTextStyle.copyWith(color: Colors.black)),
+                //style: ,
               )),
             ),
           ),
@@ -141,9 +143,10 @@ class HeadsUpPanel extends StatelessWidget {
                   border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
-                textAlign: TextAlign.right,
-                text: TextSpan(children: entryPanelString),
-                //style: cccTextStyle.copyWith(color: viewPanelText),
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                    children: entryPanelString,
+                    style: cccTextStyle.copyWith(color: Colors.black)),
               )),
             ),
           ),
