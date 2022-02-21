@@ -22,6 +22,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../models/record_ccc_mfacts.dart';
 import '../../models/student.dart';
@@ -152,7 +153,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
 
-          print(textToInclude);
           newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
           newText.add(const TextSpan(text: "\r\n"));
         }
@@ -267,7 +267,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       if (buttonText.isEmpty) return;
 
       if (hud == CCCStatus.entry) {
-        print(hud);
         hud = CCCStatus.begin;
 
         viewPanel = Colors.white;
@@ -276,7 +275,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Cover';
         toVerify = false;
       } else if (hud == CCCStatus.begin) {
-        print(hud);
         hud = CCCStatus.coverCopy;
 
         viewPanel = Colors.grey;
@@ -285,7 +283,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Copied';
         toVerify = false;
       } else if (hud == CCCStatus.coverCopy) {
-        print(hud);
         hud = CCCStatus.compare;
 
         viewPanel = Colors.white;
@@ -294,7 +291,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Compare';
         toVerify = false;
       } else {
-        print(hud);
         hud = CCCStatus.entry;
 
         isMatching =
@@ -401,6 +397,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     if (initialLoad) {
       initialLoad = false;
 

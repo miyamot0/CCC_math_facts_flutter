@@ -28,16 +28,12 @@ import 'package:covcopcomp_math_fact/screens/authrouting.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  //SystemChrome.setPreferredOrientations(
-  //        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight])
-  //    .then((value) => runApp(const MyApp()));
   runApp(const MyApp());
 }
 

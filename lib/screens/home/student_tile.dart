@@ -25,6 +25,7 @@ import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc_h.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/data.dart';
@@ -91,7 +92,7 @@ class _StudentTileState extends State<StudentTile> {
         bool _randomized) async {
       _textFieldController.text = _name;
 
-      List<int> sets = Iterable<int>.generate(NumberSetsMind).toList();
+      List<int> sets = Iterable<int>.generate(numberSetsMind).toList();
       List<String> strSets = sets.map((i) => i.toString()).toList();
 
       return showDialog(
@@ -200,52 +201,57 @@ class _StudentTileState extends State<StudentTile> {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
-        margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-        child: ListTile(
-            leading: GestureDetector(
-              child: CircleAvatar(
-                radius: 25.0,
-                backgroundColor: Colors.green[100],
-              ),
-              onTap: () async {
-                final jsonSet = await _parseJson();
+          margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+          child: ListTile(
+              leading: GestureDetector(
+                child: CircleAvatar(
+                  radius: 25.0,
+                  backgroundColor: Colors.green[100],
+                ),
+                onTap: () async {
+                  final jsonSet = await _parseJson();
 
-                if (isInPortrait == true) {
-                  print('vertical launch');
-                  Navigator.push(
+                  if (isInPortrait == true) {
+                    var res = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MathFactsCCC(
+                                student: widget.student,
+                                tid: user.uid,
+                                set: _getSet(widget.student, jsonSet),
+                              )),
+                    ).then((_) {
+                      isInPortrait = MediaQuery.of(context).orientation ==
+                          Orientation.portrait;
+                      SystemChrome.setPreferredOrientations([]);
+                    });
+                  } else {
+                    var res = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MathFactsCCCHorizontal(
+                                student: widget.student,
+                                tid: user.uid,
+                                set: _getSet(widget.student, jsonSet),
+                              )),
+                    ).then((_) {
+                      isInPortrait = MediaQuery.of(context).orientation ==
+                          Orientation.portrait;
+                      SystemChrome.setPreferredOrientations([]);
+                    });
+                  }
+                },
+                onLongPress: () async => await _displayTextModificationDialog(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => MathFactsCCC(
-                              student: widget.student,
-                              tid: user.uid,
-                              set: _getSet(widget.student, jsonSet),
-                            )),
-                  );
-                } else {
-                  print('horizontal launch');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MathFactsCCCHorizontal(
-                              student: widget.student,
-                              tid: user.uid,
-                              set: _getSet(widget.student, jsonSet),
-                            )),
-                  );
-                }
-              },
-              onLongPress: () async => await _displayTextModificationDialog(
-                  context,
-                  widget.student.setSize,
-                  widget.student.target,
-                  widget.student.name,
-                  widget.student.set,
-                  widget.student.id,
-                  widget.student.randomized),
-            ),
-            title: Text(widget.student.name),
-            subtitle: _buildStudentDescription(widget.student)),
-      ),
+                    widget.student.setSize,
+                    widget.student.target,
+                    widget.student.name,
+                    widget.student.set,
+                    widget.student.id,
+                    widget.student.randomized),
+              ),
+              title: Text(widget.student.name),
+              subtitle: _buildStudentDescription(widget.student))),
     );
   }
 }

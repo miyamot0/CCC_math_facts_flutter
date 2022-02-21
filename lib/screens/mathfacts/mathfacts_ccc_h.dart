@@ -23,6 +23,7 @@
 
 import 'package:covcopcomp_math_fact/screens/mathfacts/heads_up_h.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../models/record_ccc_mfacts.dart';
 import '../../models/student.dart';
@@ -95,7 +96,6 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
       if (buttonText.isEmpty) return;
 
       if (hud == CCCStatus.entry) {
-        print(hud);
         hud = CCCStatus.begin;
 
         viewPanel = Colors.white;
@@ -104,7 +104,6 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
         buttonText = 'Cover';
         toVerify = false;
       } else if (hud == CCCStatus.begin) {
-        print(hud);
         hud = CCCStatus.coverCopy;
 
         viewPanel = Colors.grey;
@@ -113,7 +112,6 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
         buttonText = 'Copied';
         toVerify = false;
       } else if (hud == CCCStatus.coverCopy) {
-        print(hud);
         hud = CCCStatus.compare;
 
         viewPanel = Colors.white;
@@ -122,7 +120,6 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
         buttonText = 'Compare';
         toVerify = false;
       } else {
-        print(hud);
         hud = CCCStatus.entry;
 
         isMatching =
@@ -148,7 +145,6 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
   }
 
   _submitData() async {
-    print('submitting data');
     end = DateTime.now();
 
     int secs = end.difference(start).inSeconds;
@@ -231,6 +227,10 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+    ]);
+
     if (initialLoad) {
       initialLoad = false;
 
