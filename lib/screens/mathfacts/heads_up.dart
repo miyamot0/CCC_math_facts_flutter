@@ -58,7 +58,9 @@ class HeadsUpPanel extends StatelessWidget {
               primary: Colors.white, backgroundColor: Colors.blue),
           child: Text(buttonText,
               style: cccTextStyle.copyWith(
-                  fontWeight: FontWeight.normal, fontSize: 24.0)));
+                fontWeight: FontWeight.normal,
+                fontSize: 24.0,
+              )));
     }
 
     Widget _horizontal() {
@@ -74,9 +76,8 @@ class HeadsUpPanel extends StatelessWidget {
                   border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.right,
                 text: TextSpan(children: viewPanelString),
-                //style: cccTextStyle.copyWith(color: viewPanelText),
               )),
             ),
           ),
@@ -91,7 +92,7 @@ class HeadsUpPanel extends StatelessWidget {
                   border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.right,
                 text: TextSpan(
                     children: entryPanelString,
                     style: cccTextStyle.copyWith(color: Colors.black)),
@@ -123,12 +124,10 @@ class HeadsUpPanel extends StatelessWidget {
                   border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.right,
                 text: TextSpan(
                     children: viewPanelString,
                     style: cccTextStyle.copyWith(color: viewPanelText)),
-
-                //style: cccTextStyle.copyWith(color: viewPanelText),
               )),
             ),
           ),
@@ -143,7 +142,7 @@ class HeadsUpPanel extends StatelessWidget {
                   border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.right,
                 text: TextSpan(
                     children: entryPanelString,
                     style: cccTextStyle.copyWith(color: Colors.black)),
