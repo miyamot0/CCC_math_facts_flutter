@@ -23,6 +23,7 @@
 
 import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
+import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc_h.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,6 @@ class StudentTile extends StatefulWidget {
 }
 
 class _StudentTileState extends State<StudentTile> {
-  // Pull respective content from data
   List<String> _getSet(Student student, MathFactData data) {
     List<String> mLocal;
 
@@ -77,6 +77,9 @@ class _StudentTileState extends State<StudentTile> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     TextEditingController _textFieldController = TextEditingController();
+
+    bool isInPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     Future<void> _displayTextModificationDialog(
         BuildContext context,
@@ -207,15 +210,29 @@ class _StudentTileState extends State<StudentTile> {
               onTap: () async {
                 final jsonSet = await _parseJson();
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MathFactsCCC(
-                            student: widget.student,
-                            tid: user.uid,
-                            set: _getSet(widget.student, jsonSet),
-                          )),
-                );
+                if (isInPortrait == true) {
+                  print('vertical launch');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MathFactsCCC(
+                              student: widget.student,
+                              tid: user.uid,
+                              set: _getSet(widget.student, jsonSet),
+                            )),
+                  );
+                } else {
+                  print('horizontal launch');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MathFactsCCCHorizontal(
+                              student: widget.student,
+                              tid: user.uid,
+                              set: _getSet(widget.student, jsonSet),
+                            )),
+                  );
+                }
               },
               onLongPress: () async => await _displayTextModificationDialog(
                   context,
