@@ -30,7 +30,9 @@ Implementation of Cover-Copy-Compare (paper free!)
 
 Materials included in Takuan are derivative of work:
 
--   [Measures & Interventions for Numeracy Development](https://brianponcy.wixsite.com/mind/cover-copy-compare) - License Unknown (but permission granted) - Copyright Brian Poncy. <https://brianponcy.wixsite.com/mind/>
+- [Measures & Interventions for Numeracy Development](https://brianponcy.wixsite.com/mind/cover-copy-compare) - License Unknown (but permission granted) - Copyright Brian Poncy. <https://brianponcy.wixsite.com/mind/>
+
+- [OpenClipart](https://www.openclipart.org) - Creative Commons Zero 1.0 License. <https://freesvg.org/paper-sheet-vector-image>, <https://freesvg.org/sheets-of-paper-icon-vector-image>
 
 ### Acknowledgements and Credits
 
