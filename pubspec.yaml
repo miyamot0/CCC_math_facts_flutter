@@ -31,4 +31,5 @@ flutter:
   assets:
    - assets/mathfacts.json
    - assets/Anonymous_Paper_1_icon.svg
+   - assets/Anonymous_Paper_2_icon.svg
    - assets/Anonymous_Paper_4_icon.svg
