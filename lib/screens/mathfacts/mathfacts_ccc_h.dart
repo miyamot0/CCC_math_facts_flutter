@@ -166,7 +166,7 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
               sessionDuration: secs))
           .then((value) => Navigator.of(context).pop());
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
     } finally {}
   }
 
