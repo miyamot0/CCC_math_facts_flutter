@@ -255,8 +255,6 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
-          bool isVertical = orientation == Orientation.portrait;
-
           return Container(
               margin: const EdgeInsets.all(20.0),
               child: Column(

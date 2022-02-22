@@ -70,6 +70,7 @@ class _StudentTileState extends State<StudentTile> {
   }
 
   Widget _buildStudentDescription(Student student) {
+    // ignore: prefer_adjacent_string_concatenation
     return Text("Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
         "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
         "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}");
@@ -240,7 +241,7 @@ class _StudentTileState extends State<StudentTile> {
                           isInPortrait);
 
                   if (showVertical == true) {
-                    var res = await Navigator.push(
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => MathFactsCCC(
@@ -254,7 +255,7 @@ class _StudentTileState extends State<StudentTile> {
                       SystemChrome.setPreferredOrientations([]);
                     });
                   } else {
-                    var res = await Navigator.push(
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => MathFactsCCCHorizontal(
