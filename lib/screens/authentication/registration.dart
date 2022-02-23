@@ -53,9 +53,9 @@ class _RegistrationState extends State<Registration> {
     return loading
         ? const Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               elevation: 0.0,
               title: const Text('Sign up for Cover-Copy-Compare App'),
               actions: [

@@ -51,9 +51,9 @@ class _SignInState extends State<SignIn> {
     return loading
         ? const Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               elevation: 0.0,
               title: const Text('Sign in to Cover-Copy-Compare App'),
               actions: [

@@ -167,10 +167,10 @@ class _HomeState extends State<Home> {
       value: DatabaseService(uid: user.uid).students,
       initialData: null,
       child: Scaffold(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           title: const Text("List of current students:"),
-          backgroundColor: Colors.brown[400],
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           elevation: 0.0,
           actions: <Widget>[
             TextButton.icon(

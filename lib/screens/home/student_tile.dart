@@ -71,9 +71,12 @@ class _StudentTileState extends State<StudentTile> {
 
   Widget _buildStudentDescription(Student student) {
     // ignore: prefer_adjacent_string_concatenation
-    return Text("Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
-        "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
-        "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}");
+    return Text(
+      "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
+          "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
+          "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}",
+      style: const TextStyle(fontSize: 18.0),
+    );
   }
 
   @override
@@ -227,9 +230,9 @@ class _StudentTileState extends State<StudentTile> {
           margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
           child: ListTile(
               leading: GestureDetector(
-                child: CircleAvatar(
+                child: const CircleAvatar(
                   radius: 25.0,
-                  backgroundColor: Colors.green[100],
+                  backgroundColor: Colors.blue,
                 ),
                 onTap: () async {
                   final jsonSet = await _parseJson();

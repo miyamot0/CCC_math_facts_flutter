@@ -29,6 +29,7 @@ import 'package:covcopcomp_math_fact/screens/landing/landing.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -38,8 +39,20 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  PackageInfo appInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +60,9 @@ class MyApp extends StatelessWidget {
         value: AuthService().user,
         initialData: null,
         child: MaterialApp(
+          theme: ThemeData(
+              appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
+              backgroundColor: Colors.lightBlue[100]),
           initialRoute: "/",
           routes: {
             "/": (context) => const LandingScreen(),
