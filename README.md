@@ -32,7 +32,7 @@ Materials included in Takuan are derivative of work:
 
 - [Measures & Interventions for Numeracy Development](https://brianponcy.wixsite.com/mind/cover-copy-compare) - License Unknown (but permission granted) - Copyright Brian Poncy. <https://brianponcy.wixsite.com/mind/>
 
-- [OpenClipart](https://www.openclipart.org) - Creative Commons Zero 1.0 License. <https://freesvg.org/paper-sheet-vector-image>, <https://freesvg.org/sheets-of-paper-icon-vector-image>
+- [Mulberry Symbol Set](https://github.com/straight-street/mulberry-symbols) - Licensed as Creative Commons Share-Alike 2.0 - Copyright Garry Paxton.
 
 ### Acknowledgements and Credits
 

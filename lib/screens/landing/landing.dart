@@ -1,3 +1,4 @@
+import 'package:align_positioned/align_positioned.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,33 +17,26 @@ class _LandingScreenState extends State<LandingScreen> {
 
     double centerX = screen.width / 2.0;
     double centerY = screen.height / 2.0;
-
     final double iconWidth = screen.width * 0.20;
 
-    final Widget svg1 = SvgPicture.asset('assets/Anonymous_Paper_2_icon.svg',
+    final Widget svg1 = SvgPicture.asset('assets/coloured_paper.svg',
         width: screen.width * 0.20, height: screen.height * 0.20);
 
     final Widget svg2 = SvgPicture.asset(
-      'assets/Anonymous_Paper_4_icon.svg',
+      'assets/new_document.svg',
       width: screen.width * 0.20,
       height: screen.height * 0.20,
     );
 
     return Container(
-      decoration: const BoxDecoration(color: Colors.lightBlue),
-      alignment: Alignment.center,
+      color: Colors.lightBlue,
       child: Stack(children: [
-        Positioned(
-          child: svg2,
-          left: centerX - iconWidth / 2.0,
-          top: centerY / 2.0,
+        AlignPositioned(
+          alignment: Alignment.topCenter,
+          child: Row(children: [svg1, svg2]),
         ),
-        //Positioned(
-        //  child: svg1,
-        //  left: centerX - iconWidth / 2.0 - iconWidth * 0.5,
-        //  top: centerY / 2.0 + iconWidth * 0.1,
-        //),
-        const Positioned.fill(
+        const AlignPositioned(
+          alignment: Alignment.center,
           child: Center(
               child: Text(
             "Cover, Copy, Compare",
@@ -52,22 +46,27 @@ class _LandingScreenState extends State<LandingScreen> {
                 decoration: TextDecoration.none,
                 decorationStyle: TextDecorationStyle.double),
           )),
-          top: 0,
-          left: 0,
         ),
-        Positioned.fill(
-          child: Center(
-              child: TextButton(
-                  //style: ButtonStyle(backgroundColor: ),
-                  child: const Text(
-                    "Launch",
-                    style: cccTextStyle,
-                  ),
-                  onPressed: () =>
-                      Navigator.pushReplacementNamed(context, "/start"))),
-          left: 0,
-          top: screen.height * 0.80,
-        )
+        AlignPositioned(
+            alignment: Alignment.bottomCenter,
+            dy: -screen.height * .05,
+            child: MaterialButton(
+                color: Colors.blueAccent,
+                splashColor: Colors.redAccent,
+                textColor: Colors.white,
+                minWidth: screen.width * 0.25,
+                padding: const EdgeInsets.all(20.0),
+                //style: MaterialButtonSty(
+                //    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                //    foregroundColor: MaterialStateProperty.all(Colors.green)),
+                //style: ButtonStyle(backgroundColor: ),
+                child: Text(
+                  "Launch App",
+                  style: cccTextStyle.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.normal),
+                ),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, "/start"))),
       ]),
     );
   }
