@@ -22,6 +22,7 @@
 */
 
 import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/screens/home/edit_form.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc_h.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,6 @@ import 'package:provider/provider.dart';
 
 import '../../models/data.dart';
 import '../../models/usermodel.dart';
-import '../../services/database.dart';
 import '../../services/mind.dart';
 import '../../shared/constants.dart';
 
@@ -72,6 +72,7 @@ class _StudentTileState extends State<StudentTile> {
   Widget _buildStudentDescription(Student student) {
     // ignore: prefer_adjacent_string_concatenation
     return Text(
+      // ignore: prefer_adjacent_string_concatenation
       "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
           "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
           "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}, \nMetric: ${student.metric}",
@@ -82,10 +83,11 @@ class _StudentTileState extends State<StudentTile> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-    TextEditingController _textFieldController = TextEditingController();
 
     bool isInPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
+
+    /*
 
     // TODO: replace with bottom modal at some point
     Future<void> _displayTextModificationDialog(
@@ -237,67 +239,84 @@ class _StudentTileState extends State<StudentTile> {
           });
     }
 
+    */
+
+    // Render bottom modal sheet
+    void _editParticipantModal() {
+      showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return SingleChildScrollView(
+                child: Container(
+              padding: EdgeInsets.only(
+                  left: 60.0,
+                  right: 60.0,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: EditForm(
+                  setSize: widget.student.setSize,
+                  set: widget.student.set,
+                  name: widget.student.name,
+                  id: widget.student.id,
+                  randomized: widget.student.randomized,
+                  targetSkill: widget.student.target,
+                  orientationPreference: widget.student.orientationPreference,
+                  preferredOrientation: widget.student.preferredOrientation,
+                  metric: widget.student.metric),
+            ));
+          });
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
           margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
           child: ListTile(
               leading: GestureDetector(
-                child: const CircleAvatar(
-                  radius: 25.0,
-                  backgroundColor: Colors.blue,
-                ),
-                onTap: () async {
-                  final jsonSet = await _parseJson();
+                  child: const CircleAvatar(
+                    radius: 25.0,
+                    backgroundColor: Colors.blue,
+                  ),
+                  onTap: () async {
+                    final jsonSet = await _parseJson();
 
-                  bool showVertical = widget.student.preferredOrientation ==
-                          Orientations().Vertical ||
-                      (widget.student.preferredOrientation ==
-                              Orientations().NoPreference &&
-                          isInPortrait);
+                    bool showVertical = widget.student.preferredOrientation ==
+                            Orientations().Vertical ||
+                        (widget.student.preferredOrientation ==
+                                Orientations().NoPreference &&
+                            isInPortrait);
 
-                  if (showVertical == true) {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MathFactsCCC(
-                                student: widget.student,
-                                tid: user.uid,
-                                set: _getSet(widget.student, jsonSet),
-                              )),
-                    ).then((_) {
-                      isInPortrait = MediaQuery.of(context).orientation ==
-                          Orientation.portrait;
-                      SystemChrome.setPreferredOrientations([]);
-                    });
-                  } else {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MathFactsCCCHorizontal(
-                                student: widget.student,
-                                tid: user.uid,
-                                set: _getSet(widget.student, jsonSet),
-                              )),
-                    ).then((_) {
-                      isInPortrait = MediaQuery.of(context).orientation ==
-                          Orientation.portrait;
-                      SystemChrome.setPreferredOrientations([]);
-                    });
-                  }
-                },
-                onLongPress: () async => await _displayTextModificationDialog(
-                    context,
-                    widget.student.setSize,
-                    widget.student.target,
-                    widget.student.name,
-                    widget.student.set,
-                    widget.student.id,
-                    widget.student.randomized,
-                    widget.student.orientationPreference,
-                    widget.student.preferredOrientation,
-                    widget.student.metric),
-              ),
+                    if (showVertical == true) {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MathFactsCCC(
+                                  student: widget.student,
+                                  tid: user.uid,
+                                  set: _getSet(widget.student, jsonSet),
+                                )),
+                      ).then((_) {
+                        isInPortrait = MediaQuery.of(context).orientation ==
+                            Orientation.portrait;
+                        SystemChrome.setPreferredOrientations([]);
+                      });
+                    } else {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MathFactsCCCHorizontal(
+                                  student: widget.student,
+                                  tid: user.uid,
+                                  set: _getSet(widget.student, jsonSet),
+                                )),
+                      ).then((_) {
+                        isInPortrait = MediaQuery.of(context).orientation ==
+                            Orientation.portrait;
+                        SystemChrome.setPreferredOrientations([]);
+                      });
+                    }
+                  },
+                  onLongPress: () => _editParticipantModal()),
               title: Text(widget.student.name),
               subtitle: _buildStudentDescription(widget.student))),
     );

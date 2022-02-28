@@ -31,7 +31,6 @@ import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/usermodel.dart';
-import '../../shared/constants.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);

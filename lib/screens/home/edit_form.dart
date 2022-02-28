@@ -1,54 +1,76 @@
-/* 
-    The MIT License
-    Copyright February 1, 2022 Shawn Gilroy/Louisiana State University
-    
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
-
-import 'package:covcopcomp_math_fact/models/usermodel.dart';
-import 'package:covcopcomp_math_fact/services/database.dart';
-import 'package:covcopcomp_math_fact/shared/loading.dart';
-import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/student.dart';
+import '../../models/usermodel.dart';
+import '../../services/database.dart';
+import '../../shared/constants.dart';
+import '../../shared/loading.dart';
 
-class AddForm extends StatefulWidget {
-  const AddForm({Key key}) : super(key: key);
+class EditForm extends StatefulWidget {
+  final String setSize;
+  final String targetSkill;
+  final String name;
+  final String set;
+  final String id;
+  final bool randomized;
+  final bool orientationPreference;
+  final String preferredOrientation;
+  final String metric;
+
+  EditForm(
+      {Key key,
+      this.setSize,
+      this.targetSkill,
+      this.name,
+      this.id,
+      this.randomized,
+      this.orientationPreference,
+      this.preferredOrientation,
+      this.metric,
+      this.set})
+      : super(key: key);
 
   @override
-  _AddFormState createState() => _AddFormState();
+  _EditFormState createState() => _EditFormState();
 }
 
-class _AddFormState extends State<AddForm> {
+class _EditFormState extends State<EditForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _textFieldController = TextEditingController();
-  String _setSizeEdit = setSizeArray[0],
-      _exerciseEdit = factsType[0],
-      _metricEdit = metricPreference[0];
-  bool _randomized = false;
+  String _setSizeEdit,
+      _exerciseEdit,
+      _metricEdit,
+      _preferredOrientation,
+      _setNumber,
+      _orientationSetting,
+      itemPresentation;
+  bool _randomized, _preference;
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
+
+    _setSizeEdit = _setSizeEdit ?? widget.setSize;
+    _exerciseEdit = _exerciseEdit ?? widget.targetSkill;
+    _textFieldController.text = widget.name;
+    _randomized = widget.randomized;
+    _metricEdit = widget.metric;
+
+    // TODO: add in
+    _preferredOrientation = widget.preferredOrientation;
+
+    // TODO: set number
+    _setNumber = widget.set;
+
+    // TODO: orientation
+    _orientationSetting = widget.preferredOrientation;
+
+    // TODO: set item presentation (i.e.,  random)
+    _preference = widget.orientationPreference;
+
+    //ID is as-is
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -94,9 +116,17 @@ class _AddFormState extends State<AddForm> {
                   }).toList(),
                   onChanged: (String value) => _setSizeEdit = value.toString(),
                 ),
+
+                // TODO: set number
+
+                // TODO: orientation
+
+                // TODO: set item presentation (i.e.,  random)
+
                 const SizedBox(
                   height: 20.0,
                 ),
+
                 DropdownButtonFormField(
                   decoration: textInputDecoration.copyWith(
                       hintText: "Problem Selection",
@@ -130,7 +160,7 @@ class _AddFormState extends State<AddForm> {
                       primary: Colors.white,
                       backgroundColor: Colors.green,
                       textStyle: const TextStyle(color: Colors.white)),
-                  child: const Text('Add Student'),
+                  child: const Text('Update Student'),
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
                       await DatabaseService(uid: userData.uid)

@@ -21,8 +21,6 @@
     THE SOFTWARE.
 */
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(
