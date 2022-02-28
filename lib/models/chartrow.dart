@@ -21,27 +21,8 @@
     THE SOFTWARE.
 */
 
-class Student {
-  final String name;
-  final String setSize;
-  final String target;
-  final String set;
-  final String id;
-  final String preferredOrientation;
-  final String metric;
-  final int aim;
-  final bool orientationPreference;
-  final bool randomized;
-
-  Student(
-      {this.name,
-      this.setSize,
-      this.target,
-      this.set,
-      this.id,
-      this.preferredOrientation,
-      this.metric,
-      this.aim,
-      this.orientationPreference,
-      this.randomized});
+class ChartRow {
+  final DateTime timeStamp;
+  final double y;
+  ChartRow(this.timeStamp, this.y);
 }

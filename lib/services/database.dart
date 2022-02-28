@@ -43,6 +43,10 @@ class DatabaseService {
     return 'performanceCollection/${record.tid}/${record.target}/students/${record.id}';
   }
 
+  String _studentPerformanceCollectionPath(Student student) {
+    return 'performanceCollection/$uid/${student.target}/students/${student.id}';
+  }
+
   // Stream for user data
   Stream<UserData> get userData {
     return FirebaseFirestore.instance
@@ -74,7 +78,32 @@ class DatabaseService {
           randomized: data['random'],
           orientationPreference: data['hasPreference'] ?? false,
           preferredOrientation: data['preferredOrientation'].toString() ?? '',
-          metric: data['metric'].toString() ?? '');
+          metric: data['metric'].toString() ?? '',
+          aim: int.parse(data['aim'].toString()) ?? 0);
+    }).toList();
+  }
+
+  List<RecordMathFacts> _studentPerformancesFromSnapshot(
+      QuerySnapshot snapshot) {
+    return snapshot.docs.map((d) {
+      Map<String, dynamic> data = d.data() as Map<String, dynamic>;
+
+      return RecordMathFacts(
+        tid: uid ?? '',
+        id: d.id ?? '',
+        setSize: data['setSize'].toString() ?? '',
+        target: data['target'].toString() ?? '',
+        dateTimeStart: data['dateTimeStart'].toString() ?? '',
+        dateTimeEnd: data['dateTimeEnd'].toString() ?? '',
+        errCount: int.parse(data['errCount'].toString()),
+        nRetries: int.parse(data['nRetries'].toString()),
+        nCorrectInitial: int.parse(data['nCorrectInitial'].toString()),
+        delaySec: int.parse(data['delaySec'].toString()),
+        sessionDuration: int.parse(data['sessionDuration'].toString()),
+        set: int.parse(data['set'].toString()),
+        totalDigits: int.parse(data['totalDigits'].toString()),
+        correctDigits: int.parse(data['correctDigits'].toString()),
+      );
     }).toList();
   }
 
@@ -103,7 +132,8 @@ class DatabaseService {
       'random': student.randomized,
       'hasPreference': student.orientationPreference,
       'preferredOrientation': student.preferredOrientation,
-      'metric': student.metric
+      'metric': student.metric,
+      'aim': student.aim
     });
   }
 
@@ -129,6 +159,33 @@ class DatabaseService {
     });
   }
 
+  Future getStudentPerformanceCollection(Student student) async {
+    QuerySnapshot ref = await FirebaseFirestore.instance
+        .collection(_studentPerformanceCollectionPath(student))
+        .get();
+
+    return ref.docs.map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+      return RecordMathFacts(
+        tid: uid ?? '',
+        id: doc.id ?? '',
+        setSize: data['setSize'].toString() ?? '',
+        target: data['target'].toString() ?? '',
+        dateTimeStart: data['dateTimeStart'].toString() ?? '',
+        dateTimeEnd: data['dateTimeEnd'].toString() ?? '',
+        errCount: int.parse(data['errCount'].toString()),
+        nRetries: int.parse(data['nRetries'].toString()),
+        nCorrectInitial: int.parse(data['nCorrectInitial'].toString()),
+        delaySec: int.parse(data['delaySec'].toString()),
+        sessionDuration: int.parse(data['sessionDuration'].toString()),
+        set: int.parse(data['set'].toString()),
+        totalDigits: int.parse(data['totalDigits'].toString()),
+        correctDigits: int.parse(data['correctDigits'].toString()),
+      );
+    }).toList();
+  }
+
   // Update a student's programming
   Future updateStudentInCollection(Student student) async {
     return await FirebaseFirestore.instance
@@ -142,7 +199,8 @@ class DatabaseService {
       'random': student.randomized,
       'hasPreference': student.orientationPreference,
       'preferredOrientation': student.preferredOrientation,
-      'metric': student.metric
+      'metric': student.metric,
+      'aim': student.aim
     });
   }
 

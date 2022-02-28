@@ -25,6 +25,7 @@ import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/home/add_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/settings_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/student_list.dart';
+import 'package:covcopcomp_math_fact/screens/visualfeedback.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:covcopcomp_math_fact/services/database.dart';
@@ -90,6 +91,35 @@ class _HomeState extends State<Home> {
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           elevation: 0.0,
           actions: <Widget>[
+            TextButton.icon(
+              icon: const Icon(Icons.person),
+              style: TextButton.styleFrom(primary: Colors.white),
+              onPressed: () async {
+                String target = "Math Facts-Addition";
+                String id = "VxiKUroe7MQ1MblFHVHs";
+                String aim = "30";
+
+                Student std =
+                    Student(id: id, aim: int.parse(aim), target: target);
+
+                var performances = await DatabaseService(uid: user.uid)
+                    .getStudentPerformanceCollection(std);
+
+                //print(res);
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VisualFeedback(
+                            currentStudent: std,
+                            currentPerformances: performances,
+                          )),
+                );
+
+                /*
+                */
+              },
+              label: const Text("Test Feedback"),
+            ),
             TextButton.icon(
               icon: const Icon(Icons.person),
               style: TextButton.styleFrom(primary: Colors.white),
