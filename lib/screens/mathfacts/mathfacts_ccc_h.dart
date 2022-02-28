@@ -31,14 +31,17 @@ import '../../services/database.dart';
 import '../../shared/constants.dart';
 
 import 'key_pad.dart';
+import 'math_scoring.dart';
 
 class MathFactsCCCHorizontal extends StatefulWidget {
-  const MathFactsCCCHorizontal({Key key, this.student, this.tid, this.set})
+  const MathFactsCCCHorizontal(
+      {Key key, this.student, this.tid, this.set, this.operator})
       : super(key: key);
 
   final Student student;
   final String tid;
   final List<String> set;
+  final String operator;
 
   @override
   _MathFactsCCCState createState() => _MathFactsCCCState();
@@ -57,6 +60,7 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
       viewPanelStringInternal = '',
       entryPanelStringInternal = '',
       buttonText = '';
+  List<int> correctDigits = [], totalDigits = [];
 
   Color entryPanel = Colors.grey,
       viewPanel = Colors.grey,
@@ -149,6 +153,8 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
 
     int secs = end.difference(start).inSeconds;
 
+    // TODO: total, current correct sums
+
     try {
       await DatabaseService(uid: widget.tid)
           .addToStudentPerformanceCollection(RecordMathFacts(
@@ -204,6 +210,18 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
             TextButton(
               child: const Text("No"),
               onPressed: () {
+                String currentStringDisplayed = viewPanelStringInternal;
+                int totalDigitsShown =
+                    calculateDigitsTotal(currentStringDisplayed);
+                totalDigits.add(totalDigitsShown);
+
+                String currentStringEntered = entryPanelStringInternal;
+                int totalDigitsCorrect = calculateDigitsCorrect(
+                    currentStringEntered,
+                    currentStringDisplayed,
+                    widget.operator);
+                correctDigits.add(totalDigitsCorrect);
+
                 setState(() {
                   viewPanelStringInternal = '';
                   entryPanelStringInternal = '';

@@ -144,6 +144,8 @@ class _StudentTileState extends State<StudentTile> {
                                       student: widget.student,
                                       tid: user.uid,
                                       set: _getSet(widget.student, jsonSet),
+                                      // TODO: dynamic operator check
+                                      operator: '+',
                                     )),
                           ).then((_) {
                             isInPortrait = MediaQuery.of(context).orientation ==
@@ -158,6 +160,7 @@ class _StudentTileState extends State<StudentTile> {
                                       student: widget.student,
                                       tid: user.uid,
                                       set: _getSet(widget.student, jsonSet),
+                                      // TODO: dynamic operator check
                                     )),
                           ).then((_) {
                             isInPortrait = MediaQuery.of(context).orientation ==

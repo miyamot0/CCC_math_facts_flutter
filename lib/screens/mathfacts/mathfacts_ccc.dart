@@ -31,14 +31,16 @@ import '../../shared/constants.dart';
 
 import 'heads_up.dart';
 import 'key_pad.dart';
+import 'math_scoring.dart';
 
 class MathFactsCCC extends StatefulWidget {
-  const MathFactsCCC({Key key, this.student, this.tid, this.set})
+  const MathFactsCCC({Key key, this.student, this.tid, this.set, this.operator})
       : super(key: key);
 
   final Student student;
   final String tid;
   final List<String> set;
+  final String operator;
 
   @override
   _MathFactsCCCState createState() => _MathFactsCCCState();
@@ -304,6 +306,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     int secs = end.difference(start).inSeconds;
 
+    // TODO: total, current correct sums
+
     await DatabaseService(uid: widget.tid)
         .addToStudentPerformanceCollection(RecordMathFacts(
             tid: widget.tid,
@@ -356,6 +360,18 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             TextButton(
               child: const Text("No"),
               onPressed: () {
+                String currentStringDisplayed = viewPanelStringInternal;
+                int totalDigitsShown =
+                    calculateDigitsTotal(currentStringDisplayed);
+                totalDigits.add(totalDigitsShown);
+
+                String currentStringEntered = entryPanelStringInternal;
+                int totalDigitsCorrect = calculateDigitsCorrect(
+                    currentStringEntered,
+                    currentStringDisplayed,
+                    widget.operator);
+                correctDigits.add(totalDigitsCorrect);
+
                 setState(() {
                   viewPanelString = [];
 
@@ -367,8 +383,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
                 numTrial++;
                 initialTry = true;
-
-                // TODO: digits correct here
 
                 if (localSet.isEmpty) {
                   _submitData();
