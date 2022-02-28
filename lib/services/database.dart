@@ -83,6 +83,7 @@ class DatabaseService {
     }).toList();
   }
 
+  /*
   List<RecordMathFacts> _studentPerformancesFromSnapshot(
       QuerySnapshot snapshot) {
     return snapshot.docs.map((d) {
@@ -106,6 +107,7 @@ class DatabaseService {
       );
     }).toList();
   }
+  */
 
   // Map for snapshot, specific to teacher user data
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
