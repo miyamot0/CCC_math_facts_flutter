@@ -87,6 +87,7 @@ class _StudentTileState extends State<StudentTile> {
     bool isInPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
+    // TODO: replace with bottom modal at some point
     Future<void> _displayTextModificationDialog(
         BuildContext context,
         String _setSizeEdit,

@@ -22,6 +22,7 @@
 */
 
 import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/screens/home/add_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/settings_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/student_list.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
@@ -46,123 +47,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
-    TextEditingController _textFieldController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
-    String _setSizeEdit = setSizeArray[0],
-        _exerciseEdit = factsType[0],
-        _metricEdit = metricPreference[0];
-    bool _randomized = false;
-
-    // Display new student input
-    Future<void> _displayTextInputDialog(
-        BuildContext context, String uidTag) async {
-      return showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Enter ID for New Student'),
-              content: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextField(
-                          controller: _textFieldController,
-                          decoration: textInputDecoration.copyWith(
-                              hintText: "Student ID",
-                              labelText: "Student Name:"),
-                        ),
-                        DropdownButtonFormField(
-                          decoration: textInputDecoration.copyWith(
-                              hintText: "Select exercise",
-                              labelText: "Target Skill:"),
-                          value: _exerciseEdit,
-                          items: factsType.map((setting) {
-                            return DropdownMenuItem(
-                                value: setting, child: Text(setting));
-                          }).toList(),
-                          onChanged: (String value) =>
-                              _exerciseEdit = value.toString(),
-                        ),
-                        DropdownButtonFormField(
-                          decoration: textInputDecoration.copyWith(
-                              hintText: "Set Size", labelText: "Size of Set:"),
-                          value: _setSizeEdit,
-                          items: setSizeArray.map((setting) {
-                            return DropdownMenuItem(
-                                value: setting, child: Text(setting));
-                          }).toList(),
-                          onChanged: (String value) =>
-                              _setSizeEdit = value.toString(),
-                        ),
-                        DropdownButtonFormField(
-                          decoration: textInputDecoration.copyWith(
-                              hintText: "Problem Selection",
-                              labelText: "Problem Selection:"),
-                          value: _randomized ? 'Randomized' : 'Fixed',
-                          items: ['Fixed', 'Randomized'].map((setting) {
-                            return DropdownMenuItem(
-                                value: setting, child: Text(setting));
-                          }).toList(),
-                          onChanged: (value) => _randomized =
-                              value.toString() == "Randomized" ? true : false,
-                        ),
-                        DropdownButtonFormField(
-                          decoration: textInputDecoration.copyWith(
-                              hintText: "Primary Metric",
-                              labelText: "Primary Metric:"),
-                          value: _metricEdit,
-                          items: metricPreference.map((setting) {
-                            return DropdownMenuItem(
-                                value: setting, child: Text(setting));
-                          }).toList(),
-                          onChanged: (value) => _metricEdit,
-                        ),
-                      ],
-                    ),
-                  )),
-              actions: <Widget>[
-                TextButton(
-                  style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: Colors.red,
-                      textStyle: const TextStyle(color: Colors.white)),
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    setState(() {
-                      Navigator.pop(context);
-                    });
-                  },
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: Colors.green,
-                      textStyle: const TextStyle(color: Colors.white)),
-                  child: const Text('Add Student'),
-                  onPressed: () async {
-                    if (_textFieldController.text.isNotEmpty) {
-                      await DatabaseService(uid: uidTag).addToStudentCollection(
-                          Student(
-                              name: _textFieldController.text,
-                              set: "0",
-                              setSize: _setSizeEdit,
-                              target: _exerciseEdit,
-                              randomized: _randomized,
-                              preferredOrientation: "Horizontal",
-                              orientationPreference: false,
-                              metric: _metricEdit));
-
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ],
-            );
-          });
-    }
-
     // Render bottom modal sheet
     void _showSettingsPanel() {
       showModalBottomSheet(
@@ -176,6 +60,23 @@ class _HomeState extends State<Home> {
                   right: 60.0,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: const SettingsForm(),
+            ));
+          });
+    }
+
+    // Render bottom modal sheet
+    void _addParticipantModal() {
+      showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return SingleChildScrollView(
+                child: Container(
+              padding: EdgeInsets.only(
+                  left: 60.0,
+                  right: 60.0,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: const AddForm(),
             ));
           });
     }
@@ -209,9 +110,7 @@ class _HomeState extends State<Home> {
         body: const StudentList(),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () async {
-            await _displayTextInputDialog(context, user.uid);
-          },
+          onPressed: () => _addParticipantModal(),
         ),
       ),
     );
