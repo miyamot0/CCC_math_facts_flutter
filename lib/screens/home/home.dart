@@ -70,11 +70,13 @@ class _HomeState extends State<Home> {
                         TextField(
                           controller: _textFieldController,
                           decoration: textInputDecoration.copyWith(
-                              hintText: "Student ID"),
+                              hintText: "Student ID",
+                              labelText: "Student Name:"),
                         ),
                         DropdownButtonFormField(
                           decoration: textInputDecoration.copyWith(
-                              hintText: "Select exercise"),
+                              hintText: "Select exercise",
+                              labelText: "Target Skill:"),
                           value: _exerciseEdit,
                           items: factsType.map((setting) {
                             return DropdownMenuItem(
@@ -85,7 +87,7 @@ class _HomeState extends State<Home> {
                         ),
                         DropdownButtonFormField(
                           decoration: textInputDecoration.copyWith(
-                              hintText: "Set Size"),
+                              hintText: "Set Size", labelText: "Size of Set:"),
                           value: _setSizeEdit,
                           items: setSizeArray.map((setting) {
                             return DropdownMenuItem(
@@ -96,7 +98,8 @@ class _HomeState extends State<Home> {
                         ),
                         DropdownButtonFormField(
                           decoration: textInputDecoration.copyWith(
-                              hintText: "Set Presentation"),
+                              hintText: "Problem Selection",
+                              labelText: "Problem Selection:"),
                           value: _randomized ? 'Randomized' : 'Fixed',
                           items: ['Fixed', 'Randomized'].map((setting) {
                             return DropdownMenuItem(
@@ -107,7 +110,8 @@ class _HomeState extends State<Home> {
                         ),
                         DropdownButtonFormField(
                           decoration: textInputDecoration.copyWith(
-                              hintText: "Primary Metric"),
+                              hintText: "Primary Metric",
+                              labelText: "Primary Metric:"),
                           value: _metricEdit,
                           items: metricPreference.map((setting) {
                             return DropdownMenuItem(
