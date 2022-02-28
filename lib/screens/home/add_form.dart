@@ -43,8 +43,10 @@ class _AddFormState extends State<AddForm> {
   final TextEditingController _textFieldController = TextEditingController();
   String _setSizeEdit = setSizeArray[0],
       _exerciseEdit = factsType[0],
-      _metricEdit = metricPreference[0];
-  bool _randomized = false;
+      _metricEdit = metricPreference[0],
+      _setNumber = "0",
+      _preferredOrientation = Orientations().Horizontal;
+  bool _randomized = false, _orientationPreference = true;
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +95,41 @@ class _AddFormState extends State<AddForm> {
                         value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _setSizeEdit = value.toString(),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                DropdownButtonFormField(
+                  decoration: textInputDecoration.copyWith(
+                      hintText: "Set Source", labelText: "Set Source:"),
+                  value: _setNumber,
+                  items: MathFactSets().AvailableSets.map((setting) {
+                    return DropdownMenuItem(
+                        value: setting, child: Text(setting));
+                  }).toList(),
+                  onChanged: (String value) => _setNumber = value,
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                DropdownButtonFormField(
+                  decoration: textInputDecoration.copyWith(
+                      hintText: "Select Presentation Mode",
+                      labelText: "Select Presentation Mode:"),
+                  value: _preferredOrientation,
+                  items: [
+                    Orientations().Vertical,
+                    Orientations().Horizontal,
+                    Orientations().NoPreference
+                  ].map((setting) {
+                    return DropdownMenuItem(
+                        value: setting, child: Text(setting));
+                  }).toList(),
+                  onChanged: (String value) {
+                    _preferredOrientation = value;
+                    _orientationPreference =
+                        (value == Orientations().NoPreference) ? false : true;
+                  },
                 ),
                 const SizedBox(
                   height: 20.0,

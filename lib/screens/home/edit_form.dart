@@ -44,9 +44,8 @@ class _EditFormState extends State<EditForm> {
       _metricEdit,
       _preferredOrientation,
       _setNumber,
-      _orientationSetting,
       itemPresentation;
-  bool _randomized, _preference;
+  bool _randomized, _orientationPreference;
 
   @override
   Widget build(BuildContext context) {
@@ -55,20 +54,13 @@ class _EditFormState extends State<EditForm> {
     _setSizeEdit = _setSizeEdit ?? widget.setSize;
     _exerciseEdit = _exerciseEdit ?? widget.targetSkill;
     _textFieldController.text = widget.name;
-    _randomized = widget.randomized;
-    _metricEdit = widget.metric;
-
-    // TODO: add in
-    _preferredOrientation = widget.preferredOrientation;
-
-    // TODO: set number
-    _setNumber = widget.set;
-
-    // TODO: orientation
-    _orientationSetting = widget.preferredOrientation;
-
-    // TODO: set item presentation (i.e.,  random)
-    _preference = widget.orientationPreference;
+    _randomized = _randomized ?? widget.randomized;
+    _metricEdit = _metricEdit ?? widget.metric;
+    _preferredOrientation =
+        _preferredOrientation ?? widget.preferredOrientation;
+    _orientationPreference =
+        _orientationPreference ?? widget.orientationPreference;
+    _setNumber = _setNumber ?? widget.set;
 
     //ID is as-is
 
@@ -116,28 +108,41 @@ class _EditFormState extends State<EditForm> {
                   }).toList(),
                   onChanged: (String value) => _setSizeEdit = value.toString(),
                 ),
-
-                // TODO: set number
-
-                // TODO: orientation
-
-                // TODO: set item presentation (i.e.,  random)
-
                 const SizedBox(
                   height: 20.0,
                 ),
-
                 DropdownButtonFormField(
                   decoration: textInputDecoration.copyWith(
-                      hintText: "Problem Selection",
-                      labelText: "Problem Selection:"),
-                  value: _randomized ? 'Randomized' : 'Fixed',
-                  items: ['Fixed', 'Randomized'].map((setting) {
+                      hintText: "Set Source", labelText: "Set Source:"),
+                  value: _setNumber,
+                  items: MathFactSets().AvailableSets.map((setting) {
                     return DropdownMenuItem(
                         value: setting, child: Text(setting));
                   }).toList(),
-                  onChanged: (value) => _randomized =
-                      value.toString() == "Randomized" ? true : false,
+                  onChanged: (String value) => _setNumber = value,
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                DropdownButtonFormField(
+                  decoration: textInputDecoration.copyWith(
+                      hintText: "Select Presentation Mode",
+                      labelText: "Select Presentation Mode:"),
+                  value: _preferredOrientation,
+                  items: [
+                    Orientations().Vertical,
+                    Orientations().Horizontal,
+                    Orientations().NoPreference
+                  ].map((setting) {
+                    return DropdownMenuItem(
+                        value: setting, child: Text(setting));
+                  }).toList(),
+                  onChanged: (String value) {
+                    _preferredOrientation = value;
+
+                    _orientationPreference =
+                        (value == Orientations().NoPreference) ? false : true;
+                  },
                 ),
                 const SizedBox(
                   height: 20.0,
@@ -155,23 +160,39 @@ class _EditFormState extends State<EditForm> {
                 const SizedBox(
                   height: 20.0,
                 ),
+                DropdownButtonFormField(
+                  decoration: textInputDecoration.copyWith(
+                      hintText: "Problem Selection",
+                      labelText: "Problem Selection:"),
+                  value: _randomized ? 'Randomized' : 'Fixed',
+                  items: ['Fixed', 'Randomized'].map((setting) {
+                    return DropdownMenuItem(
+                        value: setting, child: Text(setting));
+                  }).toList(),
+                  onChanged: (value) => _randomized =
+                      value.toString() == "Randomized" ? true : false,
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextButton(
                   style: TextButton.styleFrom(
                       primary: Colors.white,
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.blue,
                       textStyle: const TextStyle(color: Colors.white)),
                   child: const Text('Update Student'),
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
                       await DatabaseService(uid: userData.uid)
-                          .addToStudentCollection(Student(
+                          .updateStudentInCollection(Student(
+                              id: widget.id,
                               name: _textFieldController.text,
-                              set: "0",
+                              set: _setNumber,
                               setSize: _setSizeEdit,
                               target: _exerciseEdit,
                               randomized: _randomized,
-                              preferredOrientation: "Horizontal",
-                              orientationPreference: false,
+                              preferredOrientation: _preferredOrientation,
+                              orientationPreference: _orientationPreference,
                               metric: _metricEdit));
 
                       Navigator.pop(context);

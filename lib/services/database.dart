@@ -114,7 +114,7 @@ class DatabaseService {
         .add({
       'tid': record.tid,
       'id': record.id,
-      'setSize': record.setSize,
+      'setSize': int.parse(record.setSize),
       'set': record.set,
       'target': record.target,
       'dateTimeStart': record.dateTimeStart,
@@ -134,8 +134,8 @@ class DatabaseService {
         .doc(student.id)
         .set({
       'name': student.name,
-      'setSize': student.setSize,
-      'set': student.set,
+      'setSize': int.parse(student.setSize),
+      'set': int.parse(student.set),
       'target': student.target,
       'random': student.randomized,
       'hasPreference': student.orientationPreference,
