@@ -43,6 +43,8 @@ int calculateDigitsCorrect(
 
   int digitsCorrect = 0;
 
+  if (entry.isEmpty) return digitsCorrect;
+
   String entryPrefixInitial = entry.split('=')[0];
   String dsplyprefixInitial = comparison.split('=')[0];
 

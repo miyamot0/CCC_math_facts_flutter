@@ -34,6 +34,8 @@ class RecordMathFacts {
   final int delaySec;
   final int sessionDuration;
   final int set;
+  final int totalDigits;
+  final int correctDigits;
 
   RecordMathFacts(
       {this.tid,
@@ -47,5 +49,7 @@ class RecordMathFacts {
       this.nCorrectInitial,
       this.delaySec,
       this.sessionDuration,
-      this.set});
+      this.set,
+      this.totalDigits,
+      this.correctDigits});
 }

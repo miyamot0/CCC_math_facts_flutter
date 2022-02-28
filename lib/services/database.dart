@@ -123,7 +123,9 @@ class DatabaseService {
       'nRetries': record.nRetries,
       'nCorrectInitial': record.nCorrectInitial,
       'delaySec': record.delaySec,
-      'sessionDuration': record.sessionDuration
+      'sessionDuration': record.sessionDuration,
+      'totalDigits': record.totalDigits,
+      'correctDigits': record.correctDigits
     });
   }
 

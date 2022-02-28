@@ -23,6 +23,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:collection/collection.dart';
 
 import '../../models/record_ccc_mfacts.dart';
 import '../../models/student.dart';
@@ -306,8 +307,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     int secs = end.difference(start).inSeconds;
 
-    // TODO: total, current correct sums
-
     await DatabaseService(uid: widget.tid)
         .addToStudentPerformanceCollection(RecordMathFacts(
             tid: widget.tid,
@@ -321,7 +320,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             nCorrectInitial: nCorrectInitial,
             delaySec: 0,
             set: int.parse(widget.student.set),
-            sessionDuration: secs))
+            sessionDuration: secs,
+            totalDigits: totalDigits.sum,
+            correctDigits: correctDigits.sum))
         .then((value) => Navigator.of(context).pop());
   }
 
