@@ -59,6 +59,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   List<InlineSpan> viewPanelString = [];
   List<InlineSpan> entryPanelStringView = [];
+  List<int> correctDigits = [], totalDigits = [];
 
   Color entryPanel = Colors.grey,
       viewPanel = Colors.grey,
@@ -366,6 +367,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
                 numTrial++;
                 initialTry = true;
+
+                // TODO: digits correct here
 
                 if (localSet.isEmpty) {
                   _submitData();

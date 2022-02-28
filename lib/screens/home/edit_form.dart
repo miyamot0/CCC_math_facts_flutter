@@ -18,7 +18,7 @@ class EditForm extends StatefulWidget {
   final String preferredOrientation;
   final String metric;
 
-  EditForm(
+  const EditForm(
       {Key key,
       this.setSize,
       this.targetSkill,

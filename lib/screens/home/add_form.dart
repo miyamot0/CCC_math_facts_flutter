@@ -173,12 +173,12 @@ class _AddFormState extends State<AddForm> {
                       await DatabaseService(uid: userData.uid)
                           .addToStudentCollection(Student(
                               name: _textFieldController.text,
-                              set: "0",
+                              set: _setNumber,
                               setSize: _setSizeEdit,
                               target: _exerciseEdit,
                               randomized: _randomized,
-                              preferredOrientation: "Horizontal",
-                              orientationPreference: false,
+                              preferredOrientation: _preferredOrientation,
+                              orientationPreference: _orientationPreference,
                               metric: _metricEdit));
 
                       Navigator.pop(context);
