@@ -98,27 +98,55 @@ class _SignInState extends State<SignIn> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        style:
-                            ElevatedButton.styleFrom(primary: Colors.pink[400]),
-                        child: const Text("Sign in",
-                            style: TextStyle(color: Colors.white)),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() => {loading = true});
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.pink[400]),
+                              child: const Text("Sign in",
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() => {loading = true});
 
-                            dynamic result = await _auth
-                                .signInWithEmailAndPassword(email, pass);
+                                  dynamic result = await _auth
+                                      .signInWithEmailAndPassword(email, pass);
 
-                            if (result == null) {
-                              setState(() {
-                                error =
-                                    'Please double-check your email and password';
-                                loading = false;
-                              });
-                            }
-                          }
-                        },
+                                  if (result == null) {
+                                    setState(() {
+                                      error =
+                                          'Please double-check your email and password';
+                                      loading = false;
+                                    });
+                                  }
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.blue[400]),
+                              child: const Text("Forgot Password?",
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () async {
+                                String msg = await _auth.resetPassword(email);
+
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text("Password Reset"),
+                                        content: Text(msg),
+                                      );
+                                    });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 12.0,

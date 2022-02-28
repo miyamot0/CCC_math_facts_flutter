@@ -78,6 +78,18 @@ class AuthService {
     }
   }
 
+  // Reset password
+  Future<String> resetPassword(String email) async {
+    String msg =
+        "Password successfully reset. Remember to check your junk/spam folder for a link to the password change screen.";
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      msg = e.toString();
+    }
+    return msg;
+  }
+
   // Sign out user
   Future signOut() async {
     try {
