@@ -28,6 +28,7 @@ class Student {
   final String set;
   final String id;
   final String preferredOrientation;
+  final String metric;
   final bool orientationPreference;
   final bool randomized;
 
@@ -38,6 +39,7 @@ class Student {
       this.set,
       this.id,
       this.preferredOrientation,
+      this.metric,
       this.orientationPreference,
       this.randomized});
 }

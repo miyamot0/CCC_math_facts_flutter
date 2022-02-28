@@ -73,7 +73,8 @@ class DatabaseService {
           id: d.id ?? '',
           randomized: data['random'],
           orientationPreference: data['hasPreference'] ?? false,
-          preferredOrientation: data['preferredOrientation'].toString() ?? '');
+          preferredOrientation: data['preferredOrientation'].toString() ?? '',
+          metric: data['metric'].toString() ?? '');
     }).toList();
   }
 
@@ -101,7 +102,8 @@ class DatabaseService {
       'set': student.set,
       'random': student.randomized,
       'hasPreference': student.orientationPreference,
-      'preferredOrientation': student.preferredOrientation
+      'preferredOrientation': student.preferredOrientation,
+      'metric': student.metric
     });
   }
 
@@ -137,7 +139,8 @@ class DatabaseService {
       'target': student.target,
       'random': student.randomized,
       'hasPreference': student.orientationPreference,
-      'preferredOrientation': student.preferredOrientation
+      'preferredOrientation': student.preferredOrientation,
+      'metric': student.metric
     });
   }
 

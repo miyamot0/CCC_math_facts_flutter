@@ -48,7 +48,9 @@ class _HomeState extends State<Home> {
 
     TextEditingController _textFieldController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
-    String _setSizeEdit = setSizeArray[0], _exerciseEdit = factsType[0];
+    String _setSizeEdit = setSizeArray[0],
+        _exerciseEdit = factsType[0],
+        _metricEdit = metricPreference[0];
     bool _randomized = false;
 
     // Display new student input
@@ -103,6 +105,16 @@ class _HomeState extends State<Home> {
                           onChanged: (value) => _randomized =
                               value.toString() == "Randomized" ? true : false,
                         ),
+                        DropdownButtonFormField(
+                          decoration: textInputDecoration.copyWith(
+                              hintText: "Primary Metric"),
+                          value: _metricEdit,
+                          items: metricPreference.map((setting) {
+                            return DropdownMenuItem(
+                                value: setting, child: Text(setting));
+                          }).toList(),
+                          onChanged: (value) => _metricEdit,
+                        ),
                       ],
                     ),
                   )),
@@ -135,7 +147,8 @@ class _HomeState extends State<Home> {
                               target: _exerciseEdit,
                               randomized: _randomized,
                               preferredOrientation: "Horizontal",
-                              orientationPreference: false));
+                              orientationPreference: false,
+                              metric: _metricEdit));
 
                       Navigator.pop(context);
                     }

@@ -74,7 +74,7 @@ class _StudentTileState extends State<StudentTile> {
     return Text(
       "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
           "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
-          "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}",
+          "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}, \nMetric: ${student.metric}",
       style: const TextStyle(fontSize: 18.0),
     );
   }
@@ -96,7 +96,8 @@ class _StudentTileState extends State<StudentTile> {
         String _id,
         bool _randomized,
         bool _preferredOrientation,
-        String _orientationSetting) async {
+        String _orientationSetting,
+        String _metric) async {
       _textFieldController.text = _name;
 
       List<int> sets = Iterable<int>.generate(numberSetsMind).toList();
@@ -180,6 +181,17 @@ class _StudentTileState extends State<StudentTile> {
 
                           _orientationSetting = value.toString();
                         }),
+                    DropdownButtonFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: "Primary Metric",
+                          labelText: "Primary Metric:"),
+                      value: _metric,
+                      items: metricPreference.map((setting) {
+                        return DropdownMenuItem(
+                            value: setting, child: Text(setting));
+                      }).toList(),
+                      onChanged: (value) => _metric,
+                    ),
                   ],
                 )),
               ),
@@ -282,7 +294,8 @@ class _StudentTileState extends State<StudentTile> {
                     widget.student.id,
                     widget.student.randomized,
                     widget.student.orientationPreference,
-                    widget.student.preferredOrientation),
+                    widget.student.preferredOrientation,
+                    widget.student.metric),
               ),
               title: Text(widget.student.name),
               subtitle: _buildStudentDescription(widget.student))),

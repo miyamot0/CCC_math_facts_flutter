@@ -21,6 +21,8 @@
     THE SOFTWARE.
 */
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(
@@ -72,3 +74,12 @@ List<String> orientationPreference = [
   Orientations().Vertical,
   Orientations().Horizontal
 ];
+
+class Metrics {
+  // ignore: non_constant_identifier_names
+  String Accuracy = "Accuracy";
+  // ignore: non_constant_identifier_names
+  String Fluency = "Fluency";
+}
+
+List<String> metricPreference = [Metrics().Accuracy, Metrics().Fluency];
