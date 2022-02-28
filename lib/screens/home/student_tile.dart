@@ -272,50 +272,60 @@ class _StudentTileState extends State<StudentTile> {
       child: Card(
           margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
           child: ListTile(
+              trailing: Container(
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.greenAccent),
+                  child: IconButton(
+                      icon: const Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        final jsonSet = await _parseJson();
+
+                        bool showVertical =
+                            widget.student.preferredOrientation ==
+                                    Orientations().Vertical ||
+                                (widget.student.preferredOrientation ==
+                                        Orientations().NoPreference &&
+                                    isInPortrait);
+
+                        if (showVertical == true) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MathFactsCCC(
+                                      student: widget.student,
+                                      tid: user.uid,
+                                      set: _getSet(widget.student, jsonSet),
+                                    )),
+                          ).then((_) {
+                            isInPortrait = MediaQuery.of(context).orientation ==
+                                Orientation.portrait;
+                            SystemChrome.setPreferredOrientations([]);
+                          });
+                        } else {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MathFactsCCCHorizontal(
+                                      student: widget.student,
+                                      tid: user.uid,
+                                      set: _getSet(widget.student, jsonSet),
+                                    )),
+                          ).then((_) {
+                            isInPortrait = MediaQuery.of(context).orientation ==
+                                Orientation.portrait;
+                            SystemChrome.setPreferredOrientations([]);
+                          });
+                        }
+                      })),
               leading: GestureDetector(
                   child: const CircleAvatar(
                     radius: 25.0,
                     backgroundColor: Colors.blue,
                   ),
-                  onTap: () async {
-                    final jsonSet = await _parseJson();
-
-                    bool showVertical = widget.student.preferredOrientation ==
-                            Orientations().Vertical ||
-                        (widget.student.preferredOrientation ==
-                                Orientations().NoPreference &&
-                            isInPortrait);
-
-                    if (showVertical == true) {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MathFactsCCC(
-                                  student: widget.student,
-                                  tid: user.uid,
-                                  set: _getSet(widget.student, jsonSet),
-                                )),
-                      ).then((_) {
-                        isInPortrait = MediaQuery.of(context).orientation ==
-                            Orientation.portrait;
-                        SystemChrome.setPreferredOrientations([]);
-                      });
-                    } else {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MathFactsCCCHorizontal(
-                                  student: widget.student,
-                                  tid: user.uid,
-                                  set: _getSet(widget.student, jsonSet),
-                                )),
-                      ).then((_) {
-                        isInPortrait = MediaQuery.of(context).orientation ==
-                            Orientation.portrait;
-                        SystemChrome.setPreferredOrientations([]);
-                      });
-                    }
-                  },
+                  onTap: () async {},
                   onLongPress: () => _editParticipantModal()),
               title: Text(widget.student.name),
               subtitle: _buildStudentDescription(widget.student))),
