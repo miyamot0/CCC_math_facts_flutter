@@ -49,6 +49,20 @@ class MathFactTypes {
   String Multiplication = "Math Facts-Multiplication";
   // ignore: non_constant_identifier_names
   String Division = "Math Facts-Division";
+
+  String getOperatorCharacter(String tag) {
+    if (tag.contains('+')) {
+      return '+';
+    } else if (tag.contains('-')) {
+      return '-';
+    } else if (tag.contains('x')) {
+      return 'x';
+    } else if (tag.contains('/')) {
+      return '/';
+    } else {
+      return '';
+    }
+  }
 }
 
 List<String> factsType = [
