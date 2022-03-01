@@ -22,7 +22,6 @@
 */
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter/flutter.dart';
 import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
 import 'package:flutter/material.dart';
 
@@ -61,13 +60,13 @@ class VisualFeedback extends StatelessWidget {
       return -aDate.compareTo(bDate);
     });
 
-    List<Series<ChartRow, DateTime>> seriesList = [
+    var seriesList = [
       charts.Series<ChartRow, DateTime>(
         id: currentStudent.metric,
         domainFn: (ChartRow row, _) => row.timeStamp,
         measureFn: (ChartRow row, _) => row.y,
         data: chartRows,
-      )
+      ),
     ];
 
     return Container(
@@ -75,7 +74,21 @@ class VisualFeedback extends StatelessWidget {
       color: Colors.white,
       child: charts.TimeSeriesChart(seriesList,
           animate: true,
+          layoutConfig: charts.LayoutConfig(
+              leftMarginSpec: charts.MarginSpec.fixedPixel(60),
+              topMarginSpec: charts.MarginSpec.fixedPixel(20),
+              rightMarginSpec: charts.MarginSpec.fixedPixel(60),
+              bottomMarginSpec: charts.MarginSpec.fixedPixel(20)),
           primaryMeasureAxis: const charts.NumericAxisSpec(),
+          behaviors: [
+            charts.RangeAnnotation([
+              charts.LineAnnotationSegment(
+                  currentStudent.aim, charts.RangeAnnotationAxisType.measure,
+                  endLabel: 'Aim Level',
+                  labelAnchor: charts.AnnotationLabelAnchor.middle,
+                  color: charts.MaterialPalette.red.shadeDefault),
+            ], defaultLabelPosition: charts.AnnotationLabelPosition.inside),
+          ],
           domainAxis: const charts.DateTimeAxisSpec(
               tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
                   day: charts.TimeFormatterSpec(

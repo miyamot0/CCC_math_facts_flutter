@@ -323,7 +323,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             sessionDuration: secs,
             totalDigits: totalDigits.sum,
             correctDigits: correctDigits.sum))
-        .then((value) => Navigator.of(context).pop());
+        .then((value) => Navigator.pop(context, true));
   }
 
   _showMessageDialog(BuildContext context) => showDialog(

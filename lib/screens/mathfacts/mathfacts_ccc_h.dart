@@ -171,7 +171,7 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
               sessionDuration: secs,
               totalDigits: totalDigits.sum,
               correctDigits: correctDigits.sum))
-          .then((value) => Navigator.of(context).pop());
+          .then((value) => Navigator.pop(context, true));
     } catch (e) {
       //print(e.toString());
     } finally {}

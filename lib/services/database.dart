@@ -43,6 +43,7 @@ class DatabaseService {
     return 'performanceCollection/${record.tid}/${record.target}/students/${record.id}';
   }
 
+  // Get student performance, specific to task
   String _studentPerformanceCollectionPath(Student student) {
     return 'performanceCollection/$uid/${student.target}/students/${student.id}';
   }
@@ -75,39 +76,13 @@ class DatabaseService {
           target: data['target'].toString() ?? '',
           set: data['set'].toString() ?? '',
           id: d.id ?? '',
-          randomized: data['random'],
+          randomized: data['random'] ?? false,
           orientationPreference: data['hasPreference'] ?? false,
           preferredOrientation: data['preferredOrientation'].toString() ?? '',
           metric: data['metric'].toString() ?? '',
-          aim: int.parse(data['aim'].toString()) ?? 0);
+          aim: data['aim'] ?? 0);
     }).toList();
   }
-
-  /*
-  List<RecordMathFacts> _studentPerformancesFromSnapshot(
-      QuerySnapshot snapshot) {
-    return snapshot.docs.map((d) {
-      Map<String, dynamic> data = d.data() as Map<String, dynamic>;
-
-      return RecordMathFacts(
-        tid: uid ?? '',
-        id: d.id ?? '',
-        setSize: data['setSize'].toString() ?? '',
-        target: data['target'].toString() ?? '',
-        dateTimeStart: data['dateTimeStart'].toString() ?? '',
-        dateTimeEnd: data['dateTimeEnd'].toString() ?? '',
-        errCount: int.parse(data['errCount'].toString()),
-        nRetries: int.parse(data['nRetries'].toString()),
-        nCorrectInitial: int.parse(data['nCorrectInitial'].toString()),
-        delaySec: int.parse(data['delaySec'].toString()),
-        sessionDuration: int.parse(data['sessionDuration'].toString()),
-        set: int.parse(data['set'].toString()),
-        totalDigits: int.parse(data['totalDigits'].toString()),
-        correctDigits: int.parse(data['correctDigits'].toString()),
-      );
-    }).toList();
-  }
-  */
 
   // Map for snapshot, specific to teacher user data
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
@@ -161,6 +136,7 @@ class DatabaseService {
     });
   }
 
+  // Get the most recent information about a students performance
   Future getStudentPerformanceCollection(Student student) async {
     QuerySnapshot ref = await FirebaseFirestore.instance
         .collection(_studentPerformanceCollectionPath(student))

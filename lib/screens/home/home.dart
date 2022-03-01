@@ -95,25 +95,25 @@ class _HomeState extends State<Home> {
               icon: const Icon(Icons.person),
               style: TextButton.styleFrom(primary: Colors.white),
               onPressed: () async {
+                // TODO: currently a hack
                 String target = "Math Facts-Addition";
                 String id = "VxiKUroe7MQ1MblFHVHs";
                 String aim = "30";
 
-                Student std =
-                    Student(id: id, aim: int.parse(aim), target: target);
+                var std = Student(id: id, aim: int.parse(aim), target: target);
 
-                var performances = await DatabaseService(uid: user.uid)
-                    .getStudentPerformanceCollection(std);
-
-                //print(res);
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => VisualFeedback(
-                            currentStudent: std,
-                            currentPerformances: performances,
-                          )),
-                );
+                await DatabaseService(uid: user.uid)
+                    .getStudentPerformanceCollection(std)
+                    .then((performances) async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VisualFeedback(
+                              currentStudent: std,
+                              currentPerformances: performances,
+                            )),
+                  );
+                });
 
                 /*
                 */

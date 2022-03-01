@@ -31,8 +31,10 @@ import 'package:provider/provider.dart';
 
 import '../../models/data.dart';
 import '../../models/usermodel.dart';
+import '../../services/database.dart';
 import '../../services/mind.dart';
 import '../../shared/constants.dart';
+import '../visualfeedback.dart';
 
 class StudentTile extends StatefulWidget {
   final Student student;
@@ -44,6 +46,7 @@ class StudentTile extends StatefulWidget {
 }
 
 class _StudentTileState extends State<StudentTile> {
+  // Gets the respective set of icons (randomize if necessary)
   List<String> _getSet(Student student, MathFactData data) {
     List<String> mLocal;
 
@@ -64,11 +67,13 @@ class _StudentTileState extends State<StudentTile> {
     return mLocal.take(int.parse(student.setSize)).toList();
   }
 
+  // Parse the embedded json for math problems
   Future<MathFactData> _parseJson() async {
     return await parseJsonFromAssets('assets/mathfacts.json')
         .then((map) => MathFactData.fromJson(map));
   }
 
+  // Build out templated string for entries
   Widget _buildStudentDescription(Student student) {
     // ignore: prefer_adjacent_string_concatenation
     return Text(
@@ -113,6 +118,22 @@ class _StudentTileState extends State<StudentTile> {
           });
     }
 
+    // Show student-specific feedback
+    void _showVisualFeedback(context, student) async {
+      await DatabaseService(uid: user.uid)
+          .getStudentPerformanceCollection(student)
+          .then((performances) async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => VisualFeedback(
+                    currentStudent: student,
+                    currentPerformances: performances,
+                  )),
+        );
+      });
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
@@ -148,10 +169,14 @@ class _StudentTileState extends State<StudentTile> {
                                           .getOperatorCharacter(
                                               widget.student.target),
                                     )),
-                          ).then((_) {
+                          ).then((result) {
                             isInPortrait = MediaQuery.of(context).orientation ==
                                 Orientation.portrait;
                             SystemChrome.setPreferredOrientations([]);
+
+                            if (result != null && result == true) {
+                              _showVisualFeedback(context, widget.student);
+                            }
                           });
                         } else {
                           await Navigator.push(
@@ -165,10 +190,14 @@ class _StudentTileState extends State<StudentTile> {
                                           .getOperatorCharacter(
                                               widget.student.target),
                                     )),
-                          ).then((_) {
+                          ).then((result) {
                             isInPortrait = MediaQuery.of(context).orientation ==
                                 Orientation.portrait;
                             SystemChrome.setPreferredOrientations([]);
+
+                            if (result != null && result == true) {
+                              _showVisualFeedback(context, widget.student);
+                            }
                           });
                         }
                       })),
