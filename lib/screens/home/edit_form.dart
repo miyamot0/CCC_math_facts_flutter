@@ -39,12 +39,7 @@ class _EditFormState extends State<EditForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _textFieldController = TextEditingController();
-  String _setSizeEdit,
-      _exerciseEdit,
-      _metricEdit,
-      _preferredOrientation,
-      _setNumber,
-      itemPresentation;
+  String _setSizeEdit, _exerciseEdit, _metricEdit, _preferredOrientation, _setNumber, itemPresentation;
   bool _randomized, _orientationPreference;
 
   @override
@@ -56,10 +51,8 @@ class _EditFormState extends State<EditForm> {
     _textFieldController.text = widget.name;
     _randomized = _randomized ?? widget.randomized;
     _metricEdit = _metricEdit ?? widget.metric;
-    _preferredOrientation =
-        _preferredOrientation ?? widget.preferredOrientation;
-    _orientationPreference =
-        _orientationPreference ?? widget.orientationPreference;
+    _preferredOrientation = _preferredOrientation ?? widget.preferredOrientation;
+    _orientationPreference = _orientationPreference ?? widget.orientationPreference;
     _setNumber = _setNumber ?? widget.set;
 
     //ID is as-is
@@ -75,23 +68,27 @@ class _EditFormState extends State<EditForm> {
             child: Column(
               children: [
                 const SizedBox(
+                  height: 10.0,
+                ),
+                const Text(
+                  'Update Information for Student',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                const SizedBox(
                   height: 20.0,
                 ),
                 TextField(
                   controller: _textFieldController,
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Student ID", labelText: "Student Name:"),
+                  decoration: textInputDecoration.copyWith(hintText: "Student ID", labelText: "Student Name:"),
                 ),
                 const SizedBox(
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Select exercise", labelText: "Target Skill:"),
+                  decoration: textInputDecoration.copyWith(hintText: "Select exercise", labelText: "Target Skill:"),
                   value: _exerciseEdit,
                   items: factsType.map((setting) {
-                    return DropdownMenuItem(
-                        value: setting, child: Text(setting));
+                    return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _exerciseEdit = value.toString(),
                 ),
@@ -99,12 +96,10 @@ class _EditFormState extends State<EditForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Set Size", labelText: "Size of Set:"),
+                  decoration: textInputDecoration.copyWith(hintText: "Set Size", labelText: "Size of Set:"),
                   value: _setSizeEdit,
                   items: setSizeArray.map((setting) {
-                    return DropdownMenuItem(
-                        value: setting, child: Text(setting));
+                    return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _setSizeEdit = value.toString(),
                 ),
@@ -112,12 +107,10 @@ class _EditFormState extends State<EditForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Set Source", labelText: "Set Source:"),
+                  decoration: textInputDecoration.copyWith(hintText: "Set Source", labelText: "Set Source:"),
                   value: _setNumber,
                   items: MathFactSets().AvailableSets.map((setting) {
-                    return DropdownMenuItem(
-                        value: setting, child: Text(setting));
+                    return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _setNumber = value,
                 ),
@@ -126,34 +119,26 @@ class _EditFormState extends State<EditForm> {
                 ),
                 DropdownButtonFormField(
                   decoration: textInputDecoration.copyWith(
-                      hintText: "Select Presentation Mode",
-                      labelText: "Select Presentation Mode:"),
+                      hintText: "Select Presentation Mode", labelText: "Select Presentation Mode:"),
                   value: _preferredOrientation,
-                  items: [
-                    Orientations().Vertical,
-                    Orientations().Horizontal,
-                    Orientations().NoPreference
-                  ].map((setting) {
-                    return DropdownMenuItem(
-                        value: setting, child: Text(setting));
+                  items:
+                      [Orientations().Vertical, Orientations().Horizontal, Orientations().NoPreference].map((setting) {
+                    return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) {
                     _preferredOrientation = value;
 
-                    _orientationPreference =
-                        (value == Orientations().NoPreference) ? false : true;
+                    _orientationPreference = (value == Orientations().NoPreference) ? false : true;
                   },
                 ),
                 const SizedBox(
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Primary Metric", labelText: "Primary Metric:"),
+                  decoration: textInputDecoration.copyWith(hintText: "Primary Metric", labelText: "Primary Metric:"),
                   value: _metricEdit,
                   items: metricPreference.map((setting) {
-                    return DropdownMenuItem(
-                        value: setting, child: Text(setting));
+                    return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (value) => _metricEdit = value.toString(),
                 ),
@@ -161,16 +146,13 @@ class _EditFormState extends State<EditForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Problem Selection",
-                      labelText: "Problem Selection:"),
+                  decoration:
+                      textInputDecoration.copyWith(hintText: "Problem Selection", labelText: "Problem Selection:"),
                   value: _randomized ? 'Randomized' : 'Fixed',
                   items: ['Fixed', 'Randomized'].map((setting) {
-                    return DropdownMenuItem(
-                        value: setting, child: Text(setting));
+                    return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
-                  onChanged: (value) => _randomized =
-                      value.toString() == "Randomized" ? true : false,
+                  onChanged: (value) => _randomized = value.toString() == "Randomized" ? true : false,
                 ),
                 const SizedBox(
                   height: 20.0,
@@ -183,17 +165,16 @@ class _EditFormState extends State<EditForm> {
                   child: const Text('Update Student'),
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
-                      await DatabaseService(uid: userData.uid)
-                          .updateStudentInCollection(Student(
-                              id: widget.id,
-                              name: _textFieldController.text,
-                              set: _setNumber,
-                              setSize: _setSizeEdit,
-                              target: _exerciseEdit,
-                              randomized: _randomized,
-                              preferredOrientation: _preferredOrientation,
-                              orientationPreference: _orientationPreference,
-                              metric: _metricEdit));
+                      await DatabaseService(uid: userData.uid).updateStudentInCollection(Student(
+                          id: widget.id,
+                          name: _textFieldController.text,
+                          set: _setNumber,
+                          setSize: _setSizeEdit,
+                          target: _exerciseEdit,
+                          randomized: _randomized,
+                          preferredOrientation: _preferredOrientation,
+                          orientationPreference: _orientationPreference,
+                          metric: _metricEdit));
 
                       Navigator.pop(context);
                     }

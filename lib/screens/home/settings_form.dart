@@ -54,6 +54,9 @@ class _SettingsFormState extends State<SettingsForm> {
           return Form(
             key: _formKey,
             child: Column(children: [
+              const SizedBox(
+                height: 10.0,
+              ),
               const Text(
                 'Update your personal info',
                 style: TextStyle(fontSize: 18.0),
@@ -62,8 +65,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration.copyWith(
-                    hintText: "e.g., John/Jane Smith", labelText: "Name:"),
+                decoration: textInputDecoration.copyWith(hintText: "e.g., John/Jane Smith", labelText: "Name:"),
                 initialValue: userData.name,
                 validator: (val) => val.isEmpty ? 'Please enter a name' : null,
                 onChanged: (val) => setState((() => _currentName = val)),
@@ -72,23 +74,18 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration.copyWith(
-                    hintText: "e.g., K-2", labelText: "Grade(s) taught:"),
+                decoration: textInputDecoration.copyWith(hintText: "e.g., K-2", labelText: "Grade(s) taught:"),
                 initialValue: userData.currentGrade,
-                validator: (val) => val.isEmpty
-                    ? 'Please enter a value for your grade(s)'
-                    : null,
+                validator: (val) => val.isEmpty ? 'Please enter a value for your grade(s)' : null,
                 onChanged: (val) => setState((() => _currentGrade = val)),
               ),
               const SizedBox(
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration.copyWith(
-                    hintText: "e.g., Sadie Hawkins", labelText: "School name:"),
+                decoration: textInputDecoration.copyWith(hintText: "e.g., Sadie Hawkins", labelText: "School name:"),
                 initialValue: userData.currentSchool,
-                validator: (val) =>
-                    val.isEmpty ? 'Please enter a value for your school' : null,
+                validator: (val) => val.isEmpty ? 'Please enter a value for your school' : null,
                 onChanged: (val) => setState((() => _currentSchool = val)),
               ),
               TextButton(
@@ -103,12 +100,11 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
-                      await DatabaseService(uid: user.uid)
-                          .updateTeacherInCollection(Teacher(
-                              school: _currentSchool ?? userData.currentSchool,
-                              name: _currentName ?? userData.name,
-                              grade: _currentGrade ?? userData.currentGrade,
-                              id: user.uid));
+                      await DatabaseService(uid: user.uid).updateTeacherInCollection(Teacher(
+                          school: _currentSchool ?? userData.currentSchool,
+                          name: _currentName ?? userData.name,
+                          grade: _currentGrade ?? userData.currentGrade,
+                          id: user.uid));
 
                       Navigator.pop(context);
                     }

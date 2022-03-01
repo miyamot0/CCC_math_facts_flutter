@@ -130,15 +130,12 @@ class _StudentTileState extends State<StudentTile> {
 
     // Construct trailing widget
     Widget _leadingWidget() {
-      return Expanded(
+      return const Expanded(
           flex: 2,
-          child: GestureDetector(
-              child: const CircleAvatar(
-                radius: 50.0,
-                backgroundColor: Colors.blue,
-              ),
-              onTap: () => _showVisualFeedback(user, widget.student, context),
-              onLongPress: () => _editParticipantModal()));
+          child: CircleAvatar(
+            radius: 50.0,
+            backgroundColor: Colors.blue,
+          ));
     }
 
     // Build out templated string for entries
@@ -155,9 +152,11 @@ class _StudentTileState extends State<StudentTile> {
       // ignore: prefer_adjacent_string_concatenation
       return Text(
         // ignore: prefer_adjacent_string_concatenation
-        "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
-            "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
-            "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}, \nMetric: ${student.metric}",
+        "Skill Target: ${student.target}, \nSet size: ${student.setSize} \n" +
+            "Stimulus set: ${student.set}, \nRandomizing set: ${student.randomized}, \n" +
+            // ID:${student.id} \n
+            // Orientation Preference: ${student.orientationPreference}, \n
+            "Orientation Setting: ${student.preferredOrientation}, \nMetric: ${student.metric}",
         style: const TextStyle(fontSize: 18.0),
       );
     }
@@ -230,11 +229,11 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 15.0),
       child: Card(
           margin: const EdgeInsets.fromLTRB(10.0, 1.0, 10.0, 0.0),
           child: Padding(
-            padding: EdgeInsets.all(1),
+            padding: const EdgeInsets.all(15),
             child: Row(children: [_leadingWidget(), _bodyWidget(), _settingsWidget(), _dataWidget(), _launchWidget()]),
           )),
     );
