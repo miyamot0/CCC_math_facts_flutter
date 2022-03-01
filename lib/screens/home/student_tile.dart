@@ -203,10 +203,23 @@ class _StudentTileState extends State<StudentTile> {
                       })),
               leading: GestureDetector(
                   child: const CircleAvatar(
-                    radius: 25.0,
+                    radius: 50.0,
                     backgroundColor: Colors.blue,
                   ),
-                  onTap: () async {},
+                  onTap: () async {
+                    await DatabaseService(uid: user.uid)
+                        .getStudentPerformanceCollection(widget.student)
+                        .then((performances) async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VisualFeedback(
+                                  currentStudent: widget.student,
+                                  currentPerformances: performances,
+                                )),
+                      );
+                    });
+                  },
                   onLongPress: () => _editParticipantModal()),
               title: Text(widget.student.name),
               subtitle: _buildStudentDescription(widget.student))),
