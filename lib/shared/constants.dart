@@ -21,6 +21,8 @@
     THE SOFTWARE.
 */
 
+import 'package:covcopcomp_math_fact/models/data.dart';
+import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(
@@ -39,6 +41,27 @@ ButtonStyle keypadButtonStyle =
 enum CCCStatus { entry, begin, coverCopy, compare }
 
 List<String> setSizeArray = ["8", "16", "24"];
+
+// Gets the respective set of icons (randomize if necessary)
+List<String> getMathFactSet(Student student, MathFactData data) {
+  List<String> mLocal;
+
+  if (student.target == "Math Facts-Addition") {
+    mLocal = data.addition[int.parse(student.set)];
+  } else if (student.target == "Math Facts-Subtraction") {
+    mLocal = data.subtraction[int.parse(student.set)];
+  } else if (student.target == "Math Facts-Multiplication") {
+    mLocal = data.multiplication[int.parse(student.set)];
+  } else if (student.target == "Math Facts-Division") {
+    mLocal = data.division[int.parse(student.set)];
+  }
+
+  if (student.randomized == true) {
+    mLocal.shuffle();
+  }
+
+  return mLocal.take(int.parse(student.setSize)).toList();
+}
 
 class MathFactTypes {
   // ignore: non_constant_identifier_names

@@ -46,51 +46,16 @@ class StudentTile extends StatefulWidget {
 }
 
 class _StudentTileState extends State<StudentTile> {
-  // Gets the respective set of icons (randomize if necessary)
-  List<String> _getSet(Student student, MathFactData data) {
-    List<String> mLocal;
-
-    if (student.target == "Math Facts-Addition") {
-      mLocal = data.addition[int.parse(student.set)];
-    } else if (student.target == "Math Facts-Subtraction") {
-      mLocal = data.subtraction[int.parse(student.set)];
-    } else if (student.target == "Math Facts-Multiplication") {
-      mLocal = data.multiplication[int.parse(student.set)];
-    } else if (student.target == "Math Facts-Division") {
-      mLocal = data.division[int.parse(student.set)];
-    }
-
-    if (student.randomized == true) {
-      mLocal.shuffle();
-    }
-
-    return mLocal.take(int.parse(student.setSize)).toList();
-  }
-
-  // Parse the embedded json for math problems
-  Future<MathFactData> _parseJson() async {
-    return await parseJsonFromAssets('assets/mathfacts.json')
-        .then((map) => MathFactData.fromJson(map));
-  }
-
-  // Build out templated string for entries
-  Widget _buildStudentDescription(Student student) {
-    // ignore: prefer_adjacent_string_concatenation
-    return Text(
-      // ignore: prefer_adjacent_string_concatenation
-      "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
-          "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
-          "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}, \nMetric: ${student.metric}",
-      style: const TextStyle(fontSize: 18.0),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
-    bool isInPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    bool isInPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
+    // Parse the embedded json for math problems
+    Future<MathFactData> _parseJson() async {
+      return await parseJsonFromAssets('assets/mathfacts.json').then((map) => MathFactData.fromJson(map));
+    }
 
     // Render bottom modal sheet
     void _editParticipantModal() {
@@ -100,10 +65,7 @@ class _StudentTileState extends State<StudentTile> {
           builder: (context) {
             return SingleChildScrollView(
                 child: Container(
-              padding: EdgeInsets.only(
-                  left: 60.0,
-                  right: 60.0,
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              padding: EdgeInsets.only(left: 60.0, right: 60.0, bottom: MediaQuery.of(context).viewInsets.bottom),
               child: EditForm(
                   setSize: widget.student.setSize,
                   set: widget.student.set,
@@ -118,11 +80,9 @@ class _StudentTileState extends State<StudentTile> {
           });
     }
 
-    // Show student-specific feedback
-    void _showVisualFeedback(context, student) async {
-      await DatabaseService(uid: user.uid)
-          .getStudentPerformanceCollection(student)
-          .then((performances) async {
+    // Provide visual feedback to learner
+    void _showVisualFeedback(UserModel user, Student student, BuildContext context) async {
+      await DatabaseService(uid: user.uid).getStudentPerformanceCollection(student).then((performances) async {
         await Navigator.push(
           context,
           MaterialPageRoute(
@@ -134,95 +94,149 @@ class _StudentTileState extends State<StudentTile> {
       });
     }
 
+    // Determine whether to provide visual feedback
+    void _handleReturn(dynamic result) {
+      SystemChrome.setPreferredOrientations([]);
+
+      if (result != null && result == true) {
+        _showVisualFeedback(user, widget.student, context);
+      }
+    }
+
+    // Determine how to present the task
+    MaterialPageRoute _handleRouting(bool isVertical, MathFactData json) {
+      return isVertical == true
+          ? MaterialPageRoute(
+              builder: (context) => MathFactsCCC(
+                    student: widget.student,
+                    tid: user.uid,
+                    set: getMathFactSet(widget.student, json),
+                    operator: MathFactTypes().getOperatorCharacter(widget.student.target),
+                  ))
+          : MaterialPageRoute(
+              builder: (context) => MathFactsCCCHorizontal(
+                    student: widget.student,
+                    tid: user.uid,
+                    set: getMathFactSet(widget.student, json),
+                    operator: MathFactTypes().getOperatorCharacter(widget.student.target),
+                  ));
+    }
+
+    // Check orientation of screen
+    bool _checkVertical() {
+      return widget.student.preferredOrientation == Orientations().Vertical ||
+          (widget.student.preferredOrientation == Orientations().NoPreference && isInPortrait);
+    }
+
+    // Construct trailing widget
+    Widget _leadingWidget() {
+      return Expanded(
+          flex: 2,
+          child: GestureDetector(
+              child: const CircleAvatar(
+                radius: 50.0,
+                backgroundColor: Colors.blue,
+              ),
+              onTap: () => _showVisualFeedback(user, widget.student, context),
+              onLongPress: () => _editParticipantModal()));
+    }
+
+    // Build out templated string for entries
+    Widget _buildStudentTitle(String text) {
+      // ignore: prefer_adjacent_string_concatenation
+      return Text(
+        "Name: $text",
+        style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+      );
+    }
+
+    // Build out templated string for entries
+    Widget _buildStudentDescription(Student student) {
+      // ignore: prefer_adjacent_string_concatenation
+      return Text(
+        // ignore: prefer_adjacent_string_concatenation
+        "Current assignment: ${student.target}, \nCurrent set size: ${student.setSize} \n" +
+            "Current set: ${student.set}, \nSet Randomization: ${student.randomized}, \nID: ${student.id} \n" +
+            "Orientation Preference: ${student.orientationPreference}, \nOrientation Setting: ${student.preferredOrientation}, \nMetric: ${student.metric}",
+        style: const TextStyle(fontSize: 18.0),
+      );
+    }
+
+    // Body showing the bulk of information
+    Widget _bodyWidget() {
+      return Expanded(
+          flex: 4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildStudentTitle(widget.student.name),
+              const SizedBox(
+                height: 5,
+              ),
+              _buildStudentDescription(widget.student)
+            ],
+          ));
+    }
+
+    // Widget to access settings
+    Widget _dataWidget() {
+      return Expanded(
+          flex: 1,
+          child: Container(
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.redAccent),
+              child: IconButton(
+                  icon: const Icon(
+                    Icons.data_exploration,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => _showVisualFeedback(user, widget.student, context))));
+    }
+
+    // Construct trailing widget
+    Widget _settingsWidget() {
+      return Expanded(
+          flex: 1,
+          child: Container(
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blueAccent),
+              child: IconButton(
+                  icon: const Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => _editParticipantModal())));
+    }
+
+    // Widget to commence exercise
+    Widget _launchWidget() {
+      return Expanded(
+          flex: 1,
+          child: Container(
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.greenAccent),
+              child: IconButton(
+                  icon: const Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                  ),
+                  onPressed: () async {
+                    final MathFactData jsonSet = await _parseJson();
+                    final bool showVertical = _checkVertical();
+                    final MaterialPageRoute route = _handleRouting(showVertical, jsonSet);
+
+                    await Navigator.push(
+                      context,
+                      route,
+                    ).then((result) => _handleReturn(result));
+                  })));
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
-          margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-          child: ListTile(
-              trailing: Container(
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.greenAccent),
-                  child: IconButton(
-                      icon: const Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                      ),
-                      onPressed: () async {
-                        final jsonSet = await _parseJson();
-
-                        bool showVertical =
-                            widget.student.preferredOrientation ==
-                                    Orientations().Vertical ||
-                                (widget.student.preferredOrientation ==
-                                        Orientations().NoPreference &&
-                                    isInPortrait);
-
-                        if (showVertical == true) {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MathFactsCCC(
-                                      student: widget.student,
-                                      tid: user.uid,
-                                      set: _getSet(widget.student, jsonSet),
-                                      operator: MathFactTypes()
-                                          .getOperatorCharacter(
-                                              widget.student.target),
-                                    )),
-                          ).then((result) {
-                            isInPortrait = MediaQuery.of(context).orientation ==
-                                Orientation.portrait;
-                            SystemChrome.setPreferredOrientations([]);
-
-                            if (result != null && result == true) {
-                              _showVisualFeedback(context, widget.student);
-                            }
-                          });
-                        } else {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MathFactsCCCHorizontal(
-                                      student: widget.student,
-                                      tid: user.uid,
-                                      set: _getSet(widget.student, jsonSet),
-                                      operator: MathFactTypes()
-                                          .getOperatorCharacter(
-                                              widget.student.target),
-                                    )),
-                          ).then((result) {
-                            isInPortrait = MediaQuery.of(context).orientation ==
-                                Orientation.portrait;
-                            SystemChrome.setPreferredOrientations([]);
-
-                            if (result != null && result == true) {
-                              _showVisualFeedback(context, widget.student);
-                            }
-                          });
-                        }
-                      })),
-              leading: GestureDetector(
-                  child: const CircleAvatar(
-                    radius: 50.0,
-                    backgroundColor: Colors.blue,
-                  ),
-                  onTap: () async {
-                    await DatabaseService(uid: user.uid)
-                        .getStudentPerformanceCollection(widget.student)
-                        .then((performances) async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VisualFeedback(
-                                  currentStudent: widget.student,
-                                  currentPerformances: performances,
-                                )),
-                      );
-                    });
-                  },
-                  onLongPress: () => _editParticipantModal()),
-              title: Text(widget.student.name),
-              subtitle: _buildStudentDescription(widget.student))),
+          margin: const EdgeInsets.fromLTRB(10.0, 1.0, 10.0, 0.0),
+          child: Padding(
+            padding: EdgeInsets.all(1),
+            child: Row(children: [_leadingWidget(), _bodyWidget(), _settingsWidget(), _dataWidget(), _launchWidget()]),
+          )),
     );
   }
 }
