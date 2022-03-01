@@ -21,11 +21,12 @@
     THE SOFTWARE.
 */
 
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:covcopcomp_math_fact/models/chartrow.dart';
 import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
 import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
+
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class VisualFeedback extends StatelessWidget {

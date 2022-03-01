@@ -23,9 +23,9 @@
 
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:covcopcomp_math_fact/shared/loading.dart';
 
-import '../../shared/loading.dart';
+import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -68,30 +68,24 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             body: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'jane@email.com',
-                            labelText: "Email Address:"),
-                        validator: (value) =>
-                            value.isEmpty ? 'Enter an email' : null,
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'jane@email.com', labelText: "Email Address:"),
+                        validator: (value) => value.isEmpty ? 'Enter an email' : null,
                         onChanged: (value) {
                           setState(() => email = value);
                         },
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            labelText: "Password:"),
-                        validator: (value) => value.length < 6
-                            ? 'Enter a password 6+ chars long'
-                            : null,
+                        decoration: textInputDecoration.copyWith(labelText: "Password:"),
+                        validator: (value) => value.length < 6 ? 'Enter a password 6+ chars long' : null,
                         obscureText: true,
                         onChanged: (value) {
                           setState(() => pass = value);
@@ -103,21 +97,17 @@ class _SignInState extends State<SignIn> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.pink[400]),
-                              child: const Text("Sign in",
-                                  style: TextStyle(color: Colors.white)),
+                              style: ElevatedButton.styleFrom(primary: Colors.pink[400]),
+                              child: const Text("Sign in", style: TextStyle(color: Colors.white)),
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
                                   setState(() => {loading = true});
 
-                                  dynamic result = await _auth
-                                      .signInWithEmailAndPassword(email, pass);
+                                  dynamic result = await _auth.signInWithEmailAndPassword(email, pass);
 
                                   if (result == null) {
                                     setState(() {
-                                      error =
-                                          'Please double-check your email and password';
+                                      error = 'Please double-check your email and password';
                                       loading = false;
                                     });
                                   }
@@ -128,10 +118,8 @@ class _SignInState extends State<SignIn> {
                               width: 20,
                             ),
                             ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.blue[400]),
-                              child: const Text("Forgot Password?",
-                                  style: TextStyle(color: Colors.white)),
+                              style: ElevatedButton.styleFrom(primary: Colors.blue[400]),
+                              child: const Text("Forgot Password?", style: TextStyle(color: Colors.white)),
                               onPressed: () async {
                                 String msg = await _auth.resetPassword(email);
 
@@ -153,8 +141,7 @@ class _SignInState extends State<SignIn> {
                       ),
                       Text(
                         error,
-                        style:
-                            const TextStyle(color: Colors.red, fontSize: 14.0),
+                        style: const TextStyle(color: Colors.red, fontSize: 14.0),
                       )
                     ],
                   )),

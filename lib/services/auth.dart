@@ -22,10 +22,10 @@
 */
 
 import 'package:covcopcomp_math_fact/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
+import 'package:covcopcomp_math_fact/models/teacher.dart';
 
-import '../models/teacher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -37,16 +37,13 @@ class AuthService {
 
   // Detect auth change
   Stream<UserModel> get user {
-    return _auth
-        .authStateChanges()
-        .map((User user) => _userFromFirebaseUser(user));
+    return _auth.authStateChanges().map((User user) => _userFromFirebaseUser(user));
   }
 
   // Sign in with email/pass
   Future signInWithEmailAndPassword(String email, String pass) async {
     try {
-      UserCredential result =
-          await _auth.signInWithEmailAndPassword(email: email, password: pass);
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: pass);
 
       User user = result.user;
 
@@ -57,19 +54,17 @@ class AuthService {
   }
 
   // Register new user with email/pass
-  Future registerWithEmailAndPassword(String email, String pass, String name,
-      String school, String grade) async {
+  Future registerWithEmailAndPassword(String email, String pass, String name, String school, String grade) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: pass);
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: pass);
 
       User user = result.user;
 
       if (user == null) {
         return null;
       } else {
-        await DatabaseService(uid: user.uid).updateTeacherInCollection(
-            Teacher(school: school, name: name, grade: grade, id: user.uid));
+        await DatabaseService(uid: user.uid)
+            .updateTeacherInCollection(Teacher(school: school, name: name, grade: grade, id: user.uid));
 
         return _userFromFirebaseUser(user);
       }

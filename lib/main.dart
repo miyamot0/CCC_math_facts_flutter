@@ -27,6 +27,7 @@ import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/screens/authentication/authrouting.dart';
 import 'package:covcopcomp_math_fact/screens/landing/landing.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';

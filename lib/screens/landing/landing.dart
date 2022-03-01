@@ -1,5 +1,29 @@
-import 'package:align_positioned/align_positioned.dart';
+/* 
+    The MIT License
+    Copyright February 1, 2022 Shawn Gilroy/Louisiana State University
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+*/
+
 import 'package:covcopcomp_math_fact/shared/constants.dart';
+
+import 'package:align_positioned/align_positioned.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info/package_info.dart';
@@ -30,8 +54,8 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
 
-    final Widget svg1 = SvgPicture.asset('assets/coloured_paper.svg',
-        width: screen.width * 0.35, height: screen.height * 0.35);
+    final Widget svg1 =
+        SvgPicture.asset('assets/coloured_paper.svg', width: screen.width * 0.35, height: screen.height * 0.35);
 
     final Widget svg2 = SvgPicture.asset(
       'assets/new_document.svg',
@@ -47,15 +71,9 @@ class _LandingScreenState extends State<LandingScreen> {
               color: Theme.of(context).backgroundColor,
               child: Stack(children: [
                 AlignPositioned(
-                    alignment: Alignment.topCenter,
-                    dy: screen.height * .1,
-                    dx: screen.width * .025,
-                    child: svg1),
+                    alignment: Alignment.topCenter, dy: screen.height * .1, dx: screen.width * .025, child: svg1),
                 AlignPositioned(
-                    alignment: Alignment.topCenter,
-                    dy: screen.height * .075,
-                    dx: -screen.width * .025,
-                    child: svg2),
+                    alignment: Alignment.topCenter, dy: screen.height * .075, dx: -screen.width * .025, child: svg2),
                 AlignPositioned(
                   alignment: Alignment.center,
                   child: Center(
@@ -90,12 +108,9 @@ class _LandingScreenState extends State<LandingScreen> {
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
                           "Launch App",
-                          style: cccTextStyle.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal),
+                          style: cccTextStyle.copyWith(color: Colors.white, fontWeight: FontWeight.normal),
                         ),
-                        onPressed: () =>
-                            Navigator.pushReplacementNamed(context, "/start"))),
+                        onPressed: () => Navigator.pushReplacementNamed(context, "/start"))),
               ]),
             );
           } else {

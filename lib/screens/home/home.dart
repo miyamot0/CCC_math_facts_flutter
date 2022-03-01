@@ -22,15 +22,15 @@
 */
 
 import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/screens/home/add_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/settings_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/student_list.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
-import 'package:flutter/material.dart';
 import 'package:covcopcomp_math_fact/services/database.dart';
-import 'package:provider/provider.dart';
 
-import '../../models/usermodel.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -54,10 +54,7 @@ class _HomeState extends State<Home> {
           builder: (context) {
             return SingleChildScrollView(
                 child: Container(
-              padding: EdgeInsets.only(
-                  left: 60.0,
-                  right: 60.0,
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              padding: EdgeInsets.only(left: 60.0, right: 60.0, bottom: MediaQuery.of(context).viewInsets.bottom),
               child: const SettingsForm(),
             ));
           });
@@ -71,10 +68,7 @@ class _HomeState extends State<Home> {
           builder: (context) {
             return SingleChildScrollView(
                 child: Container(
-              padding: EdgeInsets.only(
-                  left: 60.0,
-                  right: 60.0,
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              padding: EdgeInsets.only(left: 60.0, right: 60.0, bottom: MediaQuery.of(context).viewInsets.bottom),
               child: const AddForm(),
             ));
           });

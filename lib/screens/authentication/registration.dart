@@ -24,6 +24,7 @@
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
+
 import 'package:flutter/material.dart';
 
 class Registration extends StatefulWidget {
@@ -70,8 +71,7 @@ class _RegistrationState extends State<Registration> {
               ],
             ),
             body: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
@@ -79,52 +79,40 @@ class _RegistrationState extends State<Registration> {
                     children: [
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Name', labelText: "Name:"),
-                        validator: (value) =>
-                            value.isEmpty ? 'Enter your name' : null,
+                        decoration: textInputDecoration.copyWith(hintText: 'Name', labelText: "Name:"),
+                        validator: (value) => value.isEmpty ? 'Enter your name' : null,
                         onChanged: (value) {
                           setState(() => name = value);
                         },
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'School name', labelText: "School Name:"),
-                        validator: (value) =>
-                            value.isEmpty ? 'Enter your school' : null,
+                        decoration: textInputDecoration.copyWith(hintText: 'School name', labelText: "School Name:"),
+                        validator: (value) => value.isEmpty ? 'Enter your school' : null,
                         onChanged: (value) {
                           setState(() => school = value);
                         },
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Grade', labelText: "Grade(s) Taught:"),
-                        validator: (value) => value.isEmpty
-                            ? 'Enter the grade(s) for your classroom'
-                            : null,
+                        decoration: textInputDecoration.copyWith(hintText: 'Grade', labelText: "Grade(s) Taught:"),
+                        validator: (value) => value.isEmpty ? 'Enter the grade(s) for your classroom' : null,
                         onChanged: (value) {
                           setState(() => grade = value);
                         },
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Email', labelText: "Email Address:"),
-                        validator: (value) =>
-                            value.isEmpty ? 'Enter an email' : null,
+                        decoration: textInputDecoration.copyWith(hintText: 'Email', labelText: "Email Address:"),
+                        validator: (value) => value.isEmpty ? 'Enter an email' : null,
                         onChanged: (value) {
                           setState(() => email = value);
                         },
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Password', labelText: "Password:"),
-                        validator: (value) => value.length < 6
-                            ? 'Enter a password 6+ chars long'
-                            : null,
+                        decoration: textInputDecoration.copyWith(hintText: 'Password', labelText: "Password:"),
+                        validator: (value) => value.length < 6 ? 'Enter a password 6+ chars long' : null,
                         obscureText: true,
                         onChanged: (value) {
                           setState(() => pass = value);
@@ -132,23 +120,18 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        style:
-                            ElevatedButton.styleFrom(primary: Colors.pink[400]),
+                        style: ElevatedButton.styleFrom(primary: Colors.pink[400]),
                         //color: Colors.pink[400],
-                        child: const Text("Register",
-                            style: TextStyle(color: Colors.white)),
+                        child: const Text("Register", style: TextStyle(color: Colors.white)),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() => {loading = true});
 
-                            dynamic result =
-                                await _auth.registerWithEmailAndPassword(
-                                    email, pass, name, school, grade);
+                            dynamic result = await _auth.registerWithEmailAndPassword(email, pass, name, school, grade);
 
                             if (result == null) {
                               setState(() {
-                                error =
-                                    'Please double-check your email and password';
+                                error = 'Please double-check your email and password';
                                 loading = false;
                               });
                             }
@@ -160,8 +143,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Text(
                         error,
-                        style:
-                            const TextStyle(color: Colors.red, fontSize: 14.0),
+                        style: const TextStyle(color: Colors.red, fontSize: 14.0),
                       )
                     ],
                   ))),

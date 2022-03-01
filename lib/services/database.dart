@@ -21,12 +21,12 @@
     THE SOFTWARE.
 */
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
+import 'package:covcopcomp_math_fact/models/teacher.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 
-import '../models/student.dart';
-import '../models/teacher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
   final String uid;
@@ -50,11 +50,7 @@ class DatabaseService {
 
   // Stream for user data
   Stream<UserData> get userData {
-    return FirebaseFirestore.instance
-        .collection('mainCollection')
-        .doc(uid)
-        .snapshots()
-        .map(_userDataFromSnapshot);
+    return FirebaseFirestore.instance.collection('mainCollection').doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
   // Stream for current students
@@ -99,9 +95,7 @@ class DatabaseService {
 
   // Add Student to classroom collection
   Future addToStudentCollection(Student student) async {
-    return await FirebaseFirestore.instance
-        .collection(_studentInformationPath())
-        .add({
+    return await FirebaseFirestore.instance.collection(_studentInformationPath()).add({
       'name': student.name,
       'setSize': student.setSize,
       'target': student.target,
@@ -116,9 +110,7 @@ class DatabaseService {
 
   // Add student performance to collection
   Future addToStudentPerformanceCollection(RecordMathFacts record) async {
-    return await FirebaseFirestore.instance
-        .collection(_studentPerformancePath(record))
-        .add({
+    return await FirebaseFirestore.instance.collection(_studentPerformancePath(record)).add({
       'tid': record.tid,
       'id': record.id,
       'setSize': int.parse(record.setSize),
@@ -138,9 +130,7 @@ class DatabaseService {
 
   // Get the most recent information about a students performance
   Future getStudentPerformanceCollection(Student student) async {
-    QuerySnapshot ref = await FirebaseFirestore.instance
-        .collection(_studentPerformanceCollectionPath(student))
-        .get();
+    QuerySnapshot ref = await FirebaseFirestore.instance.collection(_studentPerformanceCollectionPath(student)).get();
 
     return ref.docs.map((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -166,10 +156,7 @@ class DatabaseService {
 
   // Update a student's programming
   Future updateStudentInCollection(Student student) async {
-    return await FirebaseFirestore.instance
-        .collection(_studentInformationPath())
-        .doc(student.id)
-        .set({
+    return await FirebaseFirestore.instance.collection(_studentInformationPath()).doc(student.id).set({
       'name': student.name,
       'setSize': int.parse(student.setSize),
       'set': int.parse(student.set),
@@ -187,10 +174,6 @@ class DatabaseService {
     return await FirebaseFirestore.instance
         .collection('mainCollection')
         .doc(uid)
-        .set({
-      'school': teacher.school,
-      'teacherName': teacher.name,
-      'grade': teacher.grade
-    });
+        .set({'school': teacher.school, 'teacherName': teacher.name, 'grade': teacher.grade});
   }
 }
