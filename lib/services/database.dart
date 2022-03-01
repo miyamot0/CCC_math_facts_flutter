@@ -43,6 +43,11 @@ class DatabaseService {
     return 'performanceCollection/${record.tid}/${record.target}/students/${record.id}';
   }
 
+  // Get student performance, specific to task
+  String _studentPerformanceCollectionPath(Student student) {
+    return 'performanceCollection/$uid/${student.target}/students/${student.id}';
+  }
+
   // Stream for user data
   Stream<UserData> get userData {
     return FirebaseFirestore.instance
@@ -71,9 +76,11 @@ class DatabaseService {
           target: data['target'].toString() ?? '',
           set: data['set'].toString() ?? '',
           id: d.id ?? '',
-          randomized: data['random'],
+          randomized: data['random'] ?? false,
           orientationPreference: data['hasPreference'] ?? false,
-          preferredOrientation: data['preferredOrientation'].toString() ?? '');
+          preferredOrientation: data['preferredOrientation'].toString() ?? '',
+          metric: data['metric'].toString() ?? '',
+          aim: data['aim'] ?? 0);
     }).toList();
   }
 
@@ -101,7 +108,9 @@ class DatabaseService {
       'set': student.set,
       'random': student.randomized,
       'hasPreference': student.orientationPreference,
-      'preferredOrientation': student.preferredOrientation
+      'preferredOrientation': student.preferredOrientation,
+      'metric': student.metric,
+      'aim': student.aim
     });
   }
 
@@ -112,7 +121,7 @@ class DatabaseService {
         .add({
       'tid': record.tid,
       'id': record.id,
-      'setSize': record.setSize,
+      'setSize': int.parse(record.setSize),
       'set': record.set,
       'target': record.target,
       'dateTimeStart': record.dateTimeStart,
@@ -121,8 +130,38 @@ class DatabaseService {
       'nRetries': record.nRetries,
       'nCorrectInitial': record.nCorrectInitial,
       'delaySec': record.delaySec,
-      'sessionDuration': record.sessionDuration
+      'sessionDuration': record.sessionDuration,
+      'totalDigits': record.totalDigits,
+      'correctDigits': record.correctDigits
     });
+  }
+
+  // Get the most recent information about a students performance
+  Future getStudentPerformanceCollection(Student student) async {
+    QuerySnapshot ref = await FirebaseFirestore.instance
+        .collection(_studentPerformanceCollectionPath(student))
+        .get();
+
+    return ref.docs.map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+      return RecordMathFacts(
+        tid: uid ?? '',
+        id: doc.id ?? '',
+        setSize: data['setSize'].toString() ?? '',
+        target: data['target'].toString() ?? '',
+        dateTimeStart: data['dateTimeStart'].toString() ?? '',
+        dateTimeEnd: data['dateTimeEnd'].toString() ?? '',
+        errCount: int.parse(data['errCount'].toString()),
+        nRetries: int.parse(data['nRetries'].toString()),
+        nCorrectInitial: int.parse(data['nCorrectInitial'].toString()),
+        delaySec: int.parse(data['delaySec'].toString()),
+        sessionDuration: int.parse(data['sessionDuration'].toString()),
+        set: int.parse(data['set'].toString()),
+        totalDigits: int.parse(data['totalDigits'].toString()),
+        correctDigits: int.parse(data['correctDigits'].toString()),
+      );
+    }).toList();
   }
 
   // Update a student's programming
@@ -132,12 +171,14 @@ class DatabaseService {
         .doc(student.id)
         .set({
       'name': student.name,
-      'setSize': student.setSize,
-      'set': student.set,
+      'setSize': int.parse(student.setSize),
+      'set': int.parse(student.set),
       'target': student.target,
       'random': student.randomized,
       'hasPreference': student.orientationPreference,
-      'preferredOrientation': student.preferredOrientation
+      'preferredOrientation': student.preferredOrientation,
+      'metric': student.metric,
+      'aim': student.aim
     });
   }
 

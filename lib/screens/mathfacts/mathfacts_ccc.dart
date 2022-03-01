@@ -23,6 +23,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:collection/collection.dart';
 
 import '../../models/record_ccc_mfacts.dart';
 import '../../models/student.dart';
@@ -31,14 +32,16 @@ import '../../shared/constants.dart';
 
 import 'heads_up.dart';
 import 'key_pad.dart';
+import 'math_scoring.dart';
 
 class MathFactsCCC extends StatefulWidget {
-  const MathFactsCCC({Key key, this.student, this.tid, this.set})
+  const MathFactsCCC({Key key, this.student, this.tid, this.set, this.operator})
       : super(key: key);
 
   final Student student;
   final String tid;
   final List<String> set;
+  final String operator;
 
   @override
   _MathFactsCCCState createState() => _MathFactsCCCState();
@@ -59,6 +62,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   List<InlineSpan> viewPanelString = [];
   List<InlineSpan> entryPanelStringView = [];
+  List<int> correctDigits = [], totalDigits = [];
 
   Color entryPanel = Colors.grey,
       viewPanel = Colors.grey,
@@ -316,8 +320,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             nCorrectInitial: nCorrectInitial,
             delaySec: 0,
             set: int.parse(widget.student.set),
-            sessionDuration: secs))
-        .then((value) => Navigator.of(context).pop());
+            sessionDuration: secs,
+            totalDigits: totalDigits.sum,
+            correctDigits: correctDigits.sum))
+        .then((value) => Navigator.pop(context, true));
   }
 
   _showMessageDialog(BuildContext context) => showDialog(
@@ -355,6 +361,18 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             TextButton(
               child: const Text("No"),
               onPressed: () {
+                String currentStringDisplayed = viewPanelStringInternal;
+                int totalDigitsShown =
+                    calculateDigitsTotal(currentStringDisplayed);
+                totalDigits.add(totalDigitsShown);
+
+                String currentStringEntered = entryPanelStringInternal;
+                int totalDigitsCorrect = calculateDigitsCorrect(
+                    currentStringEntered,
+                    currentStringDisplayed,
+                    widget.operator);
+                correctDigits.add(totalDigitsCorrect);
+
                 setState(() {
                   viewPanelString = [];
 
