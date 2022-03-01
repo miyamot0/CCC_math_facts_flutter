@@ -25,16 +25,16 @@ import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/home/edit_form.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc_h.dart';
+import 'package:covcopcomp_math_fact/screens/mathfacts/visualfeedback.dart';
+import 'package:covcopcomp_math_fact/models/data.dart';
+import 'package:covcopcomp_math_fact/models/usermodel.dart';
+import 'package:covcopcomp_math_fact/services/database.dart';
+import 'package:covcopcomp_math_fact/services/mind.dart';
+import 'package:covcopcomp_math_fact/shared/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import '../../models/data.dart';
-import '../../models/usermodel.dart';
-import '../../services/database.dart';
-import '../../services/mind.dart';
-import '../../shared/constants.dart';
-import '../visualfeedback.dart';
 
 class StudentTile extends StatefulWidget {
   final Student student;
@@ -133,7 +133,7 @@ class _StudentTileState extends State<StudentTile> {
       return const Expanded(
           flex: 2,
           child: CircleAvatar(
-            radius: 50.0,
+            radius: 65.0,
             backgroundColor: Colors.blue,
           ));
     }
@@ -168,11 +168,17 @@ class _StudentTileState extends State<StudentTile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               _buildStudentTitle(widget.student.name),
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
-              _buildStudentDescription(widget.student)
+              _buildStudentDescription(widget.student),
+              const SizedBox(
+                height: 10,
+              ),
             ],
           ));
     }

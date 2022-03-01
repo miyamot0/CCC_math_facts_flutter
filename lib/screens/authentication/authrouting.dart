@@ -32,8 +32,6 @@ class AuthRouting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<UserModel>(context) == null
-        ? const AuthenticationPage()
-        : const Home();
+    return Provider.of<UserModel>(context) == null ? const AuthenticationPage() : const Home();
   }
 }

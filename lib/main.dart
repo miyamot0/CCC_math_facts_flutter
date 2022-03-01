@@ -24,7 +24,7 @@
 */
 
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
-import 'package:covcopcomp_math_fact/screens/authrouting.dart';
+import 'package:covcopcomp_math_fact/screens/authentication/authrouting.dart';
 import 'package:covcopcomp_math_fact/screens/landing/landing.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -61,8 +61,7 @@ class _MyAppState extends State<MyApp> {
         initialData: null,
         child: MaterialApp(
           theme: ThemeData(
-              appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
-              backgroundColor: Colors.lightBlue[100]),
+              appBarTheme: const AppBarTheme(backgroundColor: Colors.blue), backgroundColor: Colors.lightBlue[100]),
           initialRoute: "/",
           routes: {
             "/": (context) => const LandingScreen(),

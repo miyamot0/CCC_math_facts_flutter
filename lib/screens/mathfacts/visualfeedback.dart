@@ -22,19 +22,17 @@
 */
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covcopcomp_math_fact/models/chartrow.dart';
 import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
+import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:flutter/material.dart';
-
-import '../models/chartrow.dart';
-import '../models/student.dart';
-import '../shared/constants.dart';
 
 class VisualFeedback extends StatelessWidget {
   final List<RecordMathFacts> currentPerformances;
   final Student currentStudent;
 
-  const VisualFeedback({this.currentPerformances, this.currentStudent, Key key})
-      : super(key: key);
+  const VisualFeedback({this.currentPerformances, this.currentStudent, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +41,7 @@ class VisualFeedback extends StatelessWidget {
       final DateTime dateStart = DateTime.parse(perfs.dateTimeStart);
       final isShowingAccuracy = currentStudent.metric == Metrics().Accuracy;
 
-      final accuracy = (double.parse(perfs.nCorrectInitial.toString()) /
-              double.parse(perfs.setSize)) *
-          100;
+      final accuracy = (double.parse(perfs.nCorrectInitial.toString()) / double.parse(perfs.setSize)) * 100;
       final minutes = double.parse(perfs.sessionDuration.toString()) / 60.0;
       final fluency = (double.parse(perfs.correctDigits.toString()) / minutes);
 
@@ -82,8 +78,7 @@ class VisualFeedback extends StatelessWidget {
           primaryMeasureAxis: const charts.NumericAxisSpec(),
           behaviors: [
             charts.RangeAnnotation([
-              charts.LineAnnotationSegment(
-                  currentStudent.aim, charts.RangeAnnotationAxisType.measure,
+              charts.LineAnnotationSegment(currentStudent.aim, charts.RangeAnnotationAxisType.measure,
                   endLabel: 'Aim Level',
                   labelAnchor: charts.AnnotationLabelAnchor.middle,
                   color: charts.MaterialPalette.red.shadeDefault),
@@ -91,8 +86,7 @@ class VisualFeedback extends StatelessWidget {
           ],
           domainAxis: const charts.DateTimeAxisSpec(
               tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
-                  day: charts.TimeFormatterSpec(
-                      format: 'd', transitionFormat: 'MM/dd/yyyy')))),
+                  day: charts.TimeFormatterSpec(format: 'd', transitionFormat: 'MM/dd/yyyy')))),
     );
   }
 }
