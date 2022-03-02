@@ -209,6 +209,7 @@ class _StudentTileState extends State<StudentTile> {
       return Expanded(
           flex: 1,
           child: Container(
+              constraints: const BoxConstraints.expand(height: 75),
               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blueAccent),
               child: IconButton(
                   icon: const Icon(
