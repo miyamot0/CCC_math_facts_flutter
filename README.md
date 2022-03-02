@@ -18,9 +18,13 @@ Real-time editing of student support strategies (e.g., set size, randomization, 
 
 ![Realtime management of student settings](screenshots/Screenshot_1645128668.png "Live edit")
 
-Implementation of Cover-Copy-Compare (paper free!)
+Implementation of Cover-Copy-Compare: Horizontally (paper free!)
 
 ![Virtual interface for Cover Copy Compare](screenshots/Screenshot_1645128678.png "Cover Copy Compare")
+
+Implementation of Cover-Copy-Compare:Vertically (paper free!)
+
+![Virtual interface for Cover Copy Compare](screenshots/Screenshot_1646232732.png "Cover Copy Compare")
 
 ### Version
 
