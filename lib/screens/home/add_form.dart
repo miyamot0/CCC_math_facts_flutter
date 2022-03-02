@@ -28,6 +28,7 @@ import 'package:covcopcomp_math_fact/shared/loading.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddForm extends StatefulWidget {
@@ -47,6 +48,7 @@ class _AddFormState extends State<AddForm> {
       _setNumber = "0",
       _preferredOrientation = Orientations().Horizontal;
   bool _randomized = false, _orientationPreference = true;
+  int _aimSetting;
 
   @override
   Widget build(BuildContext context) {
@@ -151,6 +153,16 @@ class _AddFormState extends State<AddForm> {
                 const SizedBox(
                   height: 20.0,
                 ),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: "Aim Level", labelText: "Aim Level:"),
+                  initialValue: '10',
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) => _aimSetting = int.tryParse(value) ?? 0,
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextButton(
                   style: TextButton.styleFrom(
                       primary: Colors.white,
@@ -167,7 +179,8 @@ class _AddFormState extends State<AddForm> {
                           randomized: _randomized,
                           preferredOrientation: _preferredOrientation,
                           orientationPreference: _orientationPreference,
-                          metric: _metricEdit));
+                          metric: _metricEdit,
+                          aim: _aimSetting));
 
                       Navigator.pop(context);
                     }

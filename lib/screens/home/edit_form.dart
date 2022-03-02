@@ -28,6 +28,7 @@ import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class EditForm extends StatefulWidget {
@@ -40,6 +41,7 @@ class EditForm extends StatefulWidget {
   final bool orientationPreference;
   final String preferredOrientation;
   final String metric;
+  final int aim;
 
   const EditForm(
       {Key key,
@@ -51,7 +53,8 @@ class EditForm extends StatefulWidget {
       this.orientationPreference,
       this.preferredOrientation,
       this.metric,
-      this.set})
+      this.set,
+      this.aim})
       : super(key: key);
 
   @override
@@ -64,6 +67,7 @@ class _EditFormState extends State<EditForm> {
   final TextEditingController _textFieldController = TextEditingController();
   String _setSizeEdit, _exerciseEdit, _metricEdit, _preferredOrientation, _setNumber, itemPresentation;
   bool _randomized, _orientationPreference;
+  int _aimSetting;
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +81,7 @@ class _EditFormState extends State<EditForm> {
     _preferredOrientation = _preferredOrientation ?? widget.preferredOrientation;
     _orientationPreference = _orientationPreference ?? widget.orientationPreference;
     _setNumber = _setNumber ?? widget.set;
-
-    //ID is as-is
+    _aimSetting = _aimSetting ?? widget.aim;
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -180,6 +183,16 @@ class _EditFormState extends State<EditForm> {
                 const SizedBox(
                   height: 20.0,
                 ),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: "Aim Level", labelText: "Aim Level:"),
+                  initialValue: _aimSetting == null ? "10" : _aimSetting.toString(),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) => _aimSetting = int.tryParse(value) ?? 0,
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextButton(
                   style: TextButton.styleFrom(
                       primary: Colors.white,
@@ -197,7 +210,8 @@ class _EditFormState extends State<EditForm> {
                           randomized: _randomized,
                           preferredOrientation: _preferredOrientation,
                           orientationPreference: _orientationPreference,
-                          metric: _metricEdit));
+                          metric: _metricEdit,
+                          aim: _aimSetting));
 
                       Navigator.pop(context);
                     }
