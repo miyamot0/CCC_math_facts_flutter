@@ -193,11 +193,13 @@ class _StudentTileState extends State<StudentTile> {
       return Expanded(
           flex: 1,
           child: Container(
+              constraints: const BoxConstraints.expand(height: 75),
               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.redAccent),
               child: IconButton(
                   icon: const Icon(
                     Icons.trending_up,
                     color: Colors.white,
+                    size: 40.0,
                   ),
                   onPressed: () => _showVisualFeedback(user, widget.student, context))));
     }
@@ -221,11 +223,13 @@ class _StudentTileState extends State<StudentTile> {
       return Expanded(
           flex: 1,
           child: Container(
+              constraints: const BoxConstraints.expand(height: 75),
               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.greenAccent),
               child: IconButton(
                   icon: const Icon(
                     Icons.play_arrow,
                     color: Colors.white,
+                    size: 40.0,
                   ),
                   onPressed: () async {
                     final MathFactData jsonSet = await _parseJson();
