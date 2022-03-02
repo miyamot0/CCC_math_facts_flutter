@@ -26,6 +26,10 @@ Implementation of Cover-Copy-Compare:Vertically (paper free!)
 
 ![Virtual interface for Cover Copy Compare](screenshots/Screenshot_1646232732.png "Cover Copy Compare")
 
+Visual Feedback for individual students (Teacher-adjustible aim lines as well)
+
+![Virtual interface for Cover Copy Compare](screenshots/Screenshot_1646248483.png "Cover Copy Compare")
+
 ### Version
 
 -   0.0.0.1 - Alpha
