@@ -35,15 +35,44 @@ class VisualFeedback extends StatelessWidget {
 
   const VisualFeedback({this.currentPerformances, this.currentStudent, Key key}) : super(key: key);
 
+  static _containerPadding() {
+    return const EdgeInsets.all(10);
+  }
+
+  List<charts.ChartBehavior<DateTime>> _getChartFeatures() {
+    return [
+      charts.RangeAnnotation([
+        charts.LineAnnotationSegment(currentStudent.aim, charts.RangeAnnotationAxisType.measure,
+            endLabel: '${currentStudent.name}\'s Current Aim Level',
+            labelAnchor: charts.AnnotationLabelAnchor.start,
+            labelStyleSpec: const charts.TextStyleSpec(fontSize: 18),
+            color: charts.MaterialPalette.red.shadeDefault),
+      ], defaultLabelPosition: charts.AnnotationLabelPosition.inside),
+      charts.ChartTitle('Name: ${currentStudent.name}',
+          titleStyleSpec: const charts.TextStyleSpec(fontSize: 18),
+          subTitle: 'Current Skill target: ${currentStudent.target}',
+          subTitleStyleSpec: const charts.TextStyleSpec(fontSize: 16),
+          behaviorPosition: charts.BehaviorPosition.top,
+          titleOutsideJustification: charts.OutsideJustification.startDrawArea,
+          innerPadding: 20),
+      charts.ChartTitle('Date',
+          behaviorPosition: charts.BehaviorPosition.bottom,
+          titleOutsideJustification: charts.OutsideJustification.middleDrawArea),
+      charts.ChartTitle('Current Skill target: ${currentStudent.metric}',
+          behaviorPosition: charts.BehaviorPosition.start,
+          titleOutsideJustification: charts.OutsideJustification.middleDrawArea),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     // Map out list
     List<ChartRow> chartRows = currentPerformances.map((perfs) {
       final DateTime dateStart = DateTime.parse(perfs.dateTimeStart);
       final isShowingAccuracy = currentStudent.metric == Metrics().Accuracy;
+      final minutes = double.parse(perfs.sessionDuration.toString()) / 60.0;
 
       final accuracy = (double.parse(perfs.nCorrectInitial.toString()) / double.parse(perfs.setSize)) * 100;
-      final minutes = double.parse(perfs.sessionDuration.toString()) / 60.0;
       final fluency = (double.parse(perfs.correctDigits.toString()) / minutes);
 
       final y = (isShowingAccuracy == true) ? accuracy : fluency;
@@ -66,28 +95,24 @@ class VisualFeedback extends StatelessWidget {
       ),
     ];
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(5, 20, 5, 5),
-      color: Colors.white,
-      child: charts.TimeSeriesChart(seriesList,
-          animate: true,
-          layoutConfig: charts.LayoutConfig(
-              leftMarginSpec: charts.MarginSpec.fixedPixel(60),
-              topMarginSpec: charts.MarginSpec.fixedPixel(20),
-              rightMarginSpec: charts.MarginSpec.fixedPixel(60),
-              bottomMarginSpec: charts.MarginSpec.fixedPixel(20)),
-          primaryMeasureAxis: const charts.NumericAxisSpec(),
-          behaviors: [
-            charts.RangeAnnotation([
-              charts.LineAnnotationSegment(currentStudent.aim, charts.RangeAnnotationAxisType.measure,
-                  endLabel: 'Aim Level',
-                  labelAnchor: charts.AnnotationLabelAnchor.middle,
-                  color: charts.MaterialPalette.red.shadeDefault),
-            ], defaultLabelPosition: charts.AnnotationLabelPosition.inside),
-          ],
-          domainAxis: const charts.DateTimeAxisSpec(
-              tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
-                  day: charts.TimeFormatterSpec(format: 'd', transitionFormat: 'MM/dd/yyyy')))),
-    );
+    return Scaffold(
+        appBar: AppBar(title: const Text('Visual Feedback')),
+        body: Container(
+          padding: _containerPadding(),
+          color: Colors.white,
+          child: charts.TimeSeriesChart(
+            seriesList,
+            animate: true,
+            behaviors: _getChartFeatures(),
+            defaultRenderer: charts.LineRendererConfig(includePoints: true),
+            domainAxis: const charts.DateTimeAxisSpec(
+                renderSpec: charts.SmallTickRendererSpec(labelStyle: charts.TextStyleSpec(fontSize: 20)),
+                tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
+                    day: charts.TimeFormatterSpec(format: 'd', transitionFormat: 'MM/dd/yyyy'))),
+            primaryMeasureAxis: const charts.NumericAxisSpec(
+              renderSpec: charts.SmallTickRendererSpec(labelStyle: charts.TextStyleSpec(fontSize: 20)),
+            ),
+          ),
+        ));
   }
 }
