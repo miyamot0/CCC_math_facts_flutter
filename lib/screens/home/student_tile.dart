@@ -191,7 +191,7 @@ class _StudentTileState extends State<StudentTile> {
               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.redAccent),
               child: IconButton(
                   icon: const Icon(
-                    Icons.data_exploration,
+                    Icons.trending_up,
                     color: Colors.white,
                   ),
                   onPressed: () => _showVisualFeedback(user, widget.student, context))));
