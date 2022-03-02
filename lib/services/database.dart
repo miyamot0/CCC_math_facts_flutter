@@ -87,10 +87,9 @@ class DatabaseService {
     return UserData(
         uid: uid,
         name: data['teacherName'],
-        currentTarget: data['target'],
-        currentSetSize: data['setSize'],
         currentGrade: data['grade'],
-        currentSchool: data['school']);
+        currentSchool: data['school'],
+        revealSettings: data['revealSettings']);
   }
 
   // Add Student to classroom collection
@@ -174,6 +173,6 @@ class DatabaseService {
     return await FirebaseFirestore.instance
         .collection('mainCollection')
         .doc(uid)
-        .set({'school': teacher.school, 'teacherName': teacher.name, 'grade': teacher.grade});
+        .set({'school': teacher.school, 'teacherName': teacher.name, 'grade': teacher.grade, 'revealSettings': true});
   }
 }

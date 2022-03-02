@@ -30,16 +30,9 @@ class UserModel {
 class UserData {
   final String uid;
   final String name;
-  final String currentTarget;
-  final int currentSetSize;
   final String currentGrade;
   final String currentSchool;
+  final bool revealSettings;
 
-  UserData(
-      {this.uid,
-      this.name,
-      this.currentTarget,
-      this.currentSetSize,
-      this.currentGrade,
-      this.currentSchool});
+  UserData({this.uid, this.name, this.currentGrade, this.currentSchool, this.revealSettings});
 }
