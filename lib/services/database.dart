@@ -170,9 +170,11 @@ class DatabaseService {
 
   // Update a teacher's working defaults
   Future updateTeacherInCollection(Teacher teacher) async {
-    return await FirebaseFirestore.instance
-        .collection('mainCollection')
-        .doc(uid)
-        .set({'school': teacher.school, 'teacherName': teacher.name, 'grade': teacher.grade, 'revealSettings': true});
+    return await FirebaseFirestore.instance.collection('mainCollection').doc(uid).set({
+      'school': teacher.school,
+      'teacherName': teacher.name,
+      'grade': teacher.grade,
+      'revealSettings': teacher.revealSettings ?? true
+    });
   }
 }

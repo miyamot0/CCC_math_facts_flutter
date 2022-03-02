@@ -38,8 +38,9 @@ import 'package:provider/provider.dart';
 
 class StudentTile extends StatefulWidget {
   final Student student;
+  final UserData userData;
 
-  const StudentTile({Key key, this.student}) : super(key: key);
+  const StudentTile({Key key, this.student, this.userData}) : super(key: key);
 
   @override
   State<StudentTile> createState() => _StudentTileState();
@@ -48,9 +49,8 @@ class StudentTile extends StatefulWidget {
 class _StudentTileState extends State<StudentTile> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
-
     bool isInPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final user = Provider.of<UserModel>(context);
 
     // Parse the embedded json for math problems
     Future<MathFactData> _parseJson() async {
@@ -154,11 +154,13 @@ class _StudentTileState extends State<StudentTile> {
       // ignore: prefer_adjacent_string_concatenation
       return Text(
         // ignore: prefer_adjacent_string_concatenation
-        "Skill Target: ${student.target}, \nSet size: ${student.setSize} \n" +
-            "Stimulus set: ${student.set}, \nRandomizing set: ${student.randomized}, \n" +
+        "Skill Target: ${student.target}, \n" +
+            //"Set size: ${student.setSize} \n" +
+            "Stimulus set: ${student.set}, Randomizing set: ${student.randomized}, \n" +
             // ID:${student.id} \n
             // Orientation Preference: ${student.orientationPreference}, \n
-            "Orientation Setting: ${student.preferredOrientation}, \nMetric: ${student.metric}, \n" +
+            "Orientation Setting: ${student.preferredOrientation}, \n" +
+            "Metric: ${student.metric}, " +
             "Aim Setting: ${student.aim}",
         style: const TextStyle(fontSize: 18.0),
       );
@@ -243,7 +245,13 @@ class _StudentTileState extends State<StudentTile> {
           margin: const EdgeInsets.fromLTRB(10.0, 1.0, 10.0, 0.0),
           child: Padding(
             padding: const EdgeInsets.all(15),
-            child: Row(children: [_leadingWidget(), _bodyWidget(), _settingsWidget(), _dataWidget(), _launchWidget()]),
+            child: Row(children: [
+              _leadingWidget(),
+              _bodyWidget(),
+              widget.userData.revealSettings == true ? _settingsWidget() : const SizedBox.shrink(),
+              _dataWidget(),
+              _launchWidget()
+            ]),
           )),
     );
   }

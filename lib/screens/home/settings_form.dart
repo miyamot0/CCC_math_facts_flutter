@@ -41,6 +41,7 @@ class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
 
   String _currentGrade, _currentSchool, _currentName;
+  bool _revealSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +90,21 @@ class _SettingsFormState extends State<SettingsForm> {
                 validator: (val) => val.isEmpty ? 'Please enter a value for your school' : null,
                 onChanged: (val) => setState((() => _currentSchool = val)),
               ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              DropdownButtonFormField(
+                decoration: textInputDecoration.copyWith(
+                    hintText: "Show Settings on Home Screen", labelText: "Show Settings on Home Screen:"),
+                value: userData.revealSettings == true ? 'Show Settings Button' : 'Hide Settings Button',
+                items: ['Show Settings Button', 'Hide Settings Button'].map((setting) {
+                  return DropdownMenuItem(value: setting, child: Text(setting));
+                }).toList(),
+                onChanged: (value) => _revealSettings = value.toString() == "Show Settings Button" ? true : false,
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
               TextButton(
                   style: TextButton.styleFrom(
                       primary: Colors.white,
@@ -105,7 +121,8 @@ class _SettingsFormState extends State<SettingsForm> {
                           school: _currentSchool ?? userData.currentSchool,
                           name: _currentName ?? userData.name,
                           grade: _currentGrade ?? userData.currentGrade,
-                          id: user.uid));
+                          id: user.uid,
+                          revealSettings: _revealSettings ?? userData.revealSettings));
 
                       Navigator.pop(context);
                     }

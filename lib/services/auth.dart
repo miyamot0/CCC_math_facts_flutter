@@ -63,8 +63,8 @@ class AuthService {
       if (user == null) {
         return null;
       } else {
-        await DatabaseService(uid: user.uid)
-            .updateTeacherInCollection(Teacher(school: school, name: name, grade: grade, id: user.uid));
+        await DatabaseService(uid: user.uid).updateTeacherInCollection(
+            Teacher(school: school, name: name, grade: grade, id: user.uid, revealSettings: true));
 
         return _userFromFirebaseUser(user);
       }

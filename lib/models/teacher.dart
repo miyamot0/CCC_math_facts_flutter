@@ -26,11 +26,7 @@ class Teacher {
   final String grade;
   final String school;
   final String id;
+  final bool revealSettings;
 
-  Teacher({
-    this.name,
-    this.grade,
-    this.school,
-    this.id,
-  });
+  Teacher({this.name, this.grade, this.school, this.id, this.revealSettings});
 }

@@ -22,7 +22,10 @@
 */
 
 import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/screens/home/student_tile.dart';
+import 'package:covcopcomp_math_fact/services/database.dart';
+import 'package:covcopcomp_math_fact/shared/loading.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,12 +41,25 @@ class _StudentListState extends State<StudentList> {
   @override
   Widget build(BuildContext context) {
     final List<Student> students = Provider.of<List<Student>>(context) ?? [];
+    final user = Provider.of<UserModel>(context);
 
-    return ListView.builder(
-      itemCount: students.length,
-      itemBuilder: (context, index) {
-        return StudentTile(student: students[index]);
-      },
-    );
+    return StreamBuilder<UserData>(
+        stream: DatabaseService(uid: user.uid).userData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            UserData userData = snapshot.data;
+
+            return ListView.builder(
+                itemCount: students.length,
+                itemBuilder: (context, index) {
+                  return StudentTile(
+                    student: students[index],
+                    userData: userData,
+                  );
+                });
+          } else {
+            return const Loading();
+          }
+        });
   }
 }
