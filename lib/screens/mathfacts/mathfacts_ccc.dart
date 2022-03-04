@@ -35,8 +35,7 @@ import 'key_pad.dart';
 import 'math_scoring.dart';
 
 class MathFactsCCC extends StatefulWidget {
-  const MathFactsCCC({Key key, this.student, this.tid, this.set, this.operator})
-      : super(key: key);
+  const MathFactsCCC({Key key, this.student, this.tid, this.set, this.operator}) : super(key: key);
 
   final Student student;
   final String tid;
@@ -48,25 +47,17 @@ class MathFactsCCC extends StatefulWidget {
 }
 
 class _MathFactsCCCState extends State<MathFactsCCC> {
-  bool isOngoing = false,
-      initialLoad = true,
-      toVerify = false,
-      initialTry = true;
+  bool isOngoing = false, initialLoad = true, toVerify = false, initialTry = true;
 
   List<String> localSet;
 
-  String cachedString = '',
-      viewPanelStringInternal = '',
-      entryPanelStringInternal = '',
-      buttonText = '';
+  String cachedString = '', viewPanelStringInternal = '', entryPanelStringInternal = '', buttonText = '';
 
   List<InlineSpan> viewPanelString = [];
   List<InlineSpan> entryPanelStringView = [];
   List<int> correctDigits = [], totalDigits = [];
 
-  Color entryPanel = Colors.grey,
-      viewPanel = Colors.grey,
-      viewPanelText = Colors.black;
+  Color entryPanel = Colors.grey, viewPanel = Colors.grey, viewPanelText = Colors.black;
 
   int errCount = 0, nRetries = 0, nCorrectInitial = 0, numTrial = 1;
 
@@ -236,8 +227,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         return;
       }
 
-      entryPanelStringInternal = entryPanelStringInternal.substring(
-          0, entryPanelStringInternal.length - 1);
+      entryPanelStringInternal = entryPanelStringInternal.substring(0, entryPanelStringInternal.length - 1);
     } else {
       entryPanelStringInternal = entryPanelStringInternal + char;
     }
@@ -280,8 +270,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       } else {
         hud = CCCStatus.entry;
 
-        isMatching =
-            viewPanelStringInternal.trim() == entryPanelStringInternal.trim();
+        isMatching = viewPanelStringInternal.trim() == entryPanelStringInternal.trim();
 
         toVerify = true;
       }
@@ -331,8 +320,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: const Text("Compare Facts"),
-          content:
-              const Text("Please check your facts. Do you need to try again?"),
+          content: const Text("Please check your facts. Do you need to try again?"),
           actions: <Widget>[
             TextButton(
               child: const Text("Yes"),
@@ -362,15 +350,12 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
               child: const Text("No"),
               onPressed: () {
                 String currentStringDisplayed = viewPanelStringInternal;
-                int totalDigitsShown =
-                    calculateDigitsTotal(currentStringDisplayed);
+                int totalDigitsShown = calculateDigitsTotal(currentStringDisplayed);
                 totalDigits.add(totalDigitsShown);
 
                 String currentStringEntered = entryPanelStringInternal;
-                int totalDigitsCorrect = calculateDigitsCorrect(
-                    currentStringEntered,
-                    currentStringDisplayed,
-                    widget.operator);
+                int totalDigitsCorrect =
+                    calculateDigitsCorrect(currentStringEntered, currentStringDisplayed, widget.operator);
                 correctDigits.add(totalDigitsCorrect);
 
                 setState(() {
@@ -398,9 +383,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     if (initialLoad) {
       initialLoad = false;
@@ -459,15 +442,11 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                           }
 
                                           setState(() {
-                                            viewPanelStringInternal =
-                                                localSet[index];
+                                            viewPanelStringInternal = localSet[index];
 
-                                            viewPanelString =
-                                                _verticalizeString(
-                                                    viewPanelStringInternal);
+                                            viewPanelString = _verticalizeString(viewPanelStringInternal);
 
-                                            cachedString =
-                                                viewPanelStringInternal;
+                                            cachedString = viewPanelStringInternal;
                                             isOngoing = true;
                                             buttonText = 'Cover';
                                             localSet.removeAt(index);

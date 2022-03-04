@@ -49,10 +49,12 @@ class StudentTile extends StatefulWidget {
 class _StudentTileState extends State<StudentTile> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     MediaQueryData mqData = MediaQuery.of(context);
     final user = Provider.of<UserModel>(context);
 
-    bool isInPortrait = mqData.orientation == Orientation.portrait;
+    //bool isInPortrait = mqData.orientation == Orientation.portrait;
 
     final double horizontalBlock = mqData.size.width / 100;
     final double heroStudentRadiusSize = horizontalBlock * 7.5;
@@ -105,7 +107,7 @@ class _StudentTileState extends State<StudentTile> {
 
     // Determine whether to provide visual feedback
     void _handleScreenReturn(dynamic result) {
-      SystemChrome.setPreferredOrientations([]);
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
       if (result != null && result == true) {
         _showVisualFeedbackScreen(user, widget.student, context);
@@ -131,10 +133,12 @@ class _StudentTileState extends State<StudentTile> {
                   ));
     }
 
+    // TODO: Revert horizontal mode for now (most don't use it)
     // Check orientation of screen
     bool _checkIfDeviceOrientationPortrait() {
-      return widget.student.preferredOrientation == Orientations().Vertical ||
-          (widget.student.preferredOrientation == Orientations().NoPreference && isInPortrait);
+      return true;
+      //return widget.student.preferredOrientation == Orientations().Vertical ||
+      //    (widget.student.preferredOrientation == Orientations().NoPreference && isInPortrait);
     }
 
     // Construct trailing widget

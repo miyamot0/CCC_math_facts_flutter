@@ -30,7 +30,6 @@ import 'package:covcopcomp_math_fact/services/auth.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -48,13 +47,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  PackageInfo appInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-  );
-
   @override
   Widget build(BuildContext context) {
     return StreamProvider<UserModel>.value(
