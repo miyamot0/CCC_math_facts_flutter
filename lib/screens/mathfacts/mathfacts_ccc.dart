@@ -67,6 +67,16 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   static const String delCode = "Del";
 
+  int _nPad(String str) {
+    const int base = 4;
+
+    if (str == null || str.isEmpty) {
+      return base - 0;
+    } else {
+      return base - str.length;
+    }
+  }
+
   List<InlineSpan> _verticalizeString(String str) {
     RegExp regExp = RegExp(
       r"(\d[^\+\-\x\\==]*)+",
@@ -76,6 +86,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     String operator = "";
     int iter = 0;
+    String strPad = ' ';
 
     List<InlineSpan> newText = [];
 
@@ -92,18 +103,24 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     for (RegExpMatch reg in regExp.allMatches(str)) {
       if (iter == 0) {
         String textToInclude = reg.group(1).trim();
-        newText.add(TextSpan(text: textToInclude.padLeft(4)));
+        String textToInclude2 = textToInclude.padLeft(_nPad(textToInclude), strPad);
+
+        newText.add(TextSpan(text: textToInclude2));
         newText.add(const TextSpan(text: "\r\n"));
       } else if (iter == 1) {
-        String textToInclude = reg.group(1);
-        newText.add(TextSpan(
-            text: (operator + " " + textToInclude).padLeft(4).trim(),
-            style: const TextStyle(decoration: TextDecoration.underline)));
+        String textToInclude = operator + " " + reg.group(1).trim();
+        String textToInclude2 = textToInclude.padLeft(_nPad(textToInclude), strPad);
+
+        newText.add(TextSpan(text: textToInclude2, style: const TextStyle(decoration: TextDecoration.underline)));
         newText.add(const TextSpan(text: "\r\n"));
       } else {
-        TextSpan newText3 = TextSpan(text: reg.group(1).padLeft(4, ' ').trim());
+        String textToInclude = reg.group(1).trim();
+        String textToInclude2 = textToInclude.padLeft(_nPad(textToInclude), strPad);
+
+        TextSpan newText3 = TextSpan(text: textToInclude2);
 
         newText.add(newText3);
+        newText.add(const TextSpan(text: "\r"));
       }
 
       iter++;
@@ -121,6 +138,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     String operator = "";
     int iter = 0;
+    const String strPad = ' ';
 
     List<InlineSpan> newText = [];
 
@@ -138,34 +156,34 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     if (regExp.allMatches(str).length < 2 && operator == ' ') {
       for (RegExpMatch reg in regExp.allMatches(str)) {
-        newText.add(TextSpan(text: reg.group(1).padLeft(4, ' ')));
+        newText.add(TextSpan(text: reg.group(1).padLeft(_nPad(reg.group(1).trim()), strPad)));
       }
       newText.add(const TextSpan(text: "\r\n"));
       newText.add(TextSpan(text: operator));
-    } else if (regExp.allMatches(str).length <= 1 && !str.contains(' ')) {
+    } else if (regExp.allMatches(str).length <= 1 && !str.contains(strPad)) {
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
 
-          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
+          newText.add(TextSpan(text: textToInclude.padLeft(_nPad(textToInclude), strPad)));
           newText.add(const TextSpan(text: "\r\n"));
         }
 
         iter++;
       }
 
-      newText.add(TextSpan(text: (operator).padLeft(4).trim()));
+      newText.add(TextSpan(text: operator.padLeft(_nPad(operator), strPad).trim()));
       newText.add(const TextSpan(text: "\r\n"));
     } else if (regExp.allMatches(str).length == 2 && !str.contains('=')) {
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
-          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
+          newText.add(TextSpan(text: textToInclude.padLeft(_nPad(textToInclude), strPad)));
           newText.add(const TextSpan(text: "\r\n"));
         } else if (iter == 1) {
           String textToInclude = reg.group(1);
           newText.add(TextSpan(
-            text: (operator + " " + textToInclude).padLeft(4, ' '),
+            text: (operator + " " + textToInclude).padLeft(_nPad((operator + " " + textToInclude)), strPad),
           ));
           newText.add(const TextSpan(text: "\r\n"));
         }
@@ -178,12 +196,12 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
-          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
+          newText.add(TextSpan(text: textToInclude.padLeft(_nPad(textToInclude), strPad)));
           newText.add(const TextSpan(text: "\r\n"));
         } else if (iter == 1) {
-          String textToInclude = reg.group(1);
+          String textToInclude = reg.group(1).trim();
           newText.add(TextSpan(
-              text: (operator + " " + textToInclude).padLeft(4, ' '),
+              text: (operator + " " + textToInclude).padLeft(_nPad(textToInclude), strPad),
               style: const TextStyle(decoration: TextDecoration.underline)));
           newText.add(const TextSpan(text: "\r\n"));
         }
@@ -196,18 +214,19 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       for (RegExpMatch reg in regExp.allMatches(str)) {
         if (iter == 0) {
           String textToInclude = reg.group(1).trim();
-          newText.add(TextSpan(text: textToInclude.padLeft(4, ' ')));
+          newText.add(TextSpan(text: textToInclude.padLeft(_nPad(textToInclude), strPad)));
           newText.add(const TextSpan(text: "\r\n"));
         } else if (iter == 1) {
           String textToInclude = reg.group(1);
           newText.add(TextSpan(
-              text: (operator + " " + textToInclude).padLeft(4, ' '),
+              text: (operator + " " + textToInclude).padLeft(_nPad((operator + " " + textToInclude)), strPad),
               style: const TextStyle(decoration: TextDecoration.underline)));
           newText.add(const TextSpan(text: "\r\n"));
         } else {
-          TextSpan newText3 = TextSpan(text: reg.group(1).padLeft(4, ' '));
+          TextSpan newText3 = TextSpan(text: reg.group(1).padLeft(_nPad(reg.group(1)), strPad));
 
           newText.add(newText3);
+          newText.add(const TextSpan(text: "\r"));
         }
 
         iter++;

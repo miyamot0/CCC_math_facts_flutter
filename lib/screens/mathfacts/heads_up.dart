@@ -21,6 +21,8 @@
     THE SOFTWARE.
 */
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../../shared/constants.dart';
@@ -52,13 +54,13 @@ class HeadsUpPanel extends StatelessWidget {
     Widget _advanceButton(BuildContext context) {
       return TextButton(
           onPressed: () => toggleEntry(context),
-          style: TextButton.styleFrom(
-              primary: Colors.white, backgroundColor: Colors.blue),
+          style: TextButton.styleFrom(primary: Colors.white, backgroundColor: Colors.blue),
           child: Text(buttonText,
               style: cccTextStyle.copyWith(
-                fontWeight: FontWeight.normal,
-                fontSize: 24.0,
-              )));
+                  fontWeight: FontWeight.normal,
+                  fontSize: 24.0,
+                  fontFamily: 'RobotoMono',
+                  fontFeatures: [const FontFeature.tabularFigures()])));
     }
 
     Widget _vertical() {
@@ -69,15 +71,16 @@ class HeadsUpPanel extends StatelessWidget {
           Expanded(
             flex: 6,
             child: DecoratedBox(
-              decoration: BoxDecoration(
-                  color: viewPanelColor,
-                  border: Border.all(color: Colors.black)),
+              decoration: BoxDecoration(color: viewPanelColor, border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
                 textAlign: TextAlign.right,
                 text: TextSpan(
                     children: viewPanelString,
-                    style: cccTextStyle.copyWith(color: viewPanelText)),
+                    style: cccTextStyle.copyWith(
+                        color: viewPanelText,
+                        fontFamily: 'RobotoMono',
+                        fontFeatures: [const FontFeature.tabularFigures()])),
               )),
             ),
           ),
@@ -87,15 +90,16 @@ class HeadsUpPanel extends StatelessWidget {
           Expanded(
             flex: 6,
             child: DecoratedBox(
-              decoration: BoxDecoration(
-                  color: entryPanelColor,
-                  border: Border.all(color: Colors.black)),
+              decoration: BoxDecoration(color: entryPanelColor, border: Border.all(color: Colors.black)),
               child: Center(
                   child: RichText(
                 textAlign: TextAlign.right,
                 text: TextSpan(
                     children: entryPanelString,
-                    style: cccTextStyle.copyWith(color: Colors.black)),
+                    style: cccTextStyle.copyWith(
+                        color: Colors.black,
+                        fontFamily: 'RobotoMono',
+                        fontFeatures: [const FontFeature.tabularFigures()])),
               )),
             ),
           ),

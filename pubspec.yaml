@@ -1,5 +1,5 @@
 name: covcopcomp_math_fact
-description: A new Flutter project.
+description: ...
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -36,3 +36,7 @@ flutter:
    - assets/mathfacts.json
    - assets/coloured_paper.svg
    - assets/new_document.svg
+  fonts: 
+   - family: RobotoMono
+     fonts:
+      - asset: fonts/RobotoMono-Regular.ttf
