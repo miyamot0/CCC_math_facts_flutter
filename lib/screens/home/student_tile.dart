@@ -49,8 +49,15 @@ class StudentTile extends StatefulWidget {
 class _StudentTileState extends State<StudentTile> {
   @override
   Widget build(BuildContext context) {
-    bool isInPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    MediaQueryData mqData = MediaQuery.of(context);
     final user = Provider.of<UserModel>(context);
+
+    bool isInPortrait = mqData.orientation == Orientation.portrait;
+
+    final double horizontalBlock = mqData.size.width / 100;
+    final double heroStudentRadiusSize = horizontalBlock * 7.5;
+    final double tapButtonRadius = horizontalBlock * 9;
+    final double tapButtonIconSize = horizontalBlock * 5;
 
     // Parse the embedded json for math problems
     Future<MathFactData> _parseJson() async {
@@ -132,10 +139,10 @@ class _StudentTileState extends State<StudentTile> {
 
     // Construct trailing widget
     Widget _individualStudentVisualWidget() {
-      return const Expanded(
+      return Expanded(
           flex: 2,
           child: CircleAvatar(
-            radius: 65.0,
+            radius: heroStudentRadiusSize,
             backgroundColor: Colors.blue,
           ));
     }
@@ -193,13 +200,13 @@ class _StudentTileState extends State<StudentTile> {
       return Expanded(
           flex: 1,
           child: Container(
-              constraints: const BoxConstraints.expand(height: 75),
+              constraints: BoxConstraints.expand(height: tapButtonRadius),
               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.redAccent),
               child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.trending_up,
                     color: Colors.white,
-                    size: 40.0,
+                    size: tapButtonIconSize,
                   ),
                   onPressed: () => _showVisualFeedbackScreen(user, widget.student, context))));
     }
@@ -209,12 +216,13 @@ class _StudentTileState extends State<StudentTile> {
       return Expanded(
           flex: 1,
           child: Container(
-              constraints: const BoxConstraints.expand(height: 75),
+              constraints: BoxConstraints.expand(height: tapButtonRadius),
               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blueAccent),
               child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.settings,
                     color: Colors.white,
+                    size: tapButtonIconSize,
                   ),
                   onPressed: () => _showEditParticipantModal())));
     }
@@ -224,13 +232,13 @@ class _StudentTileState extends State<StudentTile> {
       return Expanded(
           flex: 1,
           child: Container(
-              constraints: const BoxConstraints.expand(height: 75),
+              constraints: BoxConstraints.expand(height: tapButtonRadius),
               decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.greenAccent),
               child: IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.play_arrow,
                     color: Colors.white,
-                    size: 40.0,
+                    size: tapButtonIconSize,
                   ),
                   onPressed: () async {
                     final MathFactData jsonSet = await _parseJson();
