@@ -51,19 +51,18 @@ class HeadsUpPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Create this as 1 of 3 boxes (for a Check or Cross later on)
+    // Render box for progression
     Widget _advanceButton(BuildContext context) {
       return TextButton(
           onPressed: () => toggleEntry(context),
           style: TextButton.styleFrom(primary: Colors.white, backgroundColor: Colors.blue),
           child: Text(buttonText,
               style: cccTextStyle.copyWith(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 24.0,
-                  fontFamily: 'RobotoMono',
-                  fontFeatures: [const FontFeature.tabularFigures()])));
+                  fontWeight: FontWeight.normal, fontSize: 24.0, fontFeatures: [const FontFeature.tabularFigures()])));
     }
 
-    Widget _vertical() {
+    Widget _generateHUDforVerticalDisplay() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -114,6 +113,6 @@ class HeadsUpPanel extends StatelessWidget {
       );
     }
 
-    return Expanded(flex: 3, child: _vertical());
+    return Expanded(flex: 3, child: _generateHUDforVerticalDisplay());
   }
 }

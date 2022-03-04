@@ -33,6 +33,8 @@ class Student {
   final bool orientationPreference;
   final bool randomized;
 
+  // TODO: Feedback after error
+
   Student(
       {this.name,
       this.setSize,

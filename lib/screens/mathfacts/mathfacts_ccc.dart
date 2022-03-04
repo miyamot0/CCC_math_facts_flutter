@@ -66,7 +66,14 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   CCCStatus hud = CCCStatus.entry;
 
   static const String delCode = "Del";
+  static const String strPad = ' ';
+  static RegExp regExp = RegExp(
+    r"(\d[^\+\-\x\\==]*)+",
+    caseSensitive: false,
+    multiLine: true,
+  );
 
+  // Determine how much padding to provided for a given string
   int _nPad(String str) {
     const int base = 4;
 
@@ -77,16 +84,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     }
   }
 
+  // Display human-readable math problem for sample
   List<InlineSpan> _verticalizeString(String str) {
-    RegExp regExp = RegExp(
-      r"(\d[^\+\-\x\\==]*)+",
-      caseSensitive: false,
-      multiLine: true,
-    );
-
     String operator = "";
     int iter = 0;
-    String strPad = ' ';
 
     List<InlineSpan> newText = [];
 
@@ -129,16 +130,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     return newText;
   }
 
+  // Display human-readable math problem for editor
   List<InlineSpan> _verticalizeStringEditor(String str) {
-    RegExp regExp = RegExp(
-      r"(\d[^\+\-\x\\==]*)+",
-      caseSensitive: false,
-      multiLine: true,
-    );
-
     String operator = "";
     int iter = 0;
-    const String strPad = ' ';
 
     List<InlineSpan> newText = [];
 
@@ -236,7 +231,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     return newText;
   }
 
-  _appendCharacter(String char) {
+  // Callback to add input from keyboard to editor
+  _appendCharacterToEditor(String char) {
     if (hud != CCCStatus.coverCopy) {
       return;
     }
@@ -256,7 +252,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     });
   }
 
-  _toggleEntry(BuildContext context) {
+  // Callback for button triggering next phase of intervention
+  _buttonPressEvent(BuildContext context) {
     bool isMatching;
 
     setState(() {
@@ -310,7 +307,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     });
   }
 
-  _submitData() async {
+  // Push local data to server
+  _submitDataToFirebase() async {
     end = DateTime.now();
 
     int secs = end.difference(start).inSeconds;
@@ -334,6 +332,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         .then((value) => Navigator.pop(context, true));
   }
 
+  // TODO: make this a setting, eventually
+  // Show message log
   _showMessageDialog(BuildContext context) => showDialog(
         context: context,
         barrierDismissible: false,
@@ -390,7 +390,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                 initialTry = true;
 
                 if (localSet.isEmpty) {
-                  _submitData();
+                  _submitDataToFirebase();
                 }
 
                 Navigator.of(context).pop();
@@ -406,7 +406,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     if (initialLoad) {
       initialLoad = false;
-
       localSet = widget.set;
     }
 
@@ -437,7 +436,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                     buttonText: buttonText,
                     viewPanelColor: viewPanel,
                     viewPanelText: viewPanelText,
-                    toggleEntry: _toggleEntry,
+                    toggleEntry: _buttonPressEvent,
                     hudStatus: hud,
                   ),
                   const SizedBox(
@@ -471,7 +470,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                             localSet.removeAt(index);
                                           });
 
-                                          _toggleEntry(context);
+                                          _buttonPressEvent(context);
                                         },
                                         child: const CircleAvatar(
                                           foregroundColor: Colors.blue,
@@ -485,7 +484,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: KeyPad(appendInput: _appendCharacter),
+                            child: KeyPad(appendInput: _appendCharacterToEditor),
                           ),
                         ],
                       ))
