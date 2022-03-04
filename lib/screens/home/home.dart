@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
-    void _showHelpPanel() {
+    void _showHelpModal() {
       showModalBottomSheet(
           context: context,
           builder: (context) {
@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
     }
 
     // Render bottom modal sheet
-    void _showSettingsPanel() {
+    void _showSettingsModal() {
       showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
     }
 
     // Render bottom modal sheet
-    void _addParticipantModal() {
+    void _showAddParticipantModal() {
       showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -108,7 +108,7 @@ class _HomeState extends State<Home> {
             TextButton.icon(
               icon: const Icon(Icons.settings),
               style: TextButton.styleFrom(primary: Colors.white),
-              onPressed: () => _showSettingsPanel(),
+              onPressed: () => _showSettingsModal(),
               label: const Text("Settings"),
             ),
           ],
@@ -121,11 +121,11 @@ class _HomeState extends State<Home> {
             FloatingActionButton(
               child: const Icon(Icons.help),
               backgroundColor: Colors.redAccent,
-              onPressed: () => _showHelpPanel(),
+              onPressed: () => _showHelpModal(),
             ),
             FloatingActionButton(
               child: const Icon(Icons.add),
-              onPressed: () => _addParticipantModal(),
+              onPressed: () => _showAddParticipantModal(),
             )
           ]),
         ),
