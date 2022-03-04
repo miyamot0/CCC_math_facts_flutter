@@ -58,7 +58,7 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Render bottom modal sheet
-    void _editParticipantModal() {
+    void _showEditParticipantModal() {
       showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -83,7 +83,7 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Provide visual feedback to learner
-    void _showVisualFeedback(UserModel user, Student student, BuildContext context) async {
+    void _showVisualFeedbackScreen(UserModel user, Student student, BuildContext context) async {
       await DatabaseService(uid: user.uid).getStudentPerformanceCollection(student).then((performances) async {
         await Navigator.push(
           context,
@@ -97,16 +97,16 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Determine whether to provide visual feedback
-    void _handleReturn(dynamic result) {
+    void _handleScreenReturn(dynamic result) {
       SystemChrome.setPreferredOrientations([]);
 
       if (result != null && result == true) {
-        _showVisualFeedback(user, widget.student, context);
+        _showVisualFeedbackScreen(user, widget.student, context);
       }
     }
 
     // Determine how to present the task
-    MaterialPageRoute _handleRouting(bool isVertical, MathFactData json) {
+    MaterialPageRoute _handleScreenOrientationRouting(bool isVertical, MathFactData json) {
       return isVertical == true
           ? MaterialPageRoute(
               builder: (context) => MathFactsCCC(
@@ -125,13 +125,13 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Check orientation of screen
-    bool _checkVertical() {
+    bool _checkIfDeviceOrientationPortrait() {
       return widget.student.preferredOrientation == Orientations().Vertical ||
           (widget.student.preferredOrientation == Orientations().NoPreference && isInPortrait);
     }
 
     // Construct trailing widget
-    Widget _leadingWidget() {
+    Widget _individualStudentVisualWidget() {
       return const Expanded(
           flex: 2,
           child: CircleAvatar(
@@ -141,7 +141,7 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Build out templated string for entries
-    Widget _buildStudentTitle(String text) {
+    Widget _individualStudentRowTitle(String text) {
       // ignore: prefer_adjacent_string_concatenation
       return Text(
         "Name: $text",
@@ -150,7 +150,7 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Build out templated string for entries
-    Widget _buildStudentDescription(Student student) {
+    Widget _individualStudentRowDescription(Student student) {
       // ignore: prefer_adjacent_string_concatenation
       return Text(
         // ignore: prefer_adjacent_string_concatenation
@@ -167,7 +167,7 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Body showing the bulk of information
-    Widget _bodyWidget() {
+    Widget _studentInfoRowWidget() {
       return Expanded(
           flex: 4,
           child: Column(
@@ -176,11 +176,11 @@ class _StudentTileState extends State<StudentTile> {
               const SizedBox(
                 height: 10,
               ),
-              _buildStudentTitle(widget.student.name),
+              _individualStudentRowTitle(widget.student.name),
               const SizedBox(
                 height: 10,
               ),
-              _buildStudentDescription(widget.student),
+              _individualStudentRowDescription(widget.student),
               const SizedBox(
                 height: 10,
               ),
@@ -189,7 +189,7 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Widget to access settings
-    Widget _dataWidget() {
+    Widget _linkingButtonStudentVisual() {
       return Expanded(
           flex: 1,
           child: Container(
@@ -201,11 +201,11 @@ class _StudentTileState extends State<StudentTile> {
                     color: Colors.white,
                     size: 40.0,
                   ),
-                  onPressed: () => _showVisualFeedback(user, widget.student, context))));
+                  onPressed: () => _showVisualFeedbackScreen(user, widget.student, context))));
     }
 
     // Construct trailing widget
-    Widget _settingsWidget() {
+    Widget _linkingButtonStudentSettings() {
       return Expanded(
           flex: 1,
           child: Container(
@@ -216,11 +216,11 @@ class _StudentTileState extends State<StudentTile> {
                     Icons.settings,
                     color: Colors.white,
                   ),
-                  onPressed: () => _editParticipantModal())));
+                  onPressed: () => _showEditParticipantModal())));
     }
 
     // Widget to commence exercise
-    Widget _launchWidget() {
+    Widget _linkingButtonStudentTrial() {
       return Expanded(
           flex: 1,
           child: Container(
@@ -234,13 +234,13 @@ class _StudentTileState extends State<StudentTile> {
                   ),
                   onPressed: () async {
                     final MathFactData jsonSet = await _parseJson();
-                    final bool showVertical = _checkVertical();
-                    final MaterialPageRoute route = _handleRouting(showVertical, jsonSet);
+                    final bool showVertical = _checkIfDeviceOrientationPortrait();
+                    final MaterialPageRoute route = _handleScreenOrientationRouting(showVertical, jsonSet);
 
                     await Navigator.push(
                       context,
                       route,
-                    ).then((result) => _handleReturn(result));
+                    ).then((result) => _handleScreenReturn(result));
                   })));
     }
 
@@ -251,11 +251,11 @@ class _StudentTileState extends State<StudentTile> {
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Row(children: [
-              _leadingWidget(),
-              _bodyWidget(),
-              widget.userData.revealSettings == true ? _settingsWidget() : const SizedBox.shrink(),
-              _dataWidget(),
-              _launchWidget()
+              _individualStudentVisualWidget(),
+              _studentInfoRowWidget(),
+              widget.userData.revealSettings == true ? _linkingButtonStudentSettings() : const SizedBox.shrink(),
+              _linkingButtonStudentVisual(),
+              _linkingButtonStudentTrial()
             ]),
           )),
     );
