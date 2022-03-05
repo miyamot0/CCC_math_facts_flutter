@@ -73,6 +73,17 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     multiLine: true,
   );
 
+  // Handle branching logic for error message
+  bool shouldShowFeedback(bool trialError) {
+    if (widget.student.errorFeedback == ErrorFeedback.EachTrialAlways) {
+      return true;
+    } else if (trialError && widget.student.errorFeedback == ErrorFeedback.EachErredTrial) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // Determine how much padding to provided for a given string
   int _nPad(String str) {
     const int base = 4;
@@ -302,7 +313,28 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
           errCount++;
         }
 
-        _showMessageDialog(context);
+        print(!isMatching);
+        print(shouldShowFeedback(!isMatching));
+
+        if (shouldShowFeedback(!isMatching)) {
+          _showMessageDialog(context);
+        } else {
+          setState(() {
+            viewPanelString = [];
+
+            entryPanelStringInternal = '';
+            entryPanelStringView = [];
+            buttonText = '';
+            isOngoing = false;
+          });
+
+          numTrial++;
+          initialTry = true;
+
+          if (localSet.isEmpty) {
+            _submitDataToFirebase();
+          }
+        }
       }
     });
   }
@@ -332,7 +364,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         .then((value) => Navigator.pop(context, true));
   }
 
-  // TODO: make this a setting, eventually
   // Show message log
   _showMessageDialog(BuildContext context) => showDialog(
         context: context,
