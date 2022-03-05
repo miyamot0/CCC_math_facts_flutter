@@ -66,7 +66,7 @@ class AppThemes {
       enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white, width: 2.0)),
       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.pink, width: 2.0)));
 
-  static const PrimaryTextStyle = TextStyle(fontSize: 42.0, fontWeight: FontWeight.bold);
+  static const PrimaryTextStyle = TextStyle(fontSize: 42.0, fontWeight: FontWeight.bold, color: Colors.white);
 
 //  ButtonTheme(
 //    buttonColor: Colors.pink,

@@ -62,7 +62,7 @@ class _RegistrationState extends State<Registration> {
               actions: [
                 TextButton.icon(
                   icon: const Icon(Icons.person),
-                  style: TextButton.styleFrom(primary: Colors.white),
+                  style: AppThemes.AppBarButtonStyle,
                   label: const Text("Sign In"),
                   onPressed: () {
                     widget.toggleView();
@@ -77,6 +77,8 @@ class _RegistrationState extends State<Registration> {
                   child: SingleChildScrollView(
                       child: Column(
                     children: [
+                      const SizedBox(height: 10),
+                      const Text("Registration Page", style: AppThemes.PrimaryTextStyle),
                       const SizedBox(height: 20),
                       TextFormField(
                         decoration: AppThemes.TextInputDecoration.copyWith(hintText: 'Name', labelText: "Name:"),
@@ -124,9 +126,9 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.pink[400]),
+                        style: AppThemes.PrimaryButtonStyle,
                         //color: Colors.pink[400],
-                        child: const Text("Register", style: TextStyle(color: Colors.white)),
+                        child: const Text("Register", style: AppThemes.SecondaryButtonTextStyle),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() => {loading = true});
