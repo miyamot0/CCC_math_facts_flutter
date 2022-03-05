@@ -73,8 +73,6 @@ class DatabaseService {
           set: data['set'].toString() ?? '',
           id: d.id ?? '',
           randomized: data['random'] ?? false,
-          orientationPreference: data['hasPreference'] ?? false,
-          preferredOrientation: data['preferredOrientation'].toString() ?? '',
           metric: data['metric'].toString() ?? '',
           errorFeedback: data['errorFeedback'] ?? '',
           aim: data['aim'] ?? 0);
@@ -101,8 +99,6 @@ class DatabaseService {
       'target': student.target,
       'set': student.set,
       'random': student.randomized,
-      'hasPreference': student.orientationPreference,
-      'preferredOrientation': student.preferredOrientation,
       'metric': student.metric,
       'errorFeedback': student.errorFeedback,
       'aim': student.aim
@@ -163,8 +159,6 @@ class DatabaseService {
       'set': int.parse(student.set),
       'target': student.target,
       'random': student.randomized,
-      'hasPreference': student.orientationPreference,
-      'preferredOrientation': student.preferredOrientation,
       'metric': student.metric,
       'errorFeedback': student.errorFeedback,
       'aim': student.aim

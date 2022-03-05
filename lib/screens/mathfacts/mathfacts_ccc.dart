@@ -313,9 +313,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
           errCount++;
         }
 
-        print(!isMatching);
-        print(shouldShowFeedback(!isMatching));
-
         if (shouldShowFeedback(!isMatching)) {
           _showMessageDialog(context);
         } else {

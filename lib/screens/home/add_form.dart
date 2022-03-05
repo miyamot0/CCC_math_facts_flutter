@@ -46,9 +46,8 @@ class _AddFormState extends State<AddForm> {
       _exerciseEdit = MathFactTypes.Addition,
       _metricEdit = Metrics.Accuracy,
       _setNumber = "0",
-      _preferredOrientation = Orientations.Vertical,
       _errFeedback = ErrorFeedback.EachTrialAlways;
-  bool _randomized = false, _orientationPreference = true;
+  bool _randomized = false;
   int _aimSetting;
 
   @override
@@ -116,21 +115,6 @@ class _AddFormState extends State<AddForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Select Presentation Mode", labelText: "Select Presentation Mode:"),
-                  value: _preferredOrientation,
-                  items: [Orientations.Vertical, Orientations.Horizontal, Orientations.NoPreference].map((setting) {
-                    return DropdownMenuItem(value: setting, child: Text(setting));
-                  }).toList(),
-                  onChanged: (String value) {
-                    _preferredOrientation = value;
-                    _orientationPreference = (value == Orientations.NoPreference) ? false : true;
-                  },
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                DropdownButtonFormField(
                   decoration:
                       textInputDecoration.copyWith(hintText: "Problem Selection", labelText: "Problem Selection:"),
                   value: _randomized ? 'Randomized' : 'Fixed',
@@ -188,8 +172,6 @@ class _AddFormState extends State<AddForm> {
                           setSize: _setSizeEdit,
                           target: _exerciseEdit,
                           randomized: _randomized,
-                          preferredOrientation: _preferredOrientation,
-                          orientationPreference: _orientationPreference,
                           metric: _metricEdit,
                           errorFeedback: _errFeedback,
                           aim: _aimSetting));

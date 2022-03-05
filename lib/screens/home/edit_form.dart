@@ -44,8 +44,8 @@ class _EditFormState extends State<EditForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _textFieldController = TextEditingController();
-  String _setSizeEdit, _exerciseEdit, _metricEdit, _preferredOrientation, _setNumber, _errFeedback;
-  bool _randomized, _orientationPreference;
+  String _setSizeEdit, _exerciseEdit, _metricEdit, _setNumber, _errFeedback;
+  bool _randomized;
   int _aimSetting;
 
   @override
@@ -58,8 +58,6 @@ class _EditFormState extends State<EditForm> {
     _randomized = _randomized ?? widget.studentData.randomized;
     _metricEdit = _metricEdit ?? widget.studentData.metric;
     _errFeedback = _errFeedback ?? widget.studentData.errorFeedback;
-    _preferredOrientation = _preferredOrientation ?? widget.studentData.preferredOrientation;
-    _orientationPreference = _orientationPreference ?? widget.studentData.orientationPreference;
     _setNumber = _setNumber ?? widget.studentData.set;
     _aimSetting = _aimSetting ?? widget.studentData.aim;
 
@@ -124,22 +122,6 @@ class _EditFormState extends State<EditForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(
-                      hintText: "Select Presentation Mode", labelText: "Select Presentation Mode:"),
-                  value: _preferredOrientation,
-                  items: [Orientations.Vertical, Orientations.Horizontal, Orientations.NoPreference].map((setting) {
-                    return DropdownMenuItem(value: setting, child: Text(setting));
-                  }).toList(),
-                  onChanged: (String value) {
-                    _preferredOrientation = value;
-
-                    _orientationPreference = (value == Orientations.NoPreference) ? false : true;
-                  },
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                DropdownButtonFormField(
                   decoration: textInputDecoration.copyWith(hintText: "Primary Metric", labelText: "Primary Metric:"),
                   value: _metricEdit,
                   items: Metrics.MetricPreference.map((setting) {
@@ -198,8 +180,6 @@ class _EditFormState extends State<EditForm> {
                           setSize: _setSizeEdit,
                           target: _exerciseEdit,
                           randomized: _randomized,
-                          preferredOrientation: _preferredOrientation,
-                          orientationPreference: _orientationPreference,
                           metric: _metricEdit,
                           errorFeedback: _errFeedback,
                           aim: _aimSetting));

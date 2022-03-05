@@ -115,7 +115,6 @@ class _StudentTileState extends State<StudentTile> {
               ));
     }
 
-    // TODO: Revert horizontal mode for now (most don't use it)
     // Check orientation of screen
     bool _checkIfDeviceOrientationPortrait() {
       return true;
@@ -152,7 +151,6 @@ class _StudentTileState extends State<StudentTile> {
             "Stimulus set: ${student.set}, Randomizing set: ${student.randomized}, \n" +
             // ID:${student.id} \n
             // Orientation Preference: ${student.orientationPreference}, \n
-            "Orientation Setting: ${student.preferredOrientation}, \n" +
             "Metric: ${student.metric}, " +
             "Aim Setting: ${student.aim}",
         style: const TextStyle(fontSize: 18.0),

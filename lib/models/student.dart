@@ -27,14 +27,10 @@ class Student {
   final String target;
   final String set;
   final String id;
-  final String preferredOrientation;
   final String metric;
   final String errorFeedback;
   final int aim;
-  final bool orientationPreference;
   final bool randomized;
-
-  // TODO: Feedback after error
 
   Student(
       {this.name,
@@ -42,10 +38,8 @@ class Student {
       this.target,
       this.set,
       this.id,
-      this.preferredOrientation,
       this.metric,
       this.errorFeedback,
       this.aim,
-      this.orientationPreference,
       this.randomized});
 }
