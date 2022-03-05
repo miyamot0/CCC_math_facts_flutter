@@ -29,6 +29,7 @@ import 'package:covcopcomp_math_fact/screens/home/settings_form.dart';
 import 'package:covcopcomp_math_fact/screens/home/student_list.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:covcopcomp_math_fact/services/database.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,7 @@ class _HomeState extends State<Home> {
           actions: <Widget>[
             TextButton.icon(
               icon: const Icon(Icons.person),
-              style: TextButton.styleFrom(primary: Colors.white),
+              style: AppThemes.AppBarButtonStyle,
               onPressed: () async {
                 await _auth.signOut();
               },
@@ -107,7 +108,7 @@ class _HomeState extends State<Home> {
             ),
             TextButton.icon(
               icon: const Icon(Icons.settings),
-              style: TextButton.styleFrom(primary: Colors.white),
+              style: AppThemes.AppBarButtonStyle,
               onPressed: () => _showSettingsModal(),
               label: const Text("Settings"),
             ),
@@ -120,12 +121,13 @@ class _HomeState extends State<Home> {
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             FloatingActionButton(
               child: const Icon(Icons.help),
-              backgroundColor: Colors.redAccent,
+              backgroundColor: AppThemes.PrimaryButtonBackground,
               heroTag: "button_1",
               onPressed: () => _showHelpModal(),
             ),
             FloatingActionButton(
               child: const Icon(Icons.add),
+              backgroundColor: AppThemes.SecondaryButtonBackground,
               heroTag: "button_2",
               onPressed: () => _showAddParticipantModal(),
             )

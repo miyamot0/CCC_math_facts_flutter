@@ -25,7 +25,7 @@ import 'package:covcopcomp_math_fact/models/teacher.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
-import 'package:covcopcomp_math_fact/shared/constants.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +67,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: "e.g., John/Jane Smith", labelText: "Name:"),
+                decoration:
+                    AppThemes.TextInputDecoration.copyWith(hintText: "e.g., John/Jane Smith", labelText: "Name:"),
                 initialValue: userData.name,
                 validator: (val) => val.isEmpty ? 'Please enter a name' : null,
                 onChanged: (val) => setState((() => _currentName = val)),
@@ -76,7 +77,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: "e.g., K-2", labelText: "Grade(s) taught:"),
+                decoration:
+                    AppThemes.TextInputDecoration.copyWith(hintText: "e.g., K-2", labelText: "Grade(s) taught:"),
                 initialValue: userData.currentGrade,
                 validator: (val) => val.isEmpty ? 'Please enter a value for your grade(s)' : null,
                 onChanged: (val) => setState((() => _currentGrade = val)),
@@ -85,7 +87,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: "e.g., Sadie Hawkins", labelText: "School name:"),
+                decoration:
+                    AppThemes.TextInputDecoration.copyWith(hintText: "e.g., Sadie Hawkins", labelText: "School name:"),
                 initialValue: userData.currentSchool,
                 validator: (val) => val.isEmpty ? 'Please enter a value for your school' : null,
                 onChanged: (val) => setState((() => _currentSchool = val)),
@@ -94,7 +97,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 height: 20.0,
               ),
               DropdownButtonFormField(
-                decoration: textInputDecoration.copyWith(
+                decoration: AppThemes.TextInputDecoration.copyWith(
                     hintText: "Show Settings on Home Screen", labelText: "Show Settings on Home Screen:"),
                 value: userData.revealSettings == true ? 'Show Settings Button' : 'Hide Settings Button',
                 items: ['Show Settings Button', 'Hide Settings Button'].map((setting) {

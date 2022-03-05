@@ -21,6 +21,7 @@
     THE SOFTWARE.
 */
 
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
@@ -446,7 +447,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                 padding: const EdgeInsets.only(right: 10.0),
                 child: Text(
                   "Name: ${widget.student.name}, Set Size: ${widget.student.setSize}",
-                  style: cccTextStyle.copyWith(fontSize: 24.0),
+                  style: AppThemes.PrimaryTextStyle.copyWith(fontSize: 24.0),
                 )),
           )
         ],
@@ -460,7 +461,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(widget.student.name, style: cccTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 36.0)),
+                  Text(widget.student.name,
+                      style: AppThemes.PrimaryTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 36.0)),
                   const SizedBox(
                     height: 10,
                   ),

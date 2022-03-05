@@ -27,6 +27,7 @@ import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/screens/authentication/authrouting.dart';
 import 'package:covcopcomp_math_fact/screens/landing/landing.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -53,8 +54,7 @@ class _MyAppState extends State<MyApp> {
         value: AuthService().user,
         initialData: null,
         child: MaterialApp(
-          theme: ThemeData(
-              appBarTheme: const AppBarTheme(backgroundColor: Colors.blue), backgroundColor: Colors.lightBlue[100]),
+          theme: AppThemes.CoreTheme,
           initialRoute: "/",
           routes: {
             "/": (context) => const LandingScreen(),

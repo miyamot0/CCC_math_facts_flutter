@@ -23,6 +23,7 @@
 
 import 'dart:ui';
 
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/constants.dart';
@@ -56,7 +57,7 @@ class HeadsUpPanel extends StatelessWidget {
           onPressed: () => toggleEntry(context),
           style: TextButton.styleFrom(primary: Colors.white, backgroundColor: Colors.blue),
           child: Text(buttonText,
-              style: cccTextStyle.copyWith(
+              style: AppThemes.PrimaryTextStyle.copyWith(
                   fontWeight: FontWeight.normal, fontSize: 24.0, fontFeatures: [const FontFeature.tabularFigures()])));
     }
 
@@ -74,7 +75,7 @@ class HeadsUpPanel extends StatelessWidget {
                 textAlign: TextAlign.right,
                 text: TextSpan(
                     children: viewPanelString,
-                    style: cccTextStyle.copyWith(
+                    style: AppThemes.PrimaryTextStyle.copyWith(
                         color: viewPanelText,
                         fontFamily: 'RobotoMono',
                         fontFeatures: [const FontFeature.tabularFigures()])),
@@ -93,7 +94,7 @@ class HeadsUpPanel extends StatelessWidget {
                 textAlign: TextAlign.right,
                 text: TextSpan(
                     children: entryPanelString,
-                    style: cccTextStyle.copyWith(
+                    style: AppThemes.PrimaryTextStyle.copyWith(
                         color: Colors.black,
                         fontFamily: 'RobotoMono',
                         fontFeatures: [const FontFeature.tabularFigures()])),

@@ -21,9 +21,8 @@
     THE SOFTWARE.
 */
 
-import 'package:covcopcomp_math_fact/shared/constants.dart';
-
 import 'package:align_positioned/align_positioned.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info/package_info.dart';
@@ -53,14 +52,15 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
+    const double scaling = 0.275;
 
     final Widget svg1 =
-        SvgPicture.asset('assets/coloured_paper.svg', width: screen.width * 0.35, height: screen.height * 0.35);
+        SvgPicture.asset('assets/coloured_paper.svg', width: screen.width * scaling, height: screen.height * scaling);
 
     final Widget svg2 = SvgPicture.asset(
       'assets/new_document.svg',
-      width: screen.width * 0.35,
-      height: screen.height * 0.35,
+      width: screen.width * scaling,
+      height: screen.height * scaling,
     );
 
     return FutureBuilder(
@@ -92,7 +92,7 @@ class _LandingScreenState extends State<LandingScreen> {
                         color: Colors.white,
                         decorationColor: Colors.black,
                         decoration: TextDecoration.none,
-                        fontSize: 14.0,
+                        fontSize: 18.0,
                       ),
                     )
                   ])),
@@ -103,12 +103,12 @@ class _LandingScreenState extends State<LandingScreen> {
                     child: MaterialButton(
                         color: Colors.blueAccent,
                         splashColor: Colors.redAccent,
-                        textColor: Colors.white,
+                        textColor: AppThemes.PrimaryButtonTextColor,
                         minWidth: screen.width * 0.25,
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
+                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        child: const Text(
                           "Launch App",
-                          style: cccTextStyle.copyWith(color: Colors.white, fontWeight: FontWeight.normal),
+                          style: AppThemes.PrimaryButtonTextStyle,
                         ),
                         onPressed: () => Navigator.pushReplacementNamed(context, "/start"))),
               ]),

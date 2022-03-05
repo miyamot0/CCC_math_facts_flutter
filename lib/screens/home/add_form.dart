@@ -26,6 +26,7 @@ import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,13 +77,15 @@ class _AddFormState extends State<AddForm> {
                 ),
                 TextField(
                   controller: _textFieldController,
-                  decoration: textInputDecoration.copyWith(hintText: "Student ID", labelText: "Student Name:"),
+                  decoration:
+                      AppThemes.TextInputDecoration.copyWith(hintText: "Student ID", labelText: "Student Name:"),
                 ),
                 const SizedBox(
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Select exercise", labelText: "Target Skill:"),
+                  decoration:
+                      AppThemes.TextInputDecoration.copyWith(hintText: "Select exercise", labelText: "Target Skill:"),
                   value: _exerciseEdit,
                   items: MathFactTypes.FactsType.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
@@ -93,7 +96,7 @@ class _AddFormState extends State<AddForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Set Size", labelText: "Size of Set:"),
+                  decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Set Size", labelText: "Size of Set:"),
                   value: _setSizeEdit,
                   items: setSizeArray.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
@@ -104,7 +107,7 @@ class _AddFormState extends State<AddForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Set Source", labelText: "Set Source:"),
+                  decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Set Source", labelText: "Set Source:"),
                   value: _setNumber,
                   items: MathFactSets.AvailableSets.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
@@ -115,8 +118,8 @@ class _AddFormState extends State<AddForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration:
-                      textInputDecoration.copyWith(hintText: "Problem Selection", labelText: "Problem Selection:"),
+                  decoration: AppThemes.TextInputDecoration.copyWith(
+                      hintText: "Problem Selection", labelText: "Problem Selection:"),
                   value: _randomized ? 'Randomized' : 'Fixed',
                   items: ['Fixed', 'Randomized'].map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
@@ -127,7 +130,8 @@ class _AddFormState extends State<AddForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Primary Metric", labelText: "Primary Metric:"),
+                  decoration:
+                      AppThemes.TextInputDecoration.copyWith(hintText: "Primary Metric", labelText: "Primary Metric:"),
                   value: _metricEdit,
                   items: Metrics.MetricPreference.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
@@ -138,7 +142,8 @@ class _AddFormState extends State<AddForm> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Error Feedback", labelText: "Error Feedback:"),
+                  decoration:
+                      AppThemes.TextInputDecoration.copyWith(hintText: "Error Feedback", labelText: "Error Feedback:"),
                   value: _errFeedback,
                   items: ErrorFeedback.FeedbackOptions.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
@@ -149,7 +154,7 @@ class _AddFormState extends State<AddForm> {
                   height: 20.0,
                 ),
                 TextFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Aim Level", labelText: "Aim Level:"),
+                  decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Aim Level", labelText: "Aim Level:"),
                   initialValue: '10',
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   keyboardType: TextInputType.number,

@@ -22,8 +22,8 @@
 */
 
 import 'package:covcopcomp_math_fact/services/auth.dart';
-import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 
 import 'package:flutter/material.dart';
 
@@ -60,7 +60,7 @@ class _SignInState extends State<SignIn> {
                 TextButton.icon(
                   icon: const Icon(Icons.person),
                   label: const Text("Register"),
-                  style: TextButton.styleFrom(primary: Colors.white),
+                  style: AppThemes.AppBarButtonStyle,
                   onPressed: () {
                     widget.toggleView();
                   },
@@ -75,8 +75,8 @@ class _SignInState extends State<SignIn> {
                     children: [
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'jane@email.com', labelText: "Email Address:"),
+                        decoration: AppThemes.TextInputDecoration.copyWith(
+                            hintText: 'jane@email.com', labelText: "Email Address:"),
                         validator: (value) => value.isEmpty ? 'Enter an email' : null,
                         onChanged: (value) {
                           setState(() => email = value);
@@ -84,7 +84,7 @@ class _SignInState extends State<SignIn> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(labelText: "Password:"),
+                        decoration: AppThemes.TextInputDecoration.copyWith(labelText: "Password:"),
                         validator: (value) => value.length < 6 ? 'Enter a password 6+ chars long' : null,
                         obscureText: true,
                         onChanged: (value) {
@@ -97,8 +97,8 @@ class _SignInState extends State<SignIn> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                              style: ElevatedButton.styleFrom(primary: Colors.pink[400]),
-                              child: const Text("Sign in", style: TextStyle(color: Colors.white)),
+                              style: AppThemes.PrimaryButtonStyle,
+                              child: const Text("Sign in", style: AppThemes.PrimaryButtonTextStyle),
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
                                   setState(() => {loading = true});
@@ -118,8 +118,8 @@ class _SignInState extends State<SignIn> {
                               width: 20,
                             ),
                             ElevatedButton(
-                              style: ElevatedButton.styleFrom(primary: Colors.blue[400]),
-                              child: const Text("Forgot Password?", style: TextStyle(color: Colors.white)),
+                              style: AppThemes.SecondaryButtonStyle,
+                              child: const Text("Forgot Password?", style: AppThemes.SecondaryButtonTextStyle),
                               onPressed: () async {
                                 String msg = await _auth.resetPassword(email);
 

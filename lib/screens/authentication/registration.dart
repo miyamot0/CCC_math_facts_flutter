@@ -22,8 +22,8 @@
 */
 
 import 'package:covcopcomp_math_fact/services/auth.dart';
-import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/loading.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 
 import 'package:flutter/material.dart';
 
@@ -79,7 +79,7 @@ class _RegistrationState extends State<Registration> {
                     children: [
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(hintText: 'Name', labelText: "Name:"),
+                        decoration: AppThemes.TextInputDecoration.copyWith(hintText: 'Name', labelText: "Name:"),
                         validator: (value) => value.isEmpty ? 'Enter your name' : null,
                         onChanged: (value) {
                           setState(() => name = value);
@@ -87,7 +87,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(hintText: 'School name', labelText: "School Name:"),
+                        decoration:
+                            AppThemes.TextInputDecoration.copyWith(hintText: 'School name', labelText: "School Name:"),
                         validator: (value) => value.isEmpty ? 'Enter your school' : null,
                         onChanged: (value) {
                           setState(() => school = value);
@@ -95,7 +96,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(hintText: 'Grade', labelText: "Grade(s) Taught:"),
+                        decoration:
+                            AppThemes.TextInputDecoration.copyWith(hintText: 'Grade', labelText: "Grade(s) Taught:"),
                         validator: (value) => value.isEmpty ? 'Enter the grade(s) for your classroom' : null,
                         onChanged: (value) {
                           setState(() => grade = value);
@@ -103,7 +105,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(hintText: 'Email', labelText: "Email Address:"),
+                        decoration:
+                            AppThemes.TextInputDecoration.copyWith(hintText: 'Email', labelText: "Email Address:"),
                         validator: (value) => value.isEmpty ? 'Enter an email' : null,
                         onChanged: (value) {
                           setState(() => email = value);
@@ -111,7 +114,8 @@ class _RegistrationState extends State<Registration> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(hintText: 'Password', labelText: "Password:"),
+                        decoration:
+                            AppThemes.TextInputDecoration.copyWith(hintText: 'Password', labelText: "Password:"),
                         validator: (value) => value.length < 6 ? 'Enter a password 6+ chars long' : null,
                         obscureText: true,
                         onChanged: (value) {

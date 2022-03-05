@@ -21,6 +21,7 @@
     THE SOFTWARE.
 */
 
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/constants.dart';
@@ -52,10 +53,9 @@ class HeadsUpPanelHorizontal extends StatelessWidget {
     Widget _advanceButton(BuildContext context) {
       return TextButton(
           onPressed: () => toggleEntry(context),
-          style: TextButton.styleFrom(
-              primary: Colors.white, backgroundColor: Colors.blue),
+          style: TextButton.styleFrom(primary: Colors.white, backgroundColor: Colors.blue),
           child: Text(buttonText,
-              style: cccTextStyle.copyWith(
+              style: AppThemes.PrimaryTextStyle.copyWith(
                 fontWeight: FontWeight.normal,
                 fontSize: 24.0,
               )));
@@ -69,13 +69,11 @@ class HeadsUpPanelHorizontal extends StatelessWidget {
           Expanded(
             flex: 6,
             child: DecoratedBox(
-              decoration: BoxDecoration(
-                  color: viewPanelColor,
-                  border: Border.all(color: Colors.black)),
+              decoration: BoxDecoration(color: viewPanelColor, border: Border.all(color: Colors.black)),
               child: Center(
                   child: Text(
                 viewPanelString,
-                style: cccTextStyle.copyWith(color: viewPanelText),
+                style: AppThemes.PrimaryTextStyle.copyWith(color: viewPanelText),
               )),
             ),
           ),
@@ -85,12 +83,9 @@ class HeadsUpPanelHorizontal extends StatelessWidget {
           Expanded(
             flex: 6,
             child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: entryPanelColor,
-                    border: Border.all(color: Colors.black)),
+                decoration: BoxDecoration(color: entryPanelColor, border: Border.all(color: Colors.black)),
                 child: Center(
-                  child: Text(entryPanelString,
-                      style: cccTextStyle.copyWith(color: Colors.black)),
+                  child: Text(entryPanelString, style: AppThemes.PrimaryTextStyle.copyWith(color: Colors.black)),
                   //style: ,
                 )),
           ),

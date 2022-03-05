@@ -22,6 +22,7 @@
 */
 
 import 'package:covcopcomp_math_fact/screens/mathfacts/deprecated_heads_up_h.dart';
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
@@ -250,7 +251,7 @@ class _MathFactsCCCState extends State<MathFactsCCCHorizontal> {
                 padding: const EdgeInsets.only(right: 10.0),
                 child: Text(
                   "Name: ${widget.student.name}, Set Size: ${widget.student.setSize}",
-                  style: cccTextStyle.copyWith(fontSize: 24.0),
+                  style: AppThemes.PrimaryTextStyle.copyWith(fontSize: 24.0),
                 )),
           )
         ],

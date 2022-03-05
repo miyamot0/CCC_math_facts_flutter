@@ -21,9 +21,8 @@
     THE SOFTWARE.
 */
 
+import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
-
-import '../../shared/constants.dart';
 
 class KeyPad extends StatelessWidget {
   const KeyPad({Key key, this.appendInput}) : super(key: key);
@@ -34,7 +33,7 @@ class KeyPad extends StatelessWidget {
     return Expanded(
         child: TextButton(
       onPressed: () => appendInput(code),
-      style: keypadButtonStyle,
+      style: AppThemes.KeypadButtonStyle,
       child: Text(
         code,
         textAlign: TextAlign.center,
