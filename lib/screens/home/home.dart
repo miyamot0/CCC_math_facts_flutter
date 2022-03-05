@@ -121,10 +121,12 @@ class _HomeState extends State<Home> {
             FloatingActionButton(
               child: const Icon(Icons.help),
               backgroundColor: Colors.redAccent,
+              heroTag: "button_1",
               onPressed: () => _showHelpModal(),
             ),
             FloatingActionButton(
               child: const Icon(Icons.add),
+              heroTag: "button_2",
               onPressed: () => _showAddParticipantModal(),
             )
           ]),

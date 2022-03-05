@@ -122,7 +122,9 @@ class _StudentTileState extends State<StudentTile> {
       //    (widget.student.preferredOrientation == Orientations().NoPreference && isInPortrait);
     }
 
-    // Construct trailing widget
+    // TODO: add in features for taking a picture here
+    // TODO: launch intent following long press (if in settings mode)?
+    // Construct leading widget
     Widget _individualStudentVisualWidget() {
       return Expanded(
           flex: 2,

@@ -129,9 +129,9 @@ class MathFactSets {
 }
 
 class ErrorFeedback {
-  static const String EachTrialAlways = "EachTrialAlways";
-  static const String EachErredTrial = "EachErredTrial";
-  static const String NoErrorFeedback = "NoErrorFeedback";
+  static const String EachTrialAlways = "Each Trial Always";
+  static const String EachErredTrial = "Each Erred Trial";
+  static const String NoErrorFeedback = "No Error Feedback";
 
   static const List<String> FeedbackOptions = [
     ErrorFeedback.EachTrialAlways,

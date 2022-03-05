@@ -51,8 +51,6 @@ class HeadsUpPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Create this as 1 of 3 boxes (for a Check or Cross later on)
-    // Render box for progression
     Widget _advanceButton(BuildContext context) {
       return TextButton(
           onPressed: () => toggleEntry(context),
@@ -130,9 +128,6 @@ class HeadsUpPanel extends StatelessWidget {
                   child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black))),
                   flex: 1,
                 ),
-                //SizedBox.expand(
-                //  child: Text('...'),
-                //)
               ],
             ),
           ),

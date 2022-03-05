@@ -86,22 +86,20 @@ class VisualFeedback extends StatelessWidget {
       return -aDate.compareTo(bDate);
     });
 
-    var seriesList = [
-      charts.Series<ChartRow, DateTime>(
-        id: currentStudent.metric,
-        domainFn: (ChartRow row, _) => row.timeStamp,
-        measureFn: (ChartRow row, _) => row.y,
-        data: chartRows,
-      ),
-    ];
-
     return Scaffold(
         appBar: AppBar(title: const Text('Visual Feedback')),
         body: Container(
           padding: _containerPadding(),
           color: Colors.white,
           child: charts.TimeSeriesChart(
-            seriesList,
+            [
+              charts.Series<ChartRow, DateTime>(
+                id: currentStudent.metric,
+                domainFn: (ChartRow row, _) => row.timeStamp,
+                measureFn: (ChartRow row, _) => row.y,
+                data: chartRows,
+              ),
+            ],
             animate: true,
             behaviors: _getChartFeatures(),
             defaultRenderer: charts.LineRendererConfig(includePoints: true),
