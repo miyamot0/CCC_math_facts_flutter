@@ -107,7 +107,34 @@ class HeadsUpPanel extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: _advanceButton(context),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: _advanceButton(context),
+                  flex: 1,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black))),
+                  flex: 1,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black))),
+                  flex: 1,
+                ),
+                //SizedBox.expand(
+                //  child: Text('...'),
+                //)
+              ],
+            ),
           ),
         ],
       );
