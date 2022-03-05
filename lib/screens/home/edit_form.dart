@@ -113,7 +113,7 @@ class _EditFormState extends State<EditForm> {
                 DropdownButtonFormField(
                   decoration: textInputDecoration.copyWith(hintText: "Select exercise", labelText: "Target Skill:"),
                   value: _exerciseEdit,
-                  items: factsType.map((setting) {
+                  items: MathFactTypes.FactsType.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _exerciseEdit = value.toString(),
@@ -135,7 +135,7 @@ class _EditFormState extends State<EditForm> {
                 DropdownButtonFormField(
                   decoration: textInputDecoration.copyWith(hintText: "Set Source", labelText: "Set Source:"),
                   value: _setNumber,
-                  items: MathFactSets().AvailableSets.map((setting) {
+                  items: MathFactSets.AvailableSets.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _setNumber = value,
@@ -147,14 +147,13 @@ class _EditFormState extends State<EditForm> {
                   decoration: textInputDecoration.copyWith(
                       hintText: "Select Presentation Mode", labelText: "Select Presentation Mode:"),
                   value: _preferredOrientation,
-                  items:
-                      [Orientations().Vertical, Orientations().Horizontal, Orientations().NoPreference].map((setting) {
+                  items: [Orientations.Vertical, Orientations.Horizontal, Orientations.NoPreference].map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) {
                     _preferredOrientation = value;
 
-                    _orientationPreference = (value == Orientations().NoPreference) ? false : true;
+                    _orientationPreference = (value == Orientations.NoPreference) ? false : true;
                   },
                 ),
                 const SizedBox(
@@ -163,7 +162,7 @@ class _EditFormState extends State<EditForm> {
                 DropdownButtonFormField(
                   decoration: textInputDecoration.copyWith(hintText: "Primary Metric", labelText: "Primary Metric:"),
                   value: _metricEdit,
-                  items: metricPreference.map((setting) {
+                  items: Metrics.MetricPreference.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (value) => _metricEdit = value.toString(),

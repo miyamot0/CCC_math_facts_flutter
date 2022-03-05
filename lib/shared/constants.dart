@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 /* 
     The MIT License
     Copyright February 1, 2022 Shawn Gilroy/Louisiana State University
@@ -62,14 +64,10 @@ List<String> getMathFactSet(Student student, MathFactData data) {
 }
 
 class MathFactTypes {
-  // ignore: non_constant_identifier_names
-  String Addition = "Math Facts-Addition";
-  // ignore: non_constant_identifier_names
-  String Subtraction = "Math Facts-Subtraction";
-  // ignore: non_constant_identifier_names
-  String Multiplication = "Math Facts-Multiplication";
-  // ignore: non_constant_identifier_names
-  String Division = "Math Facts-Division";
+  static const String Addition = "Math Facts-Addition";
+  static const String Subtraction = "Math Facts-Subtraction";
+  static const String Multiplication = "Math Facts-Multiplication";
+  static const String Division = "Math Facts-Division";
 
   String getOperatorCharacter(String tag) {
     if (tag.contains('+')) {
@@ -84,55 +82,53 @@ class MathFactTypes {
       return '';
     }
   }
+
+  static const List<String> FactsType = [
+    MathFactTypes.Addition,
+    MathFactTypes.Subtraction,
+    MathFactTypes.Multiplication,
+    MathFactTypes.Division
+  ];
 }
 
-List<String> factsType = [
-  MathFactTypes().Addition,
-  MathFactTypes().Subtraction,
-  MathFactTypes().Multiplication,
-  MathFactTypes().Division
-];
-
 class Orientations {
-  // ignore: non_constant_identifier_names
-  String Vertical = "Vertical";
-  // ignore: non_constant_identifier_names
-  String Horizontal = "Horizontal";
-  // ignore: non_constant_identifier_names
-  String NoPreference = "No Preference";
+  static const String Vertical = "Vertical";
+  static const String Horizontal = "Horizontal";
+  static const String NoPreference = "No Preference";
 }
 
 class Metrics {
-  // ignore: non_constant_identifier_names
-  String Accuracy = "Accuracy";
-  // ignore: non_constant_identifier_names
-  String Fluency = "Fluency";
+  static const String Accuracy = "Accuracy";
+  static const String Fluency = "Fluency";
+
+  static const List<String> MetricPreference = [Metrics.Accuracy, Metrics.Fluency];
 }
 
-List<String> metricPreference = [Metrics().Accuracy, Metrics().Fluency];
-
-List<String> setNumberList = [
-  '0',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  '11',
-  '12',
-  '13',
-  '14',
-  '15',
-  '16',
-  '17'
-];
-
 class MathFactSets {
-  // ignore: non_constant_identifier_names
-  List<String> AvailableSets = setNumberList;
+  static List<String> AvailableSets = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17'
+  ];
+}
+
+class ErrorFeedback {
+  static const String EachTrialAlways = "EachTrialAlways";
+  static const String EachErredTrial = "EachErredTrial";
+  static const String NoErrorFeedback = "NoErrorFeedback";
 }

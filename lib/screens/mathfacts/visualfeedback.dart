@@ -69,7 +69,7 @@ class VisualFeedback extends StatelessWidget {
     // Map out list
     List<ChartRow> chartRows = currentPerformances.map((perfs) {
       final DateTime dateStart = DateTime.parse(perfs.dateTimeStart);
-      final isShowingAccuracy = currentStudent.metric == Metrics().Accuracy;
+      final isShowingAccuracy = currentStudent.metric == Metrics.Accuracy;
       final minutes = double.parse(perfs.sessionDuration.toString()) / 60.0;
 
       final accuracy = (double.parse(perfs.nCorrectInitial.toString()) / double.parse(perfs.setSize)) * 100;
