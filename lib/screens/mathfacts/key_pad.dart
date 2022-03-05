@@ -44,6 +44,8 @@ class KeyPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double padding = 10.0;
+
     return Column(children: [
       Expanded(
           child: Row(
@@ -51,56 +53,56 @@ class KeyPad extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("1"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("2"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("3"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("+"),
         ],
       )),
-      const SizedBox(height: 5),
+      const SizedBox(height: padding),
       Expanded(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("4"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("5"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("6"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("-"),
         ],
       )),
-      const SizedBox(height: 5),
+      const SizedBox(height: padding),
       Expanded(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("7"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("8"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("9"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("-"),
         ],
       )),
-      const SizedBox(height: 5),
+      const SizedBox(height: padding),
       Expanded(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("Del"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("0"),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("="),
-          const SizedBox(width: 5),
+          const SizedBox(width: padding),
           _createKey("/"),
         ],
       )),
