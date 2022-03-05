@@ -32,30 +32,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class EditForm extends StatefulWidget {
-  final String setSize;
-  final String targetSkill;
-  final String name;
-  final String set;
-  final String id;
-  final bool randomized;
-  final bool orientationPreference;
-  final String preferredOrientation;
-  final String metric;
-  final int aim;
+  final Student studentData;
 
-  const EditForm(
-      {Key key,
-      this.setSize,
-      this.targetSkill,
-      this.name,
-      this.id,
-      this.randomized,
-      this.orientationPreference,
-      this.preferredOrientation,
-      this.metric,
-      this.set,
-      this.aim})
-      : super(key: key);
+  const EditForm({Key key, this.studentData}) : super(key: key);
 
   @override
   _EditFormState createState() => _EditFormState();
@@ -65,7 +44,7 @@ class _EditFormState extends State<EditForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _textFieldController = TextEditingController();
-  String _setSizeEdit, _exerciseEdit, _metricEdit, _preferredOrientation, _setNumber, itemPresentation;
+  String _setSizeEdit, _exerciseEdit, _metricEdit, _preferredOrientation, _setNumber, _errFeedback;
   bool _randomized, _orientationPreference;
   int _aimSetting;
 
@@ -73,15 +52,16 @@ class _EditFormState extends State<EditForm> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
-    _setSizeEdit = _setSizeEdit ?? widget.setSize;
-    _exerciseEdit = _exerciseEdit ?? widget.targetSkill;
-    _textFieldController.text = widget.name;
-    _randomized = _randomized ?? widget.randomized;
-    _metricEdit = _metricEdit ?? widget.metric;
-    _preferredOrientation = _preferredOrientation ?? widget.preferredOrientation;
-    _orientationPreference = _orientationPreference ?? widget.orientationPreference;
-    _setNumber = _setNumber ?? widget.set;
-    _aimSetting = _aimSetting ?? widget.aim;
+    _setSizeEdit = _setSizeEdit ?? widget.studentData.setSize;
+    _exerciseEdit = _exerciseEdit ?? widget.studentData.target;
+    _textFieldController.text = widget.studentData.name;
+    _randomized = _randomized ?? widget.studentData.randomized;
+    _metricEdit = _metricEdit ?? widget.studentData.metric;
+    _errFeedback = _errFeedback ?? widget.studentData.errorFeedback;
+    _preferredOrientation = _preferredOrientation ?? widget.studentData.preferredOrientation;
+    _orientationPreference = _orientationPreference ?? widget.studentData.orientationPreference;
+    _setNumber = _setNumber ?? widget.studentData.set;
+    _aimSetting = _aimSetting ?? widget.studentData.aim;
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -182,6 +162,17 @@ class _EditFormState extends State<EditForm> {
                 const SizedBox(
                   height: 20.0,
                 ),
+                DropdownButtonFormField(
+                  decoration: textInputDecoration.copyWith(hintText: "Error Feedback", labelText: "Error Feedback:"),
+                  value: _errFeedback,
+                  items: ErrorFeedback.FeedbackOptions.map((setting) {
+                    return DropdownMenuItem(value: setting, child: Text(setting));
+                  }).toList(),
+                  onChanged: (value) => _errFeedback = value.toString(),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: "Aim Level", labelText: "Aim Level:"),
                   initialValue: _aimSetting == null ? "10" : _aimSetting.toString(),
@@ -201,7 +192,7 @@ class _EditFormState extends State<EditForm> {
                   onPressed: () async {
                     if (_textFieldController.text.isNotEmpty) {
                       await DatabaseService(uid: userData.uid).updateStudentInCollection(Student(
-                          id: widget.id,
+                          id: widget.studentData.id,
                           name: _textFieldController.text,
                           set: _setNumber,
                           setSize: _setSizeEdit,
@@ -210,6 +201,7 @@ class _EditFormState extends State<EditForm> {
                           preferredOrientation: _preferredOrientation,
                           orientationPreference: _orientationPreference,
                           metric: _metricEdit,
+                          errorFeedback: _errFeedback,
                           aim: _aimSetting));
 
                       Navigator.pop(context);

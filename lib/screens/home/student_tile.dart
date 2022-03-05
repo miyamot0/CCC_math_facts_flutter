@@ -76,16 +76,7 @@ class _StudentTileState extends State<StudentTile> {
                 child: Container(
               padding: EdgeInsets.only(left: 60.0, right: 60.0, bottom: MediaQuery.of(context).viewInsets.bottom),
               child: EditForm(
-                setSize: widget.student.setSize,
-                set: widget.student.set,
-                name: widget.student.name,
-                id: widget.student.id,
-                randomized: widget.student.randomized,
-                targetSkill: widget.student.target,
-                orientationPreference: widget.student.orientationPreference,
-                preferredOrientation: widget.student.preferredOrientation,
-                metric: widget.student.metric,
-                aim: widget.student.aim,
+                studentData: widget.student,
               ),
             ));
           });

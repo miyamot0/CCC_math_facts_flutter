@@ -46,7 +46,8 @@ class _AddFormState extends State<AddForm> {
       _exerciseEdit = MathFactTypes.Addition,
       _metricEdit = Metrics.Accuracy,
       _setNumber = "0",
-      _preferredOrientation = Orientations.Vertical;
+      _preferredOrientation = Orientations.Vertical,
+      _errFeedback = ErrorFeedback.EachTrialAlways;
   bool _randomized = false, _orientationPreference = true;
   int _aimSetting;
 
@@ -152,6 +153,17 @@ class _AddFormState extends State<AddForm> {
                 const SizedBox(
                   height: 20.0,
                 ),
+                DropdownButtonFormField(
+                  decoration: textInputDecoration.copyWith(hintText: "Error Feedback", labelText: "Error Feedback:"),
+                  value: _errFeedback,
+                  items: ErrorFeedback.FeedbackOptions.map((setting) {
+                    return DropdownMenuItem(value: setting, child: Text(setting));
+                  }).toList(),
+                  onChanged: (value) => _errFeedback = value.toString(),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: "Aim Level", labelText: "Aim Level:"),
                   initialValue: '10',
@@ -179,6 +191,7 @@ class _AddFormState extends State<AddForm> {
                           preferredOrientation: _preferredOrientation,
                           orientationPreference: _orientationPreference,
                           metric: _metricEdit,
+                          errorFeedback: _errFeedback,
                           aim: _aimSetting));
 
                       Navigator.pop(context);

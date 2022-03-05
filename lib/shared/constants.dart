@@ -131,4 +131,10 @@ class ErrorFeedback {
   static const String EachTrialAlways = "EachTrialAlways";
   static const String EachErredTrial = "EachErredTrial";
   static const String NoErrorFeedback = "NoErrorFeedback";
+
+  static const List<String> FeedbackOptions = [
+    ErrorFeedback.EachTrialAlways,
+    ErrorFeedback.EachErredTrial,
+    ErrorFeedback.NoErrorFeedback
+  ];
 }

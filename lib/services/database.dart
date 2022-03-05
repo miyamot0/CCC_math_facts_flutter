@@ -76,6 +76,7 @@ class DatabaseService {
           orientationPreference: data['hasPreference'] ?? false,
           preferredOrientation: data['preferredOrientation'].toString() ?? '',
           metric: data['metric'].toString() ?? '',
+          errorFeedback: data['errorFeedback'] ?? '',
           aim: data['aim'] ?? 0);
     }).toList();
   }
@@ -103,6 +104,7 @@ class DatabaseService {
       'hasPreference': student.orientationPreference,
       'preferredOrientation': student.preferredOrientation,
       'metric': student.metric,
+      'errorFeedback': student.errorFeedback,
       'aim': student.aim
     });
   }
@@ -164,6 +166,7 @@ class DatabaseService {
       'hasPreference': student.orientationPreference,
       'preferredOrientation': student.preferredOrientation,
       'metric': student.metric,
+      'errorFeedback': student.errorFeedback,
       'aim': student.aim
     });
   }

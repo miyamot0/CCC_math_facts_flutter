@@ -29,6 +29,7 @@ class Student {
   final String id;
   final String preferredOrientation;
   final String metric;
+  final String errorFeedback;
   final int aim;
   final bool orientationPreference;
   final bool randomized;
@@ -43,6 +44,7 @@ class Student {
       this.id,
       this.preferredOrientation,
       this.metric,
+      this.errorFeedback,
       this.aim,
       this.orientationPreference,
       this.randomized});
