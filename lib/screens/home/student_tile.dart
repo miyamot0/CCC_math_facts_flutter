@@ -24,7 +24,6 @@
 import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/home/edit_form.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
-import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc_h.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/visualfeedback.dart';
 import 'package:covcopcomp_math_fact/models/data.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
@@ -107,21 +106,13 @@ class _StudentTileState extends State<StudentTile> {
 
     // Determine how to present the task
     MaterialPageRoute _handleScreenOrientationRouting(bool isVertical, MathFactData json) {
-      return isVertical == true
-          ? MaterialPageRoute(
-              builder: (context) => MathFactsCCC(
-                    student: widget.student,
-                    tid: user.uid,
-                    set: getMathFactSet(widget.student, json),
-                    operator: MathFactTypes().getOperatorCharacter(widget.student.target),
-                  ))
-          : MaterialPageRoute(
-              builder: (context) => MathFactsCCCHorizontal(
-                    student: widget.student,
-                    tid: user.uid,
-                    set: getMathFactSet(widget.student, json),
-                    operator: MathFactTypes().getOperatorCharacter(widget.student.target),
-                  ));
+      return MaterialPageRoute(
+          builder: (context) => MathFactsCCC(
+                student: widget.student,
+                tid: user.uid,
+                set: getMathFactSet(widget.student, json),
+                operator: MathFactTypes().getOperatorCharacter(widget.student.target),
+              ));
     }
 
     // TODO: Revert horizontal mode for now (most don't use it)
