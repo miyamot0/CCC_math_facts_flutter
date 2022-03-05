@@ -457,6 +457,13 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
               margin: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(widget.student.name, style: cccTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 36.0)),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   HeadsUpPanel(
                     viewPanelString: viewPanelString,
                     entryPanelColor: entryPanel,
