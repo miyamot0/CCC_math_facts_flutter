@@ -23,10 +23,10 @@
 
 import 'dart:ui';
 
+import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/themes.dart';
-import 'package:flutter/material.dart';
 
-import '../../shared/constants.dart';
+import 'package:flutter/material.dart';
 
 class HeadsUpPanel extends StatelessWidget {
   const HeadsUpPanel(

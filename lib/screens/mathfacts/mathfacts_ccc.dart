@@ -21,19 +21,18 @@
     THE SOFTWARE.
 */
 
+import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
+import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/screens/mathfacts/heads_up.dart';
+import 'package:covcopcomp_math_fact/screens/mathfacts/key_pad.dart';
+import 'package:covcopcomp_math_fact/screens/mathfacts/math_scoring.dart';
+import 'package:covcopcomp_math_fact/services/database.dart';
+import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/themes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
-
-import '../../models/record_ccc_mfacts.dart';
-import '../../models/student.dart';
-import '../../services/database.dart';
-import '../../shared/constants.dart';
-
-import 'heads_up.dart';
-import 'key_pad.dart';
-import 'math_scoring.dart';
 
 class MathFactsCCC extends StatefulWidget {
   const MathFactsCCC({Key key, this.student, this.tid, this.set, this.operator}) : super(key: key);
