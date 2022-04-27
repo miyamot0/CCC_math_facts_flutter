@@ -53,6 +53,8 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     const double scaling = 0.275;
+    const double strokeWidth = 4;
+    const double fontSize = 20;
 
     final Widget svg1 =
         SvgPicture.asset('assets/coloured_paper.svg', width: screen.width * scaling, height: screen.height * scaling);
@@ -76,26 +78,54 @@ class _LandingScreenState extends State<LandingScreen> {
                     alignment: Alignment.topCenter, dy: screen.height * .075, dx: -screen.width * .025, child: svg2),
                 AlignPositioned(
                   alignment: Alignment.center,
+                  dy: screen.height * .075,
                   child: Center(
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    const Text(
-                      "Cover, Copy, Compare",
-                      style: TextStyle(
-                          color: Colors.white,
-                          decorationColor: Colors.black,
-                          decoration: TextDecoration.none,
-                          decorationStyle: TextDecorationStyle.double),
-                    ),
-                    Text(
-                      "\nShawn Gilroy, Louisiana State University (2018-2019)\nBehavioral Engineering Lab\nMIT-Licensed (${appInfo.appName}:${appInfo.version})",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        decorationColor: Colors.black,
-                        decoration: TextDecoration.none,
-                        fontSize: 18.0,
-                      ),
-                    )
-                  ])),
+                      child: Stack(
+                    children: [
+                      Column(mainAxisSize: MainAxisSize.min, children: [
+                        Text(
+                          "Cover, Copy, Compare",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              decoration: TextDecoration.none,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = strokeWidth
+                                ..color = Colors.blue),
+                        ),
+                        Text(
+                          "\nShawn Gilroy, Louisiana State University (2018-2019)\n\nBehavioral Engineering Lab\n\nMIT-Licensed (Version: ${appInfo.version})",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: fontSize,
+                              decoration: TextDecoration.none,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = strokeWidth
+                                ..color = Colors.blue),
+                        )
+                      ]),
+                      Column(mainAxisSize: MainAxisSize.min, children: [
+                        const Text(
+                          "Cover, Copy, Compare",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                        Text(
+                          "\nShawn Gilroy, Louisiana State University (2018-2019)\n\nBehavioral Engineering Lab\n\nMIT-Licensed (Version: ${appInfo.version})",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            decoration: TextDecoration.none,
+                            fontSize: fontSize,
+                          ),
+                        )
+                      ])
+                    ],
+                  )),
                 ),
                 AlignPositioned(
                     alignment: Alignment.bottomCenter,
