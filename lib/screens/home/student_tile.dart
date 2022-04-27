@@ -53,8 +53,6 @@ class _StudentTileState extends State<StudentTile> {
     MediaQueryData mqData = MediaQuery.of(context);
     final user = Provider.of<UserModel>(context);
 
-    //bool isInPortrait = mqData.orientation == Orientation.portrait;
-
     final double horizontalBlock = mqData.size.width / 100;
     final double heroStudentRadiusSize = horizontalBlock * 7.5;
     final double tapButtonRadius = horizontalBlock * 9;
@@ -105,7 +103,7 @@ class _StudentTileState extends State<StudentTile> {
     }
 
     // Determine how to present the task
-    MaterialPageRoute _handleScreenOrientationRouting(bool isVertical, MathFactData json) {
+    MaterialPageRoute _handleScreenOrientationRouting(MathFactData json) {
       return MaterialPageRoute(
           builder: (context) => MathFactsCCC(
                 student: widget.student,
@@ -113,13 +111,6 @@ class _StudentTileState extends State<StudentTile> {
                 set: getMathFactSet(widget.student, json),
                 operator: MathFactTypes().getOperatorCharacter(widget.student.target),
               ));
-    }
-
-    // Check orientation of screen
-    bool _checkIfDeviceOrientationPortrait() {
-      return true;
-      //return widget.student.preferredOrientation == Orientations().Vertical ||
-      //    (widget.student.preferredOrientation == Orientations().NoPreference && isInPortrait);
     }
 
     // TODO: add in features for taking a picture here
@@ -228,8 +219,7 @@ class _StudentTileState extends State<StudentTile> {
                   ),
                   onPressed: () async {
                     final MathFactData jsonSet = await _parseJson();
-                    final bool showVertical = _checkIfDeviceOrientationPortrait();
-                    final MaterialPageRoute route = _handleScreenOrientationRouting(showVertical, jsonSet);
+                    final MaterialPageRoute route = _handleScreenOrientationRouting(jsonSet);
 
                     await Navigator.push(
                       context,
