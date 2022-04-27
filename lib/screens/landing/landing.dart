@@ -26,6 +26,7 @@ import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info/package_info.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key key}) : super(key: key);
@@ -55,6 +56,8 @@ class _LandingScreenState extends State<LandingScreen> {
     const double scaling = 0.275;
     const double strokeWidth = 4;
     const double fontSize = 20;
+
+    final double tapButtonRadius = screen.width * 0.1;
 
     final Widget svg1 =
         SvgPicture.asset('assets/coloured_paper.svg', width: screen.width * scaling, height: screen.height * scaling);
@@ -128,19 +131,27 @@ class _LandingScreenState extends State<LandingScreen> {
                   )),
                 ),
                 AlignPositioned(
-                    alignment: Alignment.bottomCenter,
-                    dy: -screen.height * .05,
-                    child: MaterialButton(
-                        color: Colors.blueAccent,
-                        splashColor: Colors.redAccent,
-                        textColor: AppThemes.PrimaryButtonTextColor,
-                        minWidth: screen.width * 0.25,
-                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                        child: const Text(
-                          "Launch App",
-                          style: AppThemes.PrimaryButtonTextStyle,
-                        ),
-                        onPressed: () => Navigator.pushReplacementNamed(context, "/start"))),
+                  alignment: Alignment.bottomCenter,
+                  dy: -screen.height * .05,
+                  child: AvatarGlow(
+                    endRadius: 150,
+                    animate: true,
+                    glowColor: Colors.green,
+                    child: Material(
+                      elevation: 20.0,
+                      color: Colors.greenAccent,
+                      shape: const CircleBorder(),
+                      child: IconButton(
+                          iconSize: tapButtonRadius,
+                          icon: Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                            size: tapButtonRadius,
+                          ),
+                          onPressed: () => Navigator.pushReplacementNamed(context, "/start")),
+                    ),
+                  ),
+                )
               ]),
             );
           } else {
