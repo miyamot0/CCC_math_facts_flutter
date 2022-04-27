@@ -24,5 +24,6 @@
 class ChartRow {
   final DateTime timeStamp;
   final double y;
+
   ChartRow(this.timeStamp, this.y);
 }

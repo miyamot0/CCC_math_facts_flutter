@@ -50,6 +50,10 @@ class HeadsUpPanel extends StatelessWidget {
   final ValueSetter<BuildContext> toggleEntry;
   final CCCStatus hudStatus;
 
+  static const sizedBox10 = SizedBox(
+    width: 10,
+  );
+
   @override
   Widget build(BuildContext context) {
     Widget _advanceButton(BuildContext context) {
@@ -82,9 +86,7 @@ class HeadsUpPanel extends StatelessWidget {
               )),
             ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
+          sizedBox10,
           Expanded(
             flex: 6,
             child: DecoratedBox(
@@ -101,9 +103,7 @@ class HeadsUpPanel extends StatelessWidget {
               )),
             ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
+          sizedBox10,
           Expanded(
             flex: 2,
             child: Column(
@@ -115,16 +115,12 @@ class HeadsUpPanel extends StatelessWidget {
                   child: _advanceButton(context),
                   flex: 1,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                sizedBox10,
                 Expanded(
                   child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black))),
                   flex: 1,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                sizedBox10,
                 Expanded(
                   child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black))),
                   flex: 1,
