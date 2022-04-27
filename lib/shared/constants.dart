@@ -127,3 +127,9 @@ class ErrorFeedback {
     ErrorFeedback.NoErrorFeedback
   ];
 }
+
+class Landing {
+  static const String Title = "Cover, Copy, Compare";
+  static const String Description =
+      "\nShawn Gilroy, Louisiana State University (2018-2019)\n\nBehavioral Engineering Lab\n\nMIT-Licensed (Version:";
+}

@@ -22,6 +22,7 @@
 */
 
 import 'package:align_positioned/align_positioned.dart';
+import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info/package_info.dart';
@@ -55,7 +56,6 @@ class _LandingScreenState extends State<LandingScreen> {
     const double scaling = 0.275;
     const double strokeWidth = 4;
     const double fontSize = 20;
-
     final double tapButtonRadius = screen.width * 0.1;
 
     final Widget svg1 =
@@ -86,7 +86,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     children: [
                       Column(mainAxisSize: MainAxisSize.min, children: [
                         Text(
-                          "Cover, Copy, Compare",
+                          Landing.Title,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               decoration: TextDecoration.none,
@@ -96,7 +96,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                 ..color = Colors.blue),
                         ),
                         Text(
-                          "\nShawn Gilroy, Louisiana State University (2018-2019)\n\nBehavioral Engineering Lab\n\nMIT-Licensed (Version: ${appInfo.version})",
+                          "${Landing.Description} ${appInfo.version})",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: fontSize,
@@ -109,7 +109,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       ]),
                       Column(mainAxisSize: MainAxisSize.min, children: [
                         const Text(
-                          "Cover, Copy, Compare",
+                          Landing.Title,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -117,7 +117,7 @@ class _LandingScreenState extends State<LandingScreen> {
                           ),
                         ),
                         Text(
-                          "\nShawn Gilroy, Louisiana State University (2018-2019)\n\nBehavioral Engineering Lab\n\nMIT-Licensed (Version: ${appInfo.version})",
+                          "${Landing.Description} ${appInfo.version})",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
