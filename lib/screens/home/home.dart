@@ -48,6 +48,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
 
+    // Show help instructions
     void _showHelpModal() {
       showModalBottomSheet(
           context: context,

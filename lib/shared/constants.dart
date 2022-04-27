@@ -133,3 +133,22 @@ class Landing {
   static const String Description =
       "\nShawn Gilroy, Louisiana State University (2018-2019)\n\nBehavioral Engineering Lab\n\nMIT-Licensed (Version:";
 }
+
+class HelpText {
+  static const String HelpGuidelines = "App Usage Guidelines";
+  static const String HelpAddingStudents = "Adding a New Student to Group/Class";
+  static const String HelpAddingStudentsDesc =
+      "Students can be easily added to the dashboard by selected the button with the '+' symbol on the home screen. From there, you can supply a name for the student, which types of tasks to assign (e.g., math facts, addition), which sets of items to assign (18 variations are included), how many problems to present from the set, whether to randomize which items in the set are present, whether to present problems vertically or horizontally, and whether to focus on accuracy or fluency.";
+  static const String HelpClassroom = "Editing Personal Settings (Classroom)";
+  static const String HelpClassroomDesc =
+      "At any time, you can edit your personal settings (e.g., name, school) by pressing the settings button in the appbar. The settings button in the appbar pertains to the teacher, while the settings button in the student area refers to respective students.";
+  static const String HelpSettings = "Editing a Student's Assigned Programming (In-App)";
+  static const String HelpSettingsDesc =
+      "It is likely that, over time, you may choose to update a student's current programming (e.g., changing from a focus on accuracy, to fluency for addition math facts). Settings for an individual student can be done by pressing the settings icon for the respective student. From this menu, you will be able to modify both the skill targeted as well as how Cover Copy Compare will be presented.";
+  static const String HelpView = "Viewing a Student's Progress (In-App)";
+  static const String HelpViewDesc =
+      "Student progress is updated in realtime and can be viewed in the app by pressing the red charting button to the right of the student's information. This will bring up a visual chart of the student's performance, highlight the specific type of data being targeted (e.g., Accuracy for Math Facts Addition, fluency for Math Facts Subtraction). Additionally, the aimline designated for the student will be drawn atop of their current programming.";
+  static const String HelpRemote = "Working with the App Remotely (Via Website)";
+  static const String HelpRemoteDesc1 =
+      "Occasionally, teachers/team leaders may find it easier to manage student programming remotely (i.e., not having to update individually using a tablet). Teachers/team leaders may log into their account at the following location: ";
+}
