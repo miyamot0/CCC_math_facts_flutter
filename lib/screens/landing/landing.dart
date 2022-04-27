@@ -22,7 +22,6 @@
 */
 
 import 'package:align_positioned/align_positioned.dart';
-import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info/package_info.dart';
