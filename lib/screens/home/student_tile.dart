@@ -65,12 +65,6 @@ class _StudentTileState extends State<StudentTile> {
     final double tapButtonRadius = horizontalBlock * 9;
     final double tapButtonIconSize = horizontalBlock * 5;
 
-    Image getUnitformImageDims(File file) {
-      return Image.file(
-        file,
-      );
-    }
-
     // Futurebuilder for student image
     Future<Image> getLocalImage() async {
       final Directory appDocsDirectory = await getApplicationDocumentsDirectory();
@@ -79,8 +73,14 @@ class _StudentTileState extends State<StudentTile> {
       final bool doesThisExist = await File(imagePath).exists();
 
       return doesThisExist
-          ? Image.file(File(imagePath))
-          : const Image(image: AssetImage('assets/placeholdercircle.png'));
+          ? Image.file(
+              File(imagePath),
+              width: heroStudentRadiusSize,
+            )
+          : Image(
+              image: const AssetImage('assets/placeholdercircle.png'),
+              width: heroStudentRadiusSize,
+            );
     }
 
     // Parse the embedded json for math problems
@@ -142,26 +142,33 @@ class _StudentTileState extends State<StudentTile> {
     Widget _individualStudentVisualWidget(Image studentImage) {
       return Expanded(
           flex: 2,
-          child: GestureDetector(
-            child: Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: studentImage,
-                )),
-            onLongPress: () async {
-              final ImagePicker imagePicker = ImagePicker();
-              final XFile imageCamera = await imagePicker.pickImage(source: ImageSource.camera);
+          child: widget.userData.revealSettings
+              ? GestureDetector(
+                  child: Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: studentImage,
+                      )),
+                  onLongPress: () async {
+                    final ImagePicker imagePicker = ImagePicker();
+                    final XFile imageCamera = await imagePicker.pickImage(source: ImageSource.camera);
 
-              if (imageCamera == null) return;
+                    if (imageCamera == null) return;
 
-              final Directory appDocsDirectory = await getApplicationDocumentsDirectory();
-              final String imagePath = "${appDocsDirectory.path}/${widget.student.id}.png";
+                    final Directory appDocsDirectory = await getApplicationDocumentsDirectory();
+                    final String imagePath = "${appDocsDirectory.path}/${widget.student.id}.png";
 
-              await File(imageCamera.path).copy(imagePath);
-              await File(imageCamera.path).delete();
-            },
-          ));
+                    await File(imageCamera.path).copy(imagePath);
+                    await File(imageCamera.path).delete();
+                  },
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: studentImage,
+                  )));
     }
 
     // Build out templated string for entries
