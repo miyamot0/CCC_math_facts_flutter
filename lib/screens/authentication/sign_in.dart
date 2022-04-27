@@ -46,6 +46,9 @@ class _SignInState extends State<SignIn> {
   String pass = '';
   String error = '';
 
+  static const sizedBox10 = SizedBox(height: 10);
+  static const sizedBox20 = SizedBox(height: 20);
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -73,9 +76,9 @@ class _SignInState extends State<SignIn> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      const SizedBox(height: 10),
+                      sizedBox10,
                       const Text("Sign In Page", style: AppThemes.PrimaryTextStyle),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       TextFormField(
                         decoration: AppThemes.TextInputDecoration.copyWith(
                             hintText: 'jane@email.com', labelText: "Email Address:"),
@@ -84,7 +87,7 @@ class _SignInState extends State<SignIn> {
                           setState(() => email = value);
                         },
                       ),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       TextFormField(
                         decoration: AppThemes.TextInputDecoration.copyWith(labelText: "Password:"),
                         validator: (value) => value.length < 6 ? 'Enter a password 6+ chars long' : null,
@@ -93,7 +96,7 @@ class _SignInState extends State<SignIn> {
                           setState(() => pass = value);
                         },
                       ),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -116,9 +119,7 @@ class _SignInState extends State<SignIn> {
                                 }
                               },
                             ),
-                            const SizedBox(
-                              width: 20,
-                            ),
+                            sizedBox20,
                             ElevatedButton(
                               style: AppThemes.SecondaryButtonStyle,
                               child: const Text("Forgot Password?", style: AppThemes.SecondaryButtonTextStyle),
@@ -138,9 +139,7 @@ class _SignInState extends State<SignIn> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 12.0,
-                      ),
+                      sizedBox10,
                       Text(
                         error,
                         style: const TextStyle(color: Colors.red, fontSize: 14.0),

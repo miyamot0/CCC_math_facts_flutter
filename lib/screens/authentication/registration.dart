@@ -49,6 +49,9 @@ class _RegistrationState extends State<Registration> {
   String pass = '';
   String error = '';
 
+  static const sizedBox10 = SizedBox(height: 10);
+  static const sizedBox20 = SizedBox(height: 20);
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -77,9 +80,9 @@ class _RegistrationState extends State<Registration> {
                   child: SingleChildScrollView(
                       child: Column(
                     children: [
-                      const SizedBox(height: 10),
+                      sizedBox10,
                       const Text("Registration Page", style: AppThemes.PrimaryTextStyle),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       TextFormField(
                         decoration: AppThemes.TextInputDecoration.copyWith(hintText: 'Name', labelText: "Name:"),
                         validator: (value) => value.isEmpty ? 'Enter your name' : null,
@@ -87,7 +90,7 @@ class _RegistrationState extends State<Registration> {
                           setState(() => name = value);
                         },
                       ),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       TextFormField(
                         decoration:
                             AppThemes.TextInputDecoration.copyWith(hintText: 'School name', labelText: "School Name:"),
@@ -96,7 +99,7 @@ class _RegistrationState extends State<Registration> {
                           setState(() => school = value);
                         },
                       ),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       TextFormField(
                         decoration:
                             AppThemes.TextInputDecoration.copyWith(hintText: 'Grade', labelText: "Grade(s) Taught:"),
@@ -105,7 +108,7 @@ class _RegistrationState extends State<Registration> {
                           setState(() => grade = value);
                         },
                       ),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       TextFormField(
                         decoration:
                             AppThemes.TextInputDecoration.copyWith(hintText: 'Email', labelText: "Email Address:"),
@@ -114,7 +117,7 @@ class _RegistrationState extends State<Registration> {
                           setState(() => email = value);
                         },
                       ),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       TextFormField(
                         decoration:
                             AppThemes.TextInputDecoration.copyWith(hintText: 'Password', labelText: "Password:"),
@@ -124,7 +127,7 @@ class _RegistrationState extends State<Registration> {
                           setState(() => pass = value);
                         },
                       ),
-                      const SizedBox(height: 20),
+                      sizedBox20,
                       ElevatedButton(
                         style: AppThemes.PrimaryButtonStyle,
                         //color: Colors.pink[400],
@@ -144,9 +147,7 @@ class _RegistrationState extends State<Registration> {
                           }
                         },
                       ),
-                      const SizedBox(
-                        height: 12.0,
-                      ),
+                      sizedBox10,
                       Text(
                         error,
                         style: const TextStyle(color: Colors.red, fontSize: 14.0),

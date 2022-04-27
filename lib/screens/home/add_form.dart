@@ -51,6 +51,9 @@ class _AddFormState extends State<AddForm> {
   bool _randomized = false;
   int _aimSetting;
 
+  static const sizedBox10 = SizedBox(height: 10);
+  static const sizedBox20 = SizedBox(height: 20);
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
@@ -65,24 +68,18 @@ class _AddFormState extends State<AddForm> {
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 10.0,
-                ),
+                sizedBox10,
                 const Text(
                   'Add a New Student to Class/Group',
                   style: TextStyle(fontSize: 18.0),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 TextField(
                   controller: _textFieldController,
                   decoration:
                       AppThemes.TextInputDecoration.copyWith(hintText: "Student ID", labelText: "Student Name:"),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 DropdownButtonFormField(
                   decoration:
                       AppThemes.TextInputDecoration.copyWith(hintText: "Select exercise", labelText: "Target Skill:"),
@@ -92,9 +89,7 @@ class _AddFormState extends State<AddForm> {
                   }).toList(),
                   onChanged: (String value) => _exerciseEdit = value.toString(),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 DropdownButtonFormField(
                   decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Set Size", labelText: "Size of Set:"),
                   value: _setSizeEdit,
@@ -103,9 +98,7 @@ class _AddFormState extends State<AddForm> {
                   }).toList(),
                   onChanged: (String value) => _setSizeEdit = value.toString(),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 DropdownButtonFormField(
                   decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Set Source", labelText: "Set Source:"),
                   value: _setNumber,
@@ -114,9 +107,7 @@ class _AddFormState extends State<AddForm> {
                   }).toList(),
                   onChanged: (String value) => _setNumber = value,
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 DropdownButtonFormField(
                   decoration: AppThemes.TextInputDecoration.copyWith(
                       hintText: "Problem Selection", labelText: "Problem Selection:"),
@@ -126,9 +117,7 @@ class _AddFormState extends State<AddForm> {
                   }).toList(),
                   onChanged: (value) => _randomized = value.toString() == "Randomized" ? true : false,
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 DropdownButtonFormField(
                   decoration:
                       AppThemes.TextInputDecoration.copyWith(hintText: "Primary Metric", labelText: "Primary Metric:"),
@@ -138,9 +127,7 @@ class _AddFormState extends State<AddForm> {
                   }).toList(),
                   onChanged: (value) => _metricEdit = value.toString(),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 DropdownButtonFormField(
                   decoration:
                       AppThemes.TextInputDecoration.copyWith(hintText: "Error Feedback", labelText: "Error Feedback:"),
@@ -150,9 +137,7 @@ class _AddFormState extends State<AddForm> {
                   }).toList(),
                   onChanged: (value) => _errFeedback = value.toString(),
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 TextFormField(
                   decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Aim Level", labelText: "Aim Level:"),
                   initialValue: '10',
@@ -160,9 +145,7 @@ class _AddFormState extends State<AddForm> {
                   keyboardType: TextInputType.number,
                   onChanged: (value) => _aimSetting = int.tryParse(value) ?? 0,
                 ),
-                const SizedBox(
-                  height: 20.0,
-                ),
+                sizedBox20,
                 TextButton(
                   style: TextButton.styleFrom(
                       primary: Colors.white,

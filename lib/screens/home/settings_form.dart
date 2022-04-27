@@ -43,6 +43,9 @@ class _SettingsFormState extends State<SettingsForm> {
   String _currentGrade, _currentSchool, _currentName;
   bool _revealSettings;
 
+  static const sizedBox10 = SizedBox(height: 10);
+  static const sizedBox20 = SizedBox(height: 20);
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
@@ -56,16 +59,12 @@ class _SettingsFormState extends State<SettingsForm> {
           return Form(
             key: _formKey,
             child: Column(children: [
-              const SizedBox(
-                height: 10.0,
-              ),
+              sizedBox10,
               const Text(
                 'Update your personal info',
                 style: TextStyle(fontSize: 18.0),
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              sizedBox20,
               TextFormField(
                 decoration:
                     AppThemes.TextInputDecoration.copyWith(hintText: "e.g., John/Jane Smith", labelText: "Name:"),
@@ -73,9 +72,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 validator: (val) => val.isEmpty ? 'Please enter a name' : null,
                 onChanged: (val) => setState((() => _currentName = val)),
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              sizedBox20,
               TextFormField(
                 decoration:
                     AppThemes.TextInputDecoration.copyWith(hintText: "e.g., K-2", labelText: "Grade(s) taught:"),
@@ -83,9 +80,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 validator: (val) => val.isEmpty ? 'Please enter a value for your grade(s)' : null,
                 onChanged: (val) => setState((() => _currentGrade = val)),
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              sizedBox20,
               TextFormField(
                 decoration:
                     AppThemes.TextInputDecoration.copyWith(hintText: "e.g., Sadie Hawkins", labelText: "School name:"),
@@ -93,9 +88,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 validator: (val) => val.isEmpty ? 'Please enter a value for your school' : null,
                 onChanged: (val) => setState((() => _currentSchool = val)),
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              sizedBox20,
               DropdownButtonFormField(
                 decoration: AppThemes.TextInputDecoration.copyWith(
                     hintText: "Show Settings on Home Screen", labelText: "Show Settings on Home Screen:"),
@@ -105,9 +98,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 }).toList(),
                 onChanged: (value) => _revealSettings = value.toString() == "Show Settings Button" ? true : false,
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              sizedBox20,
               TextButton(
                   style: TextButton.styleFrom(
                       primary: Colors.white,
