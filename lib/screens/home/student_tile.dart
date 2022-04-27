@@ -21,6 +21,8 @@
     THE SOFTWARE.
 */
 
+import 'dart:io';
+
 import 'package:covcopcomp_math_fact/models/student.dart';
 import 'package:covcopcomp_math_fact/screens/home/edit_form.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/mathfacts_ccc.dart';
@@ -30,10 +32,15 @@ import 'package:covcopcomp_math_fact/models/usermodel.dart';
 import 'package:covcopcomp_math_fact/services/database.dart';
 import 'package:covcopcomp_math_fact/services/mind.dart';
 import 'package:covcopcomp_math_fact/shared/constants.dart';
+import 'package:covcopcomp_math_fact/shared/loading.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
+//import 'package:flutter/services.dart' show rootBundle;
 
 class StudentTile extends StatefulWidget {
   final Student student;
@@ -57,6 +64,24 @@ class _StudentTileState extends State<StudentTile> {
     final double heroStudentRadiusSize = horizontalBlock * 7.5;
     final double tapButtonRadius = horizontalBlock * 9;
     final double tapButtonIconSize = horizontalBlock * 5;
+
+    Image getUnitformImageDims(File file) {
+      return Image.file(
+        file,
+      );
+    }
+
+    // Futurebuilder for student image
+    Future<Image> getLocalImage() async {
+      final Directory appDocsDirectory = await getApplicationDocumentsDirectory();
+      final String imagePath = "${appDocsDirectory.path}/${widget.student.id}.png";
+
+      final bool doesThisExist = await File(imagePath).exists();
+
+      return doesThisExist
+          ? Image.file(File(imagePath))
+          : const Image(image: AssetImage('assets/placeholdercircle.png'));
+    }
 
     // Parse the embedded json for math problems
     Future<MathFactData> _parseJson() async {
@@ -113,15 +138,29 @@ class _StudentTileState extends State<StudentTile> {
               ));
     }
 
-    // TODO: add in features for taking a picture here
-    // TODO: launch intent following long press (if in settings mode)?
     // Construct leading widget
-    Widget _individualStudentVisualWidget() {
+    Widget _individualStudentVisualWidget(Image studentImage) {
       return Expanded(
           flex: 2,
-          child: CircleAvatar(
-            radius: heroStudentRadiusSize,
-            backgroundColor: Colors.blue,
+          child: GestureDetector(
+            child: Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: studentImage,
+                )),
+            onLongPress: () async {
+              final ImagePicker imagePicker = ImagePicker();
+              final XFile imageCamera = await imagePicker.pickImage(source: ImageSource.camera);
+
+              if (imageCamera == null) return;
+
+              final Directory appDocsDirectory = await getApplicationDocumentsDirectory();
+              final String imagePath = "${appDocsDirectory.path}/${widget.student.id}.png";
+
+              await File(imageCamera.path).copy(imagePath);
+              await File(imageCamera.path).delete();
+            },
           ));
     }
 
@@ -228,20 +267,32 @@ class _StudentTileState extends State<StudentTile> {
                   })));
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
-      child: Card(
-          margin: const EdgeInsets.fromLTRB(10.0, 1.0, 10.0, 0.0),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Row(children: [
-              _individualStudentVisualWidget(),
-              _studentInfoRowWidget(),
-              widget.userData.revealSettings == true ? _linkingButtonStudentSettings() : const SizedBox.shrink(),
-              _linkingButtonStudentVisual(),
-              _linkingButtonStudentTrial()
-            ]),
-          )),
-    );
+    return FutureBuilder<Image>(
+        future: getLocalImage(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            Image studentImage = snapshot.data;
+
+            return Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Card(
+                  margin: const EdgeInsets.fromLTRB(10.0, 1.0, 10.0, 0.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(children: [
+                      _individualStudentVisualWidget(studentImage),
+                      _studentInfoRowWidget(),
+                      widget.userData.revealSettings == true
+                          ? _linkingButtonStudentSettings()
+                          : const SizedBox.shrink(),
+                      _linkingButtonStudentVisual(),
+                      _linkingButtonStudentTrial()
+                    ]),
+                  )),
+            );
+          } else {
+            return const Loading();
+          }
+        });
   }
 }
