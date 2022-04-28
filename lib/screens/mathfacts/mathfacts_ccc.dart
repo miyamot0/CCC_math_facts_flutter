@@ -440,16 +440,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cover, Copy, Compare'),
-        actions: [
-          Center(
-            child: Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Text(
-                  "Name: ${widget.student.name}, Set Size: ${widget.student.setSize}",
-                  style: AppThemes.PrimaryTextStyle.copyWith(fontSize: 24.0),
-                )),
-          )
-        ],
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
@@ -457,7 +447,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
               margin: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  Text(widget.student.name,
+                  Text("${widget.student.name} (Set Size: ${widget.student.setSize})",
                       style: AppThemes.PrimaryTextStyle.copyWith(
                           fontWeight: FontWeight.bold, fontSize: 36.0, color: Colors.black)),
                   const SizedBox(

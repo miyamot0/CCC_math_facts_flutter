@@ -54,6 +54,10 @@ class HeadsUpPanel extends StatelessWidget {
     width: 10,
   );
 
+  static const sizedBoxVertical10 = SizedBox(
+    height: 10,
+  );
+
   @override
   Widget build(BuildContext context) {
     Widget _advanceButton(BuildContext context) {
@@ -105,24 +109,24 @@ class HeadsUpPanel extends StatelessWidget {
           ),
           sizedBox10,
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
+                  child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.white))),
+                  flex: 1,
+                ),
+                sizedBoxVertical10,
+                Expanded(
                   child: _advanceButton(context),
-                  flex: 1,
+                  flex: 2,
                 ),
-                sizedBox10,
+                sizedBoxVertical10,
                 Expanded(
-                  child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black))),
-                  flex: 1,
-                ),
-                sizedBox10,
-                Expanded(
-                  child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black))),
+                  child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.white))),
                   flex: 1,
                 ),
               ],

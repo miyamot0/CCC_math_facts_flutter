@@ -29,6 +29,7 @@ import 'package:covcopcomp_math_fact/screens/landing/landing.dart';
 import 'package:covcopcomp_math_fact/services/auth.dart';
 import 'package:covcopcomp_math_fact/shared/themes.dart';
 
+import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,9 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(const MyApp());
 }
