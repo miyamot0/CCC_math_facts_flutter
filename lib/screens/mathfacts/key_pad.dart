@@ -44,7 +44,9 @@ class KeyPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     const sizedBox10 = SizedBox(height: 10.0);
+    const sizedBoxSides = SizedBox(width: 10.0);
 
     return Column(children: [
       Expanded(
@@ -53,11 +55,11 @@ class KeyPad extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("1"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("2"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("3"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("+"),
         ],
       )),
@@ -68,11 +70,11 @@ class KeyPad extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("4"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("5"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("6"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("-"),
         ],
       )),
@@ -83,11 +85,11 @@ class KeyPad extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("7"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("8"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("9"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("-"),
         ],
       )),
@@ -98,11 +100,11 @@ class KeyPad extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _createKey("Del"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("0"),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("="),
-          sizedBox10,
+          sizedBoxSides,
           _createKey("/"),
         ],
       )),
