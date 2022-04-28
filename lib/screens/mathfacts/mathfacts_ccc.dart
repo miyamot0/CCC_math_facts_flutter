@@ -325,9 +325,21 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
           errCount++;
         }
 
+        // TODO do counts here
+
         if (shouldShowFeedback(!isMatching)) {
           _showMessageDialog(context);
         } else {
+
+          String currentStringDisplayed = viewPanelStringInternal;
+          int totalDigitsShown = calculateDigitsTotal(currentStringDisplayed);
+          totalDigits.add(totalDigitsShown);
+
+          String currentStringEntered = entryPanelStringInternal;
+          int totalDigitsCorrect =
+              calculateDigitsCorrect(currentStringEntered, currentStringDisplayed, widget.operator);
+          correctDigits.add(totalDigitsCorrect);
+
           setState(() {
             viewPanelString = [];
 
