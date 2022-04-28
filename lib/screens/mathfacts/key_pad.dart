@@ -25,15 +25,18 @@ import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 
 class KeyPad extends StatelessWidget {
-  const KeyPad({Key key, this.appendInput}) : super(key: key);
+  const KeyPad({Key key, this.appendInput, this.readyForEntry}) : super(key: key);
 
   final ValueSetter<String> appendInput;
+  final bool readyForEntry;
 
   Widget _createKey(String code) {
     return Expanded(
         child: TextButton(
       onPressed: () => appendInput(code),
-      style: AppThemes.KeypadButtonStyle,
+      style: readyForEntry ? AppThemes.KeypadButtonStyle : 
+      TextButton.styleFrom(backgroundColor: Colors.green[50], 
+                           primary: Colors.white),
       child: Text(
         code,
         textAlign: TextAlign.center,

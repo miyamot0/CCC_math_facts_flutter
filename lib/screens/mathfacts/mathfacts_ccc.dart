@@ -33,6 +33,7 @@ import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class MathFactsCCC extends StatefulWidget {
   const MathFactsCCC({Key key, this.student, this.tid, this.set, this.operator}) : super(key: key);
@@ -48,6 +49,10 @@ class MathFactsCCC extends StatefulWidget {
 
 class _MathFactsCCCState extends State<MathFactsCCC> {
   bool isOngoing = false, initialLoad = true, toVerify = false, initialTry = true;
+
+  bool animateList = true;
+  bool animateButton = false;
+  bool illustrateKeys = false;
 
   List<String> localSet;
 
@@ -278,6 +283,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         entryPanel = Colors.grey;
         buttonText = 'Cover';
         toVerify = false;
+
+        animateList = false;
+        animateButton = true;
       } else if (hud == CCCStatus.begin) {
         hud = CCCStatus.coverCopy;
 
@@ -286,6 +294,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         entryPanel = Colors.white;
         buttonText = 'Copied';
         toVerify = false;
+        illustrateKeys = true;
+
       } else if (hud == CCCStatus.coverCopy) {
         hud = CCCStatus.compare;
 
@@ -294,6 +304,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         entryPanel = Colors.white;
         buttonText = 'Compare';
         toVerify = false;
+        illustrateKeys = false;
+
       } else {
         hud = CCCStatus.entry;
 
@@ -323,6 +335,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             entryPanelStringView = [];
             buttonText = '';
             isOngoing = false;
+
+            animateList = true;
+            animateButton = false;
+            illustrateKeys = false;
           });
 
           numTrial++;
@@ -462,6 +478,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                     viewPanelText: viewPanelText,
                     toggleEntry: _buttonPressEvent,
                     hudStatus: hud,
+                    animatedButton: animateButton
                   ),
                   const SizedBox(
                     height: 20,
@@ -496,8 +513,20 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
                                           _buttonPressEvent(context);
                                         },
-                                        child: const CircleAvatar(
-                                          foregroundColor: Colors.blue,
+                                        child: AvatarGlow(
+                                          endRadius: 30,
+                                          animate: animateList,
+                                          glowColor: Colors.blue,
+                                          child: Material(
+                                            elevation: 10.0,
+                                            color: Colors.greenAccent,
+                                            shape: const CircleBorder(),
+                                            child: const CircleAvatar(
+                                              
+                                              foregroundColor: Colors.blue,
+                                              radius: 15
+                                            ),
+                                          ),
                                         )),
                                     title: Text(
                                       localSet[index],
@@ -508,7 +537,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: KeyPad(appendInput: _appendCharacterToEditor),
+                            child: KeyPad(appendInput: _appendCharacterToEditor, readyForEntry: illustrateKeys),
                           ),
                         ],
                       ))

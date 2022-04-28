@@ -27,6 +27,7 @@ import 'package:covcopcomp_math_fact/shared/constants.dart';
 import 'package:covcopcomp_math_fact/shared/themes.dart';
 
 import 'package:flutter/material.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class HeadsUpPanel extends StatelessWidget {
   const HeadsUpPanel(
@@ -38,7 +39,8 @@ class HeadsUpPanel extends StatelessWidget {
       this.viewPanelColor,
       this.viewPanelText,
       this.toggleEntry,
-      this.hudStatus})
+      this.hudStatus,
+      this.animatedButton})
       : super(key: key);
 
   final List<InlineSpan> viewPanelString;
@@ -48,6 +50,7 @@ class HeadsUpPanel extends StatelessWidget {
   final Color viewPanelColor;
   final Color viewPanelText;
   final ValueSetter<BuildContext> toggleEntry;
+  final bool animatedButton;
   final CCCStatus hudStatus;
 
   static const sizedBox10 = SizedBox(
@@ -61,12 +64,19 @@ class HeadsUpPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget _advanceButton(BuildContext context) {
-      return TextButton(
-          onPressed: () => toggleEntry(context),
-          style: TextButton.styleFrom(primary: Colors.white, backgroundColor: Colors.blue),
-          child: Text(buttonText,
-              style: AppThemes.PrimaryTextStyle.copyWith(
-                  fontWeight: FontWeight.normal, fontSize: 24.0, fontFeatures: [const FontFeature.tabularFigures()])));
+
+      Color customColor = animatedButton ? Colors.blue : Colors.white;
+      double elevation = animatedButton ? 10 : 0;
+
+      return ElevatedButton(
+        onPressed: () => toggleEntry(context),
+        style: TextButton.styleFrom(primary: Colors.white, 
+          backgroundColor: customColor,
+          elevation: elevation,
+          minimumSize: Size.fromHeight(100)),
+        child: Text(buttonText,
+            style: AppThemes.PrimaryTextStyle.copyWith(
+                fontWeight: FontWeight.normal, fontSize: 24.0, fontFeatures: [const FontFeature.tabularFigures()])));
     }
 
     Widget _generateHUDforVerticalDisplay() {
@@ -82,11 +92,11 @@ class HeadsUpPanel extends StatelessWidget {
                   child: RichText(
                 textAlign: TextAlign.right,
                 text: TextSpan(
-                    children: viewPanelString,
-                    style: AppThemes.PrimaryTextStyle.copyWith(
-                        color: viewPanelText,
-                        fontFamily: 'RobotoMono',
-                        fontFeatures: [const FontFeature.tabularFigures()])),
+                  children: viewPanelString,
+                  style: AppThemes.PrimaryTextStyle.copyWith(
+                    color: viewPanelText,
+                    fontFamily: 'RobotoMono',
+                    fontFeatures: [const FontFeature.tabularFigures()])),
               )),
             ),
           ),
@@ -121,7 +131,12 @@ class HeadsUpPanel extends StatelessWidget {
                 ),
                 sizedBoxVertical10,
                 Expanded(
-                  child: _advanceButton(context),
+                  child: AvatarGlow(
+                    endRadius: 200,
+                    animate: animatedButton,
+                    glowColor: Colors.blue,
+                    child: _advanceButton(context),
+                  ),
                   flex: 2,
                 ),
                 sizedBoxVertical10,
