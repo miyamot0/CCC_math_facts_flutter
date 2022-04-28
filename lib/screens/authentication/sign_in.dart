@@ -48,6 +48,7 @@ class _SignInState extends State<SignIn> {
 
   static const sizedBox10 = SizedBox(height: 10);
   static const sizedBox20 = SizedBox(height: 20);
+  static const sizedBoxH20 = SizedBox(width: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +120,7 @@ class _SignInState extends State<SignIn> {
                                 }
                               },
                             ),
-                            sizedBox20,
+                            sizedBoxH20,
                             ElevatedButton(
                               style: AppThemes.SecondaryButtonStyle,
                               child: const Text("Forgot Password?", style: AppThemes.SecondaryButtonTextStyle),
