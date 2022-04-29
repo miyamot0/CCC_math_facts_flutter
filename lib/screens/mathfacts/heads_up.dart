@@ -74,7 +74,7 @@ class HeadsUpPanel extends StatelessWidget {
           backgroundColor: customColor,
           shape: const CircleBorder(),
           elevation: elevation,
-          minimumSize: Size.fromHeight(100)),
+          minimumSize: Size.fromHeight(110)),
         child: Text(buttonText,
             style: AppThemes.PrimaryTextStyle.copyWith(
                 fontWeight: FontWeight.normal, 
