@@ -357,6 +357,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             animateList = true;
             animateButton = false;
             illustrateKeys = false;
+
+            entryPanel = Colors.grey;
+            viewPanel = Colors.grey;
           });
 
           numTrial++;
@@ -446,6 +449,9 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                   entryPanelStringView = [];
                   buttonText = '';
                   isOngoing = false;
+
+                  entryPanel = Colors.grey;
+                  viewPanel = Colors.grey;
                 });
 
                 numTrial++;
