@@ -39,7 +39,7 @@ flutter:
     - assets/mathfacts.json
     - assets/coloured_paper.svg
     - assets/new_document.svg
-    - assets/placeholdercircle.png
+    - assets/placeholder.png
   fonts: 
     - family: RobotoMono
       fonts:

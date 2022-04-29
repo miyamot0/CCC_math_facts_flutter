@@ -78,7 +78,7 @@ class _StudentTileState extends State<StudentTile> {
               width: heroStudentRadiusSize,
             )
           : Image(
-              image: const AssetImage('assets/placeholdercircle.png'),
+              image: const AssetImage('assets/placeholder.png'),
               width: heroStudentRadiusSize,
             );
     }
