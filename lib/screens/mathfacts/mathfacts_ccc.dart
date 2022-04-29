@@ -62,7 +62,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   List<InlineSpan> entryPanelStringView = [];
   List<int> correctDigits = [], totalDigits = [];
 
-  Color entryPanel = Colors.grey, viewPanel = Colors.grey, viewPanelText = Colors.black;
+  Color entryPanel = Colors.grey, viewPanel = Colors.grey, viewPanelText = Colors.black, listViewTextColor = Colors.black;
 
   int errCount = 0, nRetries = 0, nCorrectInitial = 0, numTrial = 1;
 
@@ -291,6 +291,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
         animateList = false;
         animateButton = true;
+
+        listViewTextColor = Colors.grey[200];
       } else if (hud == CCCStatus.begin) {
         hud = CCCStatus.coverCopy;
 
@@ -360,6 +362,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
             entryPanel = Colors.grey;
             viewPanel = Colors.grey;
+            listViewTextColor = Colors.black;
           });
 
           numTrial++;
@@ -452,6 +455,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
                   entryPanel = Colors.grey;
                   viewPanel = Colors.grey;
+                  listViewTextColor = Colors.black;
                 });
 
                 numTrial++;
@@ -554,7 +558,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                         )),
                                     title: Text(
                                       localSet[index],
-                                      style: AppThemes.PrimaryProblemSizing,
+                                      style: AppThemes.PrimaryProblemSizing.copyWith(color: listViewTextColor),
                                     ),
                                   );
                                 }),
