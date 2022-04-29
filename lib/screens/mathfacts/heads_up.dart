@@ -72,11 +72,14 @@ class HeadsUpPanel extends StatelessWidget {
         onPressed: () => toggleEntry(context),
         style: TextButton.styleFrom(primary: Colors.white, 
           backgroundColor: customColor,
+          shape: const CircleBorder(),
           elevation: elevation,
           minimumSize: Size.fromHeight(100)),
         child: Text(buttonText,
             style: AppThemes.PrimaryTextStyle.copyWith(
-                fontWeight: FontWeight.normal, fontSize: 24.0, fontFeatures: [const FontFeature.tabularFigures()])));
+                fontWeight: FontWeight.normal, 
+                fontSize: 24.0, 
+                fontFeatures: [const FontFeature.tabularFigures()])));
     }
 
     Widget _generateHUDforVerticalDisplay() {
