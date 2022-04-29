@@ -68,6 +68,8 @@ class AppThemes {
 
   static const PrimaryTextStyle = TextStyle(fontSize: 42.0, fontWeight: FontWeight.bold, color: Colors.white);
 
+  static const PrimaryProblemSizing = TextStyle(fontSize: 34.0);
+
 //  ButtonTheme(
 //    buttonColor: Colors.pink,
 //  );

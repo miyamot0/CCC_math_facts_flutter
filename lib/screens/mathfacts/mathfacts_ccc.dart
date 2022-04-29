@@ -248,7 +248,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   }
 
   // Callback to add input from keyboard to editor
-  _appendCharacterToEditor(String char) {
+  void _appendCharacterToEditor(String char) {
     if (hud != CCCStatus.coverCopy) {
       return;
     }
@@ -269,7 +269,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   }
 
   // Callback for button triggering next phase of intervention
-  _buttonPressEvent(BuildContext context) {
+  void _buttonPressEvent(BuildContext context) {
     bool isMatching;
 
     setState(() {
@@ -365,7 +365,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   }
 
   // Push local data to server
-  _submitDataToFirebase() async {
+  void _submitDataToFirebase() async {
     end = DateTime.now();
 
     int secs = end.difference(start).inSeconds;
@@ -390,7 +390,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   }
 
   // Show message log
-  _showMessageDialog(BuildContext context) => showDialog(
+  void _showMessageDialog(BuildContext context) => showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
@@ -542,7 +542,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                                         )),
                                     title: Text(
                                       localSet[index],
-                                      style: const TextStyle(fontSize: 42.0),
+                                      style: AppThemes.PrimaryProblemSizing,
                                     ),
                                   );
                                 }),
