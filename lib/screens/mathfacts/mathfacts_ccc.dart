@@ -264,6 +264,11 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     }
 
     setState(() {
+
+      if (animateButton == false) {
+        animateButton = true;
+      }
+
       entryPanelStringView = _verticalizeStringEditor(entryPanelStringInternal);
     });
   }
@@ -295,6 +300,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         buttonText = 'Copied';
         toVerify = false;
         illustrateKeys = true;
+        animateButton = false;
 
       } else if (hud == CCCStatus.coverCopy) {
         hud = CCCStatus.compare;
