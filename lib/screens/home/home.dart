@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: const Text("List of current students:"),
+          title: const Text("List of Current Students:"),
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           elevation: 0.0,
           actions: <Widget>[

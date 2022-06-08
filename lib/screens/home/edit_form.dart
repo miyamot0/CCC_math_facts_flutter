@@ -42,6 +42,7 @@ class EditForm extends StatefulWidget {
 }
 
 class _EditFormState extends State<EditForm> {
+  FocusNode myFocusNode;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _textFieldController = TextEditingController();
@@ -51,6 +52,15 @@ class _EditFormState extends State<EditForm> {
 
   static const sizedBox10 = SizedBox(height: 10);
   static const sizedBox20 = SizedBox(height: 20);
+
+@override
+  void initState(){
+    super.initState();
+    myFocusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      FocusScope.of(context).requestFocus(myFocusNode);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +93,7 @@ class _EditFormState extends State<EditForm> {
                 sizedBox20,
                 TextField(
                   controller: _textFieldController,
+                  focusNode: myFocusNode,
                   decoration:
                       AppThemes.TextInputDecoration.copyWith(hintText: "Student ID", labelText: "Student Name:"),
                 ),
