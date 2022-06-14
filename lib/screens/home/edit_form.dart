@@ -49,6 +49,7 @@ class _EditFormState extends State<EditForm> {
   String _setSizeEdit, _exerciseEdit, _metricEdit, _setNumber, _errFeedback;
   bool _randomized;
   int _aimSetting;
+  List<String> setOptions;
 
   static const sizedBox10 = SizedBox(height: 10);
   static const sizedBox20 = SizedBox(height: 20);
@@ -74,6 +75,8 @@ class _EditFormState extends State<EditForm> {
     _errFeedback = _errFeedback ?? widget.studentData.errorFeedback;
     _setNumber = _setNumber ?? widget.studentData.set;
     _aimSetting = _aimSetting ?? widget.studentData.aim;
+
+    setOptions = getSetOptions(_exerciseEdit);
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -120,7 +123,7 @@ class _EditFormState extends State<EditForm> {
                 DropdownButtonFormField(
                   decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Set Source", labelText: "Set Source:"),
                   value: _setNumber,
-                  items: MathFactSets.AvailableSets.map((setting) {
+                  items: setOptions.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _setNumber = value,

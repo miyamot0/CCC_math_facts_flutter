@@ -28,7 +28,7 @@ import 'package:covcopcomp_math_fact/models/student.dart';
 
 enum CCCStatus { entry, begin, coverCopy, compare }
 
-List<String> setSizeArray = ["8", "16", "24"];
+List<String> setSizeArray = ["8", "16", "24", "30"];
 
 // Gets the respective set of icons (randomize if necessary)
 List<String> getMathFactSet(Student student, MathFactData data) {
@@ -92,28 +92,101 @@ class Metrics {
   static const List<String> MetricPreference = [Metrics.Accuracy, Metrics.Fluency];
 }
 
-class MathFactSets {
-  // ignore: non_constant_identifier_names
-  static List<String> AvailableSets = [
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17'
-  ];
+List<String> getSetOptions(String factType) {
+  switch (factType) {
+    case MathFactTypes.Subtraction:
+      return [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '16',
+        '17'
+      ];
+    break;
+
+    case MathFactTypes.Multiplication: 
+      return [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '16',
+        '17'
+      ];
+    break;
+
+    case MathFactTypes.Division: 
+      return [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '16',
+        '17'
+      ];
+    break;
+
+    default: //MathFactTypes.Addition: 
+      return [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '16',
+        '17',
+        '18'
+      ];
+    break;
+  }
 }
 
 class ErrorFeedback {

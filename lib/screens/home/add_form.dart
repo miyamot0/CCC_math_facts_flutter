@@ -50,6 +50,7 @@ class _AddFormState extends State<AddForm> {
       _errFeedback = ErrorFeedback.EachTrialAlways;
   bool _randomized = false;
   int _aimSetting;
+  List<String> setOptions;
 
   static const sizedBox10 = SizedBox(height: 10);
   static const sizedBox20 = SizedBox(height: 20);
@@ -57,6 +58,8 @@ class _AddFormState extends State<AddForm> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
+
+    setOptions = getSetOptions(_exerciseEdit);
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -102,7 +105,7 @@ class _AddFormState extends State<AddForm> {
                 DropdownButtonFormField(
                   decoration: AppThemes.TextInputDecoration.copyWith(hintText: "Set Source", labelText: "Set Source:"),
                   value: _setNumber,
-                  items: MathFactSets.AvailableSets.map((setting) {
+                  items: setOptions.map((setting) {
                     return DropdownMenuItem(value: setting, child: Text(setting));
                   }).toList(),
                   onChanged: (String value) => _setNumber = value,

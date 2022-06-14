@@ -49,8 +49,8 @@ class AuthService {
 
       return user == null ? null : _userFromFirebaseUser(user);
     } catch (e) {
+      print(e.toString());
       return null;
-      //print(e.toString());
     }
   }
 
@@ -70,8 +70,8 @@ class AuthService {
         return _userFromFirebaseUser(user);
       }
     } catch (e) {
+      print(e.toString());
       return null;
-      //print(e.toString());
     }
   }
 
@@ -92,7 +92,7 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
-      //print(e.toString());
+      print(e.toString());
       return null;
     }
   }
