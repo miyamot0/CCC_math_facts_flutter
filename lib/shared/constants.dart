@@ -28,7 +28,7 @@ import 'package:covcopcomp_math_fact/models/student.dart';
 
 enum CCCStatus { entry, begin, coverCopy, compare }
 
-List<String> setSizeArray = ["8", "16", "24", "30"];
+List<String> setSizeArray = ["8", "16", "24", "30", "50"];
 
 // Gets the respective set of icons (randomize if necessary)
 List<String> getMathFactSet(Student student, MathFactData data) {
@@ -183,7 +183,8 @@ List<String> getSetOptions(String factType) {
         '15',
         '16',
         '17',
-        '18'
+        '18', // P1 in study 1
+        '19'  // P2 in study 1
       ];
     break;
   }
