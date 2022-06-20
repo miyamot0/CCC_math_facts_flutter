@@ -69,7 +69,7 @@ class HeadsUpPanel extends StatelessWidget {
       double elevation = animatedButton ? 10 : 0;
 
       return ElevatedButton(
-        onPressed: () => toggleEntry(context),
+        onPressed: () => animatedButton ? toggleEntry(context) : null,
         style: TextButton.styleFrom(primary: Colors.white, 
           backgroundColor: customColor,
           shape: const CircleBorder(),
