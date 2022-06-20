@@ -45,6 +45,57 @@ class KeyPad extends StatelessWidget {
     ));
   }
 
+  Widget _createDeleteKey(String code) {
+    return Expanded(
+        child: TextButton(
+      onPressed: () => appendInput(code),
+      style: readyForEntry ? 
+        TextButton.styleFrom(backgroundColor: Colors.red, 
+                             primary: Colors.white) : 
+        TextButton.styleFrom(backgroundColor: Colors.red[50], 
+                             primary: Colors.white),
+      child: Text(
+        code,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 42.0),
+      ),
+    ));
+  }
+
+  Widget _createEqualsKey(String code) {
+    return Expanded(
+        child: TextButton(
+      onPressed: () => appendInput(code),
+      style: readyForEntry ? 
+        TextButton.styleFrom(backgroundColor: Colors.blue, 
+                             primary: Colors.white) : 
+        TextButton.styleFrom(backgroundColor: Colors.blue[50], 
+                             primary: Colors.white),
+      child: Text(
+        code,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 42.0),
+      ),
+    ));
+  }
+
+  Widget _createOperatorKey(String code) {
+    return Expanded(
+        child: TextButton(
+      onPressed: () => appendInput(code),
+      style: readyForEntry ? 
+        TextButton.styleFrom(backgroundColor: Colors.purple, 
+                             primary: Colors.white) : 
+        TextButton.styleFrom(backgroundColor: Colors.purple[50], 
+                             primary: Colors.white),
+      child: Text(
+        code,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 42.0),
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -63,7 +114,7 @@ class KeyPad extends StatelessWidget {
           sizedBoxSides,
           _createKey("3"),
           sizedBoxSides,
-          _createKey("+"),
+          _createOperatorKey("+"),
         ],
       )),
       sizedBox10,
@@ -78,7 +129,7 @@ class KeyPad extends StatelessWidget {
           sizedBoxSides,
           _createKey("6"),
           sizedBoxSides,
-          _createKey("-"),
+          _createOperatorKey("-"),
         ],
       )),
       sizedBox10,
@@ -93,7 +144,7 @@ class KeyPad extends StatelessWidget {
           sizedBoxSides,
           _createKey("9"),
           sizedBoxSides,
-          _createKey("-"),
+          _createOperatorKey("-"),
         ],
       )),
       sizedBox10,
@@ -102,13 +153,13 @@ class KeyPad extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _createKey("Del"),
+          _createDeleteKey("Del"),
           sizedBoxSides,
           _createKey("0"),
           sizedBoxSides,
-          _createKey("="),
+          _createEqualsKey("="),
           sizedBoxSides,
-          _createKey("/"),
+          _createOperatorKey("/"),
         ],
       )),
     ]);
