@@ -130,8 +130,6 @@ class DatabaseService {
   Future addItemResponses(RecordMathFacts record, String docRefId, List<FactModel> factModelList) async {
     String mPath = 'performanceCollection/${record.tid}/${record.target}/students/${record.id}/${docRefId}/items';
 
-    print(mPath);
-
     for(FactModel factItem in factModelList) {
       await FirebaseFirestore.instance.collection(mPath).doc()
                                         .set(factItem.toJson());

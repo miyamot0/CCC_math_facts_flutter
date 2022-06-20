@@ -27,14 +27,16 @@ class FactModel {
   final String factEntry;
   final bool factCorrect;
   final bool initialTry;
+  final int latencySeconds;
 
-  FactModel({this.factType, this.factString, this.factEntry, this.factCorrect, this.initialTry});
+  FactModel({this.factType, this.factString, this.factEntry, this.factCorrect, this.initialTry, this.latencySeconds});
 
   dynamic toJson() => {
     'factType': factType,
     'factString': factString,
     'factEntry': factEntry,
     'factCorrect': factCorrect,
-    'initialTry': initialTry
+    'initialTry': initialTry,
+    'latencySeconds': latencySeconds
   };
 }

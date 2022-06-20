@@ -69,6 +69,8 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   int errCount = 0, nRetries = 0, nCorrectInitial = 0, numTrial = 1;
 
   DateTime start = DateTime.now(), end;
+  DateTime pretrial = DateTime.now();
+  DateTime current;
 
   CCCStatus hud = CCCStatus.entry;
 
@@ -343,12 +345,19 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
         int totalDigitsCorrect =
               calculateDigitsCorrect(currentStringEntered, currentStringDisplayed, widget.operator);
         
+        DateTime current = DateTime.now();
+
+        int secs = current.difference(pretrial).inSeconds;
+
         factModelList.add(FactModel(
           factType: widget.student.target,
           factString: currentStringDisplayed,
           factEntry: currentStringEntered,
           factCorrect: isMatching,
-          initialTry: initialTry));
+          initialTry: initialTry,
+          latencySeconds: secs));
+
+        pretrial = DateTime.now();
 
         if (shouldShowFeedback(!isMatching)) {
           _showMessageDialog(context);
