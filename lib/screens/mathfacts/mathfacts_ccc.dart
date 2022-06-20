@@ -23,6 +23,7 @@
 
 import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
 import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/models/factmodel.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/heads_up.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/key_pad.dart';
 import 'package:covcopcomp_math_fact/screens/mathfacts/math_scoring.dart';
@@ -55,6 +56,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
   bool illustrateKeys = false;
 
   List<String> localSet;
+  List<FactModel> factModelList;
 
   String cachedString = '', viewPanelStringInternal = '', entryPanelStringInternal = '', buttonText = '';
 
@@ -335,17 +337,24 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
         // TODO do counts here
 
+        String currentStringDisplayed = viewPanelStringInternal;
+        int totalDigitsShown = calculateDigitsTotal(currentStringDisplayed);
+        String currentStringEntered = entryPanelStringInternal;
+        int totalDigitsCorrect =
+              calculateDigitsCorrect(currentStringEntered, currentStringDisplayed, widget.operator);
+        
+        factModelList.add(FactModel(
+          factType: widget.student.target,
+          factString: currentStringDisplayed,
+          factEntry: currentStringEntered,
+          factCorrect: isMatching,
+          initialTry: initialTry));
+
         if (shouldShowFeedback(!isMatching)) {
           _showMessageDialog(context);
         } else {
 
-          String currentStringDisplayed = viewPanelStringInternal;
-          int totalDigitsShown = calculateDigitsTotal(currentStringDisplayed);
           totalDigits.add(totalDigitsShown);
-
-          String currentStringEntered = entryPanelStringInternal;
-          int totalDigitsCorrect =
-              calculateDigitsCorrect(currentStringEntered, currentStringDisplayed, widget.operator);
           correctDigits.add(totalDigitsCorrect);
 
           setState(() {
@@ -382,8 +391,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
     int secs = end.difference(start).inSeconds;
 
-    await DatabaseService(uid: widget.tid)
-        .addToStudentPerformanceCollection(RecordMathFacts(
+    RecordMathFacts studentRecord = RecordMathFacts(
             tid: widget.tid,
             id: widget.student.id,
             setSize: widget.student.setSize,
@@ -397,7 +405,13 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
             set: int.parse(widget.student.set),
             sessionDuration: secs,
             totalDigits: totalDigits.sum,
-            correctDigits: correctDigits.sum))
+            correctDigits: correctDigits.sum);
+
+    await DatabaseService(uid: widget.tid)
+        .addToStudentPerformanceCollection(studentRecord)
+        .then((documentReference) async {
+          await DatabaseService(uid: widget.tid).addItemResponses(studentRecord, documentReference.id, factModelList);
+        })
         .then((value) => Navigator.pop(context, true));
   }
 
@@ -479,6 +493,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     if (initialLoad) {
       initialLoad = false;
       localSet = widget.set;
+      factModelList = [];
     }
 
     return Scaffold(

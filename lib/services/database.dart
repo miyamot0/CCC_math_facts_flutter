@@ -22,6 +22,7 @@
 */
 
 import 'package:covcopcomp_math_fact/models/student.dart';
+import 'package:covcopcomp_math_fact/models/factmodel.dart';
 import 'package:covcopcomp_math_fact/models/record_ccc_mfacts.dart';
 import 'package:covcopcomp_math_fact/models/teacher.dart';
 import 'package:covcopcomp_math_fact/models/usermodel.dart';
@@ -123,6 +124,18 @@ class DatabaseService {
       'totalDigits': record.totalDigits,
       'correctDigits': record.correctDigits
     });
+  }
+
+  // Add student responses to collection
+  Future addItemResponses(RecordMathFacts record, String docRefId, List<FactModel> factModelList) async {
+    String mPath = 'performanceCollection/${record.tid}/${record.target}/students/${record.id}/${docRefId}/items';
+
+    print(mPath);
+
+    for(FactModel factItem in factModelList) {
+      await FirebaseFirestore.instance.collection(mPath).doc()
+                                        .set(factItem.toJson());
+    }
   }
 
   // Get the most recent information about a students performance
