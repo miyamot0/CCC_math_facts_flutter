@@ -257,6 +257,21 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       return;
     }
 
+    // Rule: no '=' before an operator
+    if (char == '=' && !entryPanelStringInternal.contains(widget.operator)) {
+      return;
+    }
+
+    // Rule: no multiple operators
+    if (char == widget.operator && entryPanelStringInternal.contains(widget.operator)) {
+      return;
+    }
+
+    // Rule: no multiple equals
+    if (char == '=' && entryPanelStringInternal.contains('=')) {
+      return;
+    }
+
     if (char == delCode) {
       if (entryPanelStringInternal.isEmpty == true) {
         return;
