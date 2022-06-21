@@ -418,7 +418,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     RecordMathFacts studentRecord = RecordMathFacts(
             tid: widget.tid,
             id: widget.student.id,
-            setSize: nTotalDynamic,
+            setSize: nTotalDynamic.toString(),
             target: widget.student.target,
             dateTimeStart: start.toString(),
             dateTimeEnd: end.toString(),
