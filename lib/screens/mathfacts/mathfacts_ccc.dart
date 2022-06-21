@@ -66,7 +66,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
 
   Color entryPanel = Colors.grey, viewPanel = Colors.grey, viewPanelText = Colors.black, listViewTextColor = Colors.black;
 
-  int errCount = 0, nRetries = 0, nCorrectInitial = 0, numTrial = 1;
+  int errCount = 0, nRetries = 0, nCorrectInitial = 0, numTrial = 1, nTotalDynamic;
 
   DateTime start = DateTime.now(), end;
   DateTime pretrial = DateTime.now();
@@ -418,7 +418,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     RecordMathFacts studentRecord = RecordMathFacts(
             tid: widget.tid,
             id: widget.student.id,
-            setSize: widget.student.setSize,
+            setSize: nTotalDynamic,
             target: widget.student.target,
             dateTimeStart: start.toString(),
             dateTimeEnd: end.toString(),
@@ -518,6 +518,7 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       initialLoad = false;
       localSet = widget.set;
       factModelList = [];
+      nTotalDynamic = localSet.length;
     }
 
     return Scaffold(
