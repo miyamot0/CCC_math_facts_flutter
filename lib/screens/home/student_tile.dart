@@ -129,6 +129,7 @@ class _StudentTileState extends State<StudentTile> {
 
     // Determine how to present the task
     MaterialPageRoute _handleScreenOrientationRouting(MathFactData json) {
+
       return MaterialPageRoute(
           builder: (context) => MathFactsCCC(
                 student: widget.student,

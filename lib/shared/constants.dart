@@ -57,14 +57,15 @@ class MathFactTypes {
   static const String Multiplication = "Math Facts-Multiplication";
   static const String Division = "Math Facts-Division";
 
+  // Get operator for math activity
   String getOperatorCharacter(String tag) {
-    if (tag.contains('+')) {
+    if (tag.contains('Addition')) {
       return '+';
-    } else if (tag.contains('-')) {
+    } else if (tag.contains('Subtraction')) {
       return '-';
-    } else if (tag.contains('x')) {
+    } else if (tag.contains('Multiplication')) {
       return 'x';
-    } else if (tag.contains('/')) {
+    } else if (tag.contains('Division')) {
       return '/';
     } else {
       return '';

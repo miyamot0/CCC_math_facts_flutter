@@ -25,10 +25,17 @@ import 'package:covcopcomp_math_fact/shared/themes.dart';
 import 'package:flutter/material.dart';
 
 class KeyPad extends StatelessWidget {
-  const KeyPad({Key key, this.appendInput, this.readyForEntry}) : super(key: key);
+  const KeyPad({Key key, this.appendInput, this.readyForEntry, this.operatorChar}) : super(key: key);
 
   final ValueSetter<String> appendInput;
   final bool readyForEntry;
+  final String operatorChar;
+
+  Widget _createBlank() {
+    return Expanded(
+        child: Text(""),
+    );
+  }
 
   Widget _createKey(String code) {
     return Expanded(
@@ -114,7 +121,7 @@ class KeyPad extends StatelessWidget {
           sizedBoxSides,
           _createKey("3"),
           sizedBoxSides,
-          _createOperatorKey("+"),
+          operatorChar == '+' ? _createOperatorKey('+') : _createBlank(),
         ],
       )),
       sizedBox10,
@@ -129,7 +136,7 @@ class KeyPad extends StatelessWidget {
           sizedBoxSides,
           _createKey("6"),
           sizedBoxSides,
-          _createOperatorKey("-"),
+          operatorChar == '-' ? _createOperatorKey('-') : _createBlank(),
         ],
       )),
       sizedBox10,
@@ -144,7 +151,7 @@ class KeyPad extends StatelessWidget {
           sizedBoxSides,
           _createKey("9"),
           sizedBoxSides,
-          _createOperatorKey("-"),
+          operatorChar == 'x' ? _createOperatorKey('x') : _createBlank(),
         ],
       )),
       sizedBox10,
@@ -159,7 +166,7 @@ class KeyPad extends StatelessWidget {
           sizedBoxSides,
           _createEqualsKey("="),
           sizedBoxSides,
-          _createOperatorKey("/"),
+          operatorChar == '/' ? _createOperatorKey('/') : _createBlank(),
         ],
       )),
     ]);

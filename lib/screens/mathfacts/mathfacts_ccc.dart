@@ -589,7 +589,10 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
                           ),
                           Expanded(
                             flex: 2,
-                            child: KeyPad(appendInput: _appendCharacterToEditor, readyForEntry: illustrateKeys),
+                            child: KeyPad(
+                              appendInput: _appendCharacterToEditor, 
+                              readyForEntry: illustrateKeys,
+                              operatorChar: widget.operator),
                           ),
                         ],
                       ))
