@@ -257,11 +257,6 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
       return;
     }
 
-    // Rule: no '=' before an operator
-    if (char == '=' && !entryPanelStringInternal.contains(widget.operator)) {
-      return;
-    }
-
     // Rule: no multiple operators
     if (char == widget.operator && entryPanelStringInternal.contains(widget.operator)) {
       return;
@@ -271,6 +266,27 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     if (char == '=' && entryPanelStringInternal.contains('=')) {
       return;
     }
+
+    // Rule: no '=' before an operator
+    if (char == '=' && !entryPanelStringInternal.contains(widget.operator)) {
+      return;
+    }
+
+    // Rule: no '=', before an digit AFTER operator
+    if (char == '=' && entryPanelStringInternal.contains(widget.operator)) {
+      List<String> problemParts = entryPanelStringInternal.split(widget.operator);
+
+      // If just 1 part, disregard (no digits after operator yet)
+      if (problemParts.length <= 1) {
+        return;
+      }
+
+      // If just whitespace, disregard
+      if (problemParts[1].trim().length == 0) {
+        return;
+      }
+    }
+
 
     if (char == delCode) {
       if (entryPanelStringInternal.isEmpty == true) {
