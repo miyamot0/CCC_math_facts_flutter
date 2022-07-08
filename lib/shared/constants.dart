@@ -185,7 +185,8 @@ List<String> getSetOptions(String factType) {
         '16',
         '17',
         '18', // P1 in study 1
-        '19'  // P2 in study 1
+        '19', // P2 in study 1
+        '20'  // P3 in study 1
       ];
     break;
   }

@@ -540,6 +540,14 @@ class _MathFactsCCCState extends State<MathFactsCCC> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cover, Copy, Compare'),
+          actions: <Widget>[
+            FlatButton(
+              textColor: Colors.white,
+              onPressed: () => _submitDataToFirebase(),
+              child: Text("Upload"),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+            ),
+          ],
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
